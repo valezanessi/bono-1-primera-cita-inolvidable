@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+  <title>De la Ambiguedad a la Definicion - ELEGIDA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--borgona:#5B0F1A;--vino:#8E1C2A;--rosa:#C99BA6;--nude:#E7D6C6;--crema:#FAF5EF;--carbon:#1A1A1A;--dorado:#C8A96E;--serif:'Playfair Display',Georgia,serif;--sans:'Inter',system-ui,sans-serif;--t:.42s cubic-bezier(.25,.46,.45,.94);--r:2px;--mw:720px}
+    html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+    body{font-family:var(--sans);font-size:16px;line-height:1.72;color:var(--carbon);background:var(--crema);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+    .screen{display:none;opacity:0;transition:opacity var(--t);min-height:100vh}
+    .screen.active{display:block}
+    .screen.visible{opacity:1}
+    h1,h2,h3{font-family:var(--serif);color:var(--borgona);line-height:1.22}
+    h1{font-size:clamp(28px,6vw,44px);font-weight:700}
+    h2{font-size:clamp(22px,4.5vw,34px);font-weight:600}
+    h3{font-size:clamp(16px,3vw,20px);font-weight:500}
+    p{font-size:clamp(15px,2.5vw,17px);color:var(--carbon);line-height:1.78}
+    img{max-width:100%;display:block}
+    .sl{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--vino);display:block;margin-bottom:20px}
+    .divider{width:40px;height:1px;background:var(--rosa);margin:28px 0}
+    .divider.c{margin:28px auto}
+    .accent{width:28px;height:2px;background:var(--dorado);margin:16px 0}
+    .accent.c{margin:16px auto}
+    .dots{display:flex;gap:8px;align-items:center;justify-content:center;padding:16px 0}
+    .dot{width:6px;height:6px;border-radius:50%;background:var(--nude);transition:all var(--t)}
+    .dot.on{background:var(--vino);width:22px;border-radius:3px}
+    .btn{display:inline-flex;align-items:center;gap:10px;background:var(--vino);color:var(--crema);font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;padding:16px 32px;border:none;cursor:pointer;border-radius:var(--r);transition:background var(--t),transform var(--t);min-width:240px;justify-content:center;-webkit-tap-highlight-color:transparent}
+    .btn:hover,.btn:focus{background:var(--borgona);transform:translateY(-1px);outline:none}
+    .btn:active{transform:translateY(0)}
+    .bl{display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--rosa);font-weight:600;cursor:pointer;background:none;border:none;padding:8px 0;transition:color var(--t);-webkit-tap-highlight-color:transparent}
+    .bl:hover{color:var(--vino)}
+    .bl::before{content:'\2190'}
+    .logo{height:52px;width:auto;object-fit:contain;display:block}
+    .top-nav{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--nude);background:var(--crema);position:sticky;top:0;z-index:100}
+    .top-nav .logo{height:36px}
+    .nav-step{font-family:var(--sans);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--rosa);font-weight:600}
+    .ab{display:flex;flex-direction:column;gap:14px;margin-top:48px;align-items:flex-start}
+    @media(min-width:520px){.ab{flex-direction:row;flex-wrap:wrap;align-items:center}}
+    .sr{width:100%;height:1px;background:var(--nude);margin:40px 0;border:none}
+    .hero{position:relative;width:100%;height:58vh;min-height:300px;max-height:520px;overflow:hidden}
+    .hero img{width:100%;height:100%;object-fit:cover;object-position:center 30%}
+    .hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:50%;background:linear-gradient(to bottom,transparent,var(--crema));pointer-events:none}
+    .pb{padding:40px 24px 64px;max-width:var(--mw);margin:0 auto;text-align:center}
+    .plogo{margin-bottom:36px;display:flex;justify-content:center}
+    .ptag{font-family:var(--serif);font-size:clamp(13px,3vw,16px);color:var(--rosa);font-style:italic;margin-top:12px;margin-bottom:40px}
+    .ai{width:100%;max-height:340px;overflow:hidden}
+    .ai img{width:100%;height:340px;object-fit:cover;object-position:center 25%}
+    .ac{padding:48px 24px 64px;max-width:var(--mw);margin:0 auto}
+    .aintro{font-family:var(--serif);font-size:clamp(17px,3.5vw,21px);color:var(--carbon);line-height:1.65;font-style:italic;margin-bottom:28px}
+    .fg{margin-bottom:36px}
+    .fl{display:block;font-family:var(--serif);font-size:clamp(16px,2.8vw,19px);color:var(--borgona);font-style:italic;margin-bottom:12px;line-height:1.4}
+    .ft{width:100%;min-height:110px;background:#fff;border:1px solid var(--nude);border-bottom:2px solid var(--rosa);border-radius:0;padding:16px 18px;font-family:var(--sans);font-size:15px;line-height:1.7;color:var(--carbon);resize:vertical;transition:border-color var(--t);-webkit-appearance:none}
+    .ft:focus{outline:none;border-color:var(--rosa);border-bottom-color:var(--vino)}
+    .ft::placeholder{color:#c4b0b6;font-style:italic}
+    .fn{background:var(--nude);border-left:3px solid var(--rosa);padding:24px 28px;margin:36px 0 48px;border-radius:0 2px 2px 0}
+    .fn p{font-size:clamp(14px,2.4vw,16px);line-height:1.8;color:var(--carbon)}
+    .fn p+p{margin-top:14px}
+    .fne{font-family:var(--serif);font-style:italic;color:var(--borgona);font-weight:500}
+    .cib{width:100%;height:280px;overflow:hidden;position:relative}
+    .cib img{width:100%;height:100%;object-fit:cover;object-position:center 20%}
+    .cib::after{content:'';position:absolute;bottom:0;left:0;right:0;height:60%;background:linear-gradient(to bottom,transparent,var(--crema))}
+    .cc{padding:40px 24px 64px;max-width:var(--mw);margin:0 auto}
+    .sg{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:28px}
+    @media(max-width:420px){.sg,.rg{grid-template-columns:1fr}}
+    .sc,.rc{border:1px solid var(--nude);background:#fff;padding:24px 20px;cursor:pointer;transition:all var(--t);border-radius:var(--r);-webkit-tap-highlight-color:transparent;text-align:left}
+    .sc:hover,.sc.on,.rc:hover,.rc.on{border-color:var(--vino);background:var(--crema);box-shadow:0 4px 20px rgba(91,15,26,.08)}
+    .sc.on,.rc.on{border-left:3px solid var(--vino)}
+    .sl2{font-family:var(--serif);font-size:11px;color:var(--rosa);letter-spacing:.14em;font-weight:500;text-transform:uppercase;display:block;margin-bottom:8px}
+    .st{font-family:var(--serif);font-size:clamp(13px,2.2vw,15px);color:var(--borgona);line-height:1.35;font-weight:500;display:block}
+    .sd,.rd{display:none;margin-top:36px;opacity:0;transition:opacity var(--t)}
+    .sd.on,.rd.on{display:block;opacity:1}
+    .pb2{background:var(--crema);border:1px solid var(--nude);border-radius:var(--r);padding:28px 28px 24px;position:relative;margin-bottom:18px}
+    .pb2::before{content:'\201C';font-family:var(--serif);font-size:64px;line-height:1;color:var(--rosa);opacity:.5;position:absolute;top:8px;left:16px}
+    .pt{font-family:var(--serif);font-size:clamp(15px,2.6vw,18px);color:var(--carbon);line-height:1.68;font-style:italic;padding-top:24px}
+    .por{text-align:center;font-family:var(--sans);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--rosa);margin:8px 0;font-weight:600}
+    .ht{margin-top:40px;padding-top:36px;border-top:1px solid var(--nude)}
+    .ht h3{font-family:var(--sans);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--vino);font-weight:700;margin-bottom:20px}
+    .ht p{font-size:clamp(14px,2.4vw,16px);line-height:1.82;color:var(--carbon);margin-bottom:14px}
+    .rc2{padding:48px 24px 64px;max-width:var(--mw);margin:0 auto}
+    .rg{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:28px}
+    .rb{background:#fff;border:1px solid var(--nude);border-radius:var(--r);padding:32px 28px}
+    .rb p{font-size:clamp(15px,2.5vw,17px);line-height:1.82;color:var(--carbon);margin-bottom:16px}
+    .rb p:last-child{margin-bottom:0}
+    .rq{font-family:var(--serif);font-style:italic;color:var(--borgona);font-size:clamp(15px,2.6vw,18px);border-left:2px solid var(--rosa);padding-left:20px;margin:20px 0;line-height:1.6}
+    .rsq{font-family:var(--serif);font-style:italic;color:var(--carbon);font-size:clamp(14px,2.2vw,16px);padding-left:16px;line-height:1.7;display:block;margin:8px 0;opacity:.85}
+    .rvs{font-family:var(--sans);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--rosa);margin:10px 0 10px 16px;font-weight:600;display:block}
+    .ci{width:100%;height:380px;overflow:hidden;position:relative}
+    .ci img{width:100%;height:100%;object-fit:cover;object-position:center 15%}
+    .ci::after{content:'';position:absolute;bottom:0;left:0;right:0;height:55%;background:linear-gradient(to bottom,transparent,var(--crema))}
+    .clc{padding:48px 24px 80px;max-width:var(--mw);margin:0 auto}
+    .ct{font-family:var(--sans);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--vino);font-weight:700;margin-bottom:28px;display:block}
+    .cb p{font-size:clamp(15px,2.5vw,18px);line-height:1.85;color:var(--carbon);margin-bottom:20px}
+    .cb .sa{font-family:var(--serif);font-style:italic;font-size:clamp(17px,3vw,21px);color:var(--borgona);line-height:1.6}
+    .clogo{margin-top:60px;padding-top:32px;border-top:1px solid var(--nude);display:flex;justify-content:center}
+    .fn2{display:none;position:fixed;bottom:20px;right:16px;z-index:200;gap:10px;flex-direction:column;align-items:flex-end}
+    .fn2.on{display:flex}
+    .fp{background:var(--borgona);color:var(--crema);font-family:var(--sans);font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;padding:10px 16px;border-radius:40px;border:none;cursor:pointer;transition:all var(--t);white-space:nowrap;box-shadow:0 4px 16px rgba(91,15,26,.22);-webkit-tap-highlight-color:transparent}
+    .fp:hover{background:var(--vino);transform:translateY(-2px)}
+    @media(min-width:640px){.pb{padding:56px 32px 80px}.ai img{height:420px}.cib{height:360px}.ci{height:480px}}
+    @media(min-width:960px){.ac,.cc,.rc2,.clc{padding-left:0;padding-right:0}.ai img{height:500px;object-position:center 15%}.sg,.rg{gap:18px}.sc,.rc{padding:28px 24px}}
+    :focus-visible{outline:2px solid var(--vino);outline-offset:3px}
+  </style>
+</head>
+<body>
+
+<section id="s0" class="screen">
+  <div class="hero"><img src="foto-01-portada.png.png" alt="Pareja caminando de la mano"></div>
+  <div class="pb">
+    <div class="plogo"><img class="logo" src="logo-elegida.png.png" alt="ELEGIDA" style="height:64px"></div>
+    <div class="accent c"></div>
+    <h1>De la Ambig&#252;edad<br>a la Definici&#243;n&#8482;</h1>
+    <p class="ptag">Mi Conversaci&#243;n de Claridad&#8482;</p>
+    <div class="divider c"></div>
+    <button class="btn" onclick="goTo('s1')">Preparar mi conversaci&#243;n &nbsp;&#8594;</button>
+    <div class="dots" style="margin-top:32px"><div class="dot on"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+  </div>
+</section>
+
+<section id="s1" class="screen">
+  <nav class="top-nav"><img class="logo" src="logo-elegida.png.png" alt="ELEGIDA"><span class="nav-step">Bono 5</span></nav>
+  <div class="ai"><img src="foto-02-antes-de-hablar.png.png" alt="Reflexion personal antes de la conversacion"></div>
+  <div class="ac">
+    <div class="dots"><div class="dot"></div><div class="dot on"></div><div class="dot"></div><div class="dot"></div></div>
+    <div class="divider" style="margin-top:24px"></div>
+    <span class="sl">1 &#183; Antes de hablar</span>
+    <p class="aintro">Hay un momento en el que seguir pensando qu&#233; quiso decir, qu&#233; estar&#225; sintiendo o hacia d&#243;nde puede ir el v&#237;nculo ya no te da la respuesta que necesit&#225;s.</p>
+    <p style="margin-top:16px">Necesit&#225;s hablarlo.</p>
+    <p style="margin-top:16px">No para presionarlo.</p>
+    <p style="margin-top:16px">No para conseguir que te diga lo que quer&#233;s escuchar.</p>
+    <p style="margin-top:16px">Sino para saber si los dos est&#225;n parados en un lugar parecido.</p>
+    <div class="divider" style="margin-top:24px"></div>
+    <p style="font-family:var(--serif);font-style:italic;font-size:clamp(14px,2.4vw,16px);color:var(--borgona);margin-bottom:32px">Respond&#233; solamente estas tres preguntas:</p>
+    <div class="fg">
+      <label class="fl" for="q1">&#191;Qu&#233; quiero saber de &#233;l?</label>
+      <textarea id="q1" class="ft" placeholder="Escrib&#237; aqu&#237;&#8230;" rows="4"></textarea>
+    </div>
+    <div class="fg">
+      <label class="fl" for="q2">&#191;Qu&#233; quiero yo de este v&#237;nculo?</label>
+      <textarea id="q2" class="ft" placeholder="Escrib&#237; aqu&#237;&#8230;" rows="4"></textarea>
+    </div>
+    <div class="fg">
+      <label class="fl" for="q3">&#191;Qu&#233; respuesta ya s&#233; que no me alcanzar&#237;a?</label>
+      <textarea id="q3" class="ft" placeholder="Escrib&#237; aqu&#237;&#8230;" rows="4"></textarea>
+    </div>
+    <div class="fn">
+      <p class="fne">Esta &#250;ltima importa.</p>
+      <p>Porque si &#233;l te dice &#8220;veamos qu&#233; pasa&#8221;, &#8220;estoy bien as&#237;&#8221; o &#8220;no s&#233; qu&#233; quiero ahora&#8221;, necesit&#225;s poder escuchar esa respuesta sin transformarla autom&#225;ticamente en la que esperabas recibir.</p>
+      <p>No necesit&#225;s tener todo resuelto antes de hablar.</p>
+      <p>Solo necesit&#225;s saber qu&#233; quer&#233;s aclarar y qu&#233; necesit&#225;s vos para seguir.</p>
+    </div>
+    <div class="ab">
+      <button class="btn" onclick="goTo('s2')">Ir a mi conversaci&#243;n &nbsp;&#8594;</button>
+      <button class="bl" onclick="goTo('s0')">Volver</button>
+    </div>
+  </div>
+</section>
+
+<section id="s2" class="screen">
+  <nav class="top-nav"><img class="logo" src="logo-elegida.png.png" alt="ELEGIDA"><span class="nav-step">Bono 5</span></nav>
+  <div class="cib"><img src="foto-03-conversacion.png.png" alt="Conversacion real entre ambos"></div>
+  <div class="cc">
+    <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot on"></div><div class="dot"></div></div>
+    <div class="divider" style="margin-top:24px"></div>
+    <span class="sl">2 &#183; Mi Conversaci&#243;n de Claridad&#8482;</span>
+    <h2>Eleg&#237; la situaci&#243;n que m&#225;s se parece a la tuya.</h2>
+    <div class="sg" id="sg">
+      <button class="sc" id="sa" onclick="openSit('a')"><span class="sl2">A</span><span class="st">Nunca hablamos de qu&#233; buscamos</span></button>
+      <button class="sc" id="sb" onclick="openSit('b')"><span class="sl2">B</span><span class="st">Quiero saber c&#243;mo ve lo nuestro</span></button>
+      <button class="sc" id="sc_" onclick="openSit('c')"><span class="sl2">C</span><span class="st">Quiero saber si esto est&#225; avanzando</span></button>
+      <button class="sc" id="sd" onclick="openSit('d')"><span class="sl2">D</span><span class="st">La indefinici&#243;n ya no me alcanza</span></button>
+    </div>
+
+    <div class="sd" id="da">
+      <span class="sl" style="margin-top:8px">A &#183; Nunca hablamos de qu&#233; buscamos</span>
+      <div class="pb2"><p class="pt">&#8220;Nunca hablamos de esto&#8230; &#191;vos qu&#233; est&#225;s buscando hoy cuando conoc&#233;s a alguien?&#8221;</p></div>
+      <p class="por">O</p>
+      <div class="pb2"><p class="pt">&#8220;Me dio curiosidad saber algo. Si conoc&#233;s a alguien con quien las cosas funcionan, &#191;est&#225;s abierto a construir una relaci&#243;n?&#8221;</p></div>
+      <div class="ht">
+        <h3>Ahora hacela tuya</h3>
+        <p>No hace falta que repitas ninguna frase palabra por palabra.</p>
+        <p>Eleg&#237; la que m&#225;s se acerca a lo que quer&#233;s decir y dec&#237;la como hablar&#237;as vos.</p>
+        <p>Y despu&#233;s, dejalo responder.</p>
+        <p>No llenes el silencio.</p>
+        <p>No le expliqu&#233;s qu&#233; deber&#237;a sentir.</p>
+        <p>No intentes llevarlo hacia determinada respuesta.</p>
+        <p>Vos abriste una conversaci&#243;n. Ahora tambi&#233;n necesit&#225;s escuchar qu&#233; tiene &#233;l para decir.</p>
+        <div class="ab">
+          <button class="btn" onclick="goTo('s3')">Ya hablamos. &#191;Y ahora qu&#233;? &nbsp;&#8594;</button>
+          <button class="bl" onclick="closeSit()">Ver otras situaciones</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="sd" id="db">
+      <span class="sl" style="margin-top:8px">B &#183; Quiero saber c&#243;mo ve lo nuestro</span>
+      <div class="pb2"><p class="pt">&#8220;Me gusta lo que estamos viviendo y quer&#237;a saber c&#243;mo lo ves vos.&#8221;</p></div>
+      <p class="por">O</p>
+      <div class="pb2"><p class="pt">&#8220;Hace un tiempo que nos estamos conociendo y nunca hablamos de esto. &#191;C&#243;mo sent&#237;s lo que est&#225; pasando entre nosotros?&#8221;</p></div>
+      <div class="ht">
+        <h3>Ahora hacela tuya</h3>
+        <p>No hace falta que repitas ninguna frase palabra por palabra.</p>
+        <p>Eleg&#237; la que m&#225;s se acerca a lo que quer&#233;s decir y dec&#237;la como hablar&#237;as vos.</p>
+        <p>Y despu&#233;s, dejalo responder.</p>
+        <p>No llenes el silencio.</p>
+        <p>No le expliqu&#233;s qu&#233; deber&#237;a sentir.</p>
+        <p>No intentes llevarlo hacia determinada respuesta.</p>
+        <p>Vos abriste una conversaci&#243;n. Ahora tambi&#233;n necesit&#225;s escuchar qu&#233; tiene &#233;l para decir.</p>
+        <div class="ab">
+          <button class="btn" onclick="goTo('s3')">Ya hablamos. &#191;Y ahora qu&#233;? &nbsp;&#8594;</button>
+          <button class="bl" onclick="closeSit()">Ver otras situaciones</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="sd" id="dc">
+      <span class="sl" style="margin-top:8px">C &#183; Quiero saber si esto est&#225; avanzando</span>
+      <div class="pb2"><p class="pt">&#8220;A m&#237; me gusta seguir conoci&#233;ndote y siento que esto fue creciendo. &#191;Vos tambi&#233;n sent&#237;s que estamos avanzando hacia algo?&#8221;</p></div>
+      <p class="por">O</p>
+      <div class="pb2"><p class="pt">&#8220;Me gusta lo que tenemos y me interesa seguir avanzando. Quer&#237;a saber si vos est&#225;s en un lugar parecido.&#8221;</p></div>
+      <div class="ht">
+        <h3>Ahora hacela tuya</h3>
+        <p>No hace falta que repitas ninguna frase palabra por palabra.</p>
+        <p>Eleg&#237; la que m&#225;s se acerca a lo que quer&#233;s decir y dec&#237;la como hablar&#237;as vos.</p>
+        <p>Y despu&#233;s, dejalo responder.</p>
+        <p>No llenes el silencio.</p>
+        <p>No le expliqu&#233;s qu&#233; deber&#237;a sentir.</p>
+        <p>No intentes llevarlo hacia determinada respuesta.</p>
+        <p>Vos abriste una conversaci&#243;n. Ahora tambi&#233;n necesit&#225;s escuchar qu&#233; tiene &#233;l para decir.</p>
+        <div class="ab">
+          <button class="btn" onclick="goTo('s3')">Ya hablamos. &#191;Y ahora qu&#233;? &nbsp;&#8594;</button>
+          <button class="bl" onclick="closeSit()">Ver otras situaciones</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="sd" id="dd">
+      <span class="sl" style="margin-top:8px">D &#183; La indefinici&#243;n ya no me alcanza</span>
+      <div class="pb2"><p class="pt">&#8220;Me gusta estar con vos, pero tambi&#233;n necesito saber un poco mejor qu&#233; estamos construyendo. &#191;Vos c&#243;mo lo ves?&#8221;</p></div>
+      <p class="por">O</p>
+      <div class="pb2"><p class="pt">&#8220;Estoy bien con que las cosas tengan su tiempo, pero no quiero seguir indefinidamente sin saber si buscamos algo parecido.&#8221;</p></div>
+      <div class="ht">
+        <h3>Ahora hacela tuya</h3>
+        <p>No hace falta que repitas ninguna frase palabra por palabra.</p>
+        <p>Eleg&#237; la que m&#225;s se acerca a lo que quer&#233;s decir y dec&#237;la como hablar&#237;as vos.</p>
+        <p>Y despu&#233;s, dejalo responder.</p>
+        <p>No llenes el silencio.</p>
+        <p>No le expliqu&#233;s qu&#233; deber&#237;a sentir.</p>
+        <p>No intentes llevarlo hacia determinada respuesta.</p>
+        <p>Vos abriste una conversaci&#243;n. Ahora tambi&#233;n necesit&#225;s escuchar qu&#233; tiene &#233;l para decir.</p>
+        <div class="ab">
+          <button class="btn" onclick="goTo('s3')">Ya hablamos. &#191;Y ahora qu&#233;? &nbsp;&#8594;</button>
+          <button class="bl" onclick="closeSit()">Ver otras situaciones</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ab" style="margin-top:48px"><button class="bl" onclick="goTo('s1')">Volver a las preguntas</button></div>
+  </div>
+</section>
+
+<section id="s3" class="screen">
+  <nav class="top-nav"><img class="logo" src="logo-elegida.png.png" alt="ELEGIDA"><span class="nav-step">Bono 5</span></nav>
+  <div class="rc2">
+    <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot on"></div></div>
+    <div class="divider" style="margin-top:24px"></div>
+    <span class="sl">3 &#183; &#201;l respondi&#243;. &#191;Y ahora qu&#233;?</span>
+    <h2>Ya hiciste la pregunta. Ahora eleg&#237; la respuesta que m&#225;s se parece a lo que &#233;l te dijo.</h2>
+    <div class="rg" id="rg">
+      <button class="rc" id="ra" onclick="openResp('a')"><span class="sl2">A</span><span class="st">Quiere lo mismo que yo</span></button>
+      <button class="rc" id="rb_" onclick="openResp('b')"><span class="sl2">B</span><span class="st">Me dijo que necesita tiempo</span></button>
+      <button class="rc" id="rc_" onclick="openResp('c')"><span class="sl2">C</span><span class="st">Respondi&#243;, pero sigo sin saber qu&#233; quiere</span></button>
+      <button class="rc" id="rd" onclick="openResp('d')"><span class="sl2">D</span><span class="st">No quiere lo mismo que yo</span></button>
+    </div>
+
+    <div class="rd" id="rda">
+      <span class="sl" style="margin-top:8px">A &#183; Quiere lo mismo que yo</span>
+      <div class="rb">
+        <p>Te dijo claramente que tambi&#233;n quiere seguir avanzando y que est&#225; abierto a construir algo con vos.</p>
+        <p>No necesit&#225;s aprovechar el momento para definir todo lo que viene despu&#233;s.</p>
+        <p>Pod&#233;s responder:</p>
+        <div class="rq">&#8220;Me gusta saber que estamos en un lugar parecido.&#8221;</div>
+        <p>Y seguir conoci&#233;ndose.</p>
+        <p>La claridad no significa tener todo decidido. Significa saber que los dos quieren avanzar en la misma direcci&#243;n.</p>
+      </div>
+      <div class="ab">
+        <button class="btn" onclick="goTo('s4')">Para terminar &nbsp;&#8594;</button>
+        <button class="bl" onclick="closeResp()">Ver otras respuestas</button>
+      </div>
+    </div>
+
+    <div class="rd" id="rdb">
+      <span class="sl" style="margin-top:8px">B &#183; Me dijo que necesita tiempo</span>
+      <div class="rb">
+        <p>Puede ser una respuesta completamente v&#225;lida.</p>
+        <p>La pregunta importante ahora es:</p>
+        <div class="rq">&#191;Tiempo para qu&#233;?</div>
+        <p>No es lo mismo:</p>
+        <span class="rsq">&#8220;Quiero seguir conoci&#233;ndote, pero todav&#237;a necesito un poco m&#225;s de tiempo.&#8221;</span>
+        <span class="rvs">que:</span>
+        <span class="rsq">&#8220;No s&#233; qu&#233; quiero, pero tampoco quiero dejar de verte.&#8221;</span>
+        <p style="margin-top:20px">Si necesit&#225;s entenderlo mejor, pod&#233;s preguntarle:</p>
+        <div class="rq">&#8220;Est&#225; bien. &#191;Qu&#233; significa para vos necesitar m&#225;s tiempo?&#8221;</div>
+        <p>No para ponerle una fecha l&#237;mite en ese momento, sino para entender qu&#233; te est&#225; proponiendo realmente.</p>
+      </div>
+      <div class="ab">
+        <button class="btn" onclick="goTo('s4')">Para terminar &nbsp;&#8594;</button>
+        <button class="bl" onclick="closeResp()">Ver otras respuestas</button>
+      </div>
+    </div>
+
+    <div class="rd" id="rdc">
+      <span class="sl" style="margin-top:8px">C &#183; Respondi&#243;, pero sigo sin saber qu&#233; quiere</span>
+      <div class="rb">
+        <p>Te habl&#243;, quiz&#225;s bastante, pero terminaste la conversaci&#243;n pr&#225;cticamente con la misma duda con la que empezaste.</p>
+        <p>Pod&#233;s decir:</p>
+        <div class="rq">&#8220;Entiendo lo que me dec&#237;s, pero todav&#237;a no me queda claro qu&#233; quer&#233;s vos con esto.&#8221;</div>
+        <p>No necesit&#225;s interpretar una respuesta confusa hasta conseguir convertirla en una respuesta clara.</p>
+        <p>Si necesitabas claridad y segu&#237;s confundida, eso tambi&#233;n es informaci&#243;n.</p>
+      </div>
+      <div class="ab">
+        <button class="btn" onclick="goTo('s4')">Para terminar &nbsp;&#8594;</button>
+        <button class="bl" onclick="closeResp()">Ver otras respuestas</button>
+      </div>
+    </div>
+
+    <div class="rd" id="rdd">
+      <span class="sl" style="margin-top:8px">D &#183; No quiere lo mismo que yo</span>
+      <div class="rb">
+        <p>Quiz&#225;s te dijo que no quiere una relaci&#243;n, que no est&#225; buscando avanzar o que simplemente no est&#225; en el mismo lugar que vos.</p>
+        <p>No necesit&#225;s convencerlo.</p>
+        <p>Tampoco decidir en ese mismo segundo qu&#233; vas a hacer con todo lo que sent&#237;s.</p>
+        <p>Pod&#233;s responder:</p>
+        <div class="rq">&#8220;Gracias por dec&#237;rmelo. Yo estoy buscando algo distinto y necesitaba saber d&#243;nde est&#225;bamos parados.&#8221;</div>
+        <p>Puede dolerte y seguir siendo una respuesta que necesitabas conocer.</p>
+        <p>Ahora ya no est&#225;s intentando adivinar qu&#233; quiere. Ten&#233;s informaci&#243;n para decidir qu&#233; quer&#233;s hacer vos con ella.</p>
+      </div>
+      <div class="ab">
+        <button class="btn" onclick="goTo('s4')">Para terminar &nbsp;&#8594;</button>
+        <button class="bl" onclick="closeResp()">Ver otras respuestas</button>
+      </div>
+    </div>
+
+    <div class="ab" style="margin-top:48px"><button class="bl" onclick="goTo('s2')">Volver a las situaciones</button></div>
+  </div>
+</section>
+
+<section id="s4" class="screen">
+  <nav class="top-nav"><img class="logo" src="logo-elegida.png.png" alt="ELEGIDA"><span class="nav-step">Bono 5</span></nav>
+  <div class="ci"><img src="foto-04-claridad.png.png" alt="Ella sola, tranquila, natural, en movimiento y con claridad"></div>
+  <div class="clc">
+    <span class="ct">Para terminar</span>
+    <div class="accent"></div>
+    <div class="cb">
+      <p>Tener esta conversaci&#243;n no garantiza que vayas a escuchar la respuesta que quer&#237;as.</p>
+      <p>Pero s&#237; puede sacarte de un lugar mucho m&#225;s desgastante: tener que imaginarla.</p>
+      <p>Ahora sab&#233;s qu&#233; preguntaste, qu&#233; respondi&#243; &#233;l y, sobre todo, qu&#233; quer&#233;s vos.</p>
+      <p>No necesit&#225;s resolver todo hoy.</p>
+      <p class="sa">La claridad no siempre te da la respuesta que quer&#237;as. Pero s&#237; te permite saber d&#243;nde est&#225;s parada.</p>
+    </div>
+    <hr class="sr">
+    <div class="ab">
+      <button class="bl" onclick="goTo('s3')">Volver a las respuestas</button>
+      <button class="bl" onclick="goTo('s2')">Volver a las situaciones</button>
+    </div>
+    <div class="clogo"><img class="logo" src="logo-elegida.png.png" alt="ELEGIDA" style="height:48px;opacity:.7"></div>
+  </div>
+</section>
+
+<div class="fn2" id="fn2">
+  <button class="fp" onclick="goTo('s3')">&#201;L RESPONDI&#211; &#8594;</button>
+</div>
+
+<script>
+var cur='s0',aS=null,aR=null,LS='elegida_b5';
+function save(){try{localStorage.setItem(LS,JSON.stringify({q1:v('q1'),q2:v('q2'),q3:v('q3')}));}catch(e){}}
+function v(id){var el=document.getElementById(id);return el?el.value:'';}
+function load(){try{var d=JSON.parse(localStorage.getItem(LS)||'{}');['q1','q2','q3'].forEach(function(k){var el=document.getElementById(k);if(el&&d[k])el.value=d[k];});}catch(e){}}
+function goTo(id){
+  var c=document.getElementById(cur),n=document.getElementById(id);
+  if(!n)return;
+  c.classList.remove('visible');
+  setTimeout(function(){
+    c.classList.remove('active');
+    n.classList.add('active');
+    window.scrollTo({top:0,behavior:'instant'});
+    requestAnimationFrame(function(){requestAnimationFrame(function(){n.classList.add('visible');});});
+    cur=id;uf();
+  },280);
+}
+function uf(){var f=document.getElementById('fn2');if(cur==='s1'||cur==='s2'){f.classList.add('on');}else{f.classList.remove('on');}}
+function openSit(l){
+  if(aS){
+    var pd=document.getElementById('d'+aS);if(pd){pd.classList.remove('on');setTimeout(function(){pd.style.display='none';},300);}
+    var pc=document.getElementById('s'+aS);if(pc)pc.classList.remove('on');
+  }
+  aS=l;
+  var d=document.getElementById('d'+l),c=document.getElementById('s'+l);
+  if(c)c.classList.add('on');
+  if(d){d.style.display='block';requestAnimationFrame(function(){requestAnimationFrame(function(){d.classList.add('on');});});setTimeout(function(){d.scrollIntoView({behavior:'smooth',block:'start'});},80);}
+}
+function closeSit(){
+  if(!aS)return;
+  var d=document.getElementById('d'+aS),c=document.getElementById('s'+aS);
+  if(d){d.classList.remove('on');setTimeout(function(){d.style.display='none';},300);}
+  if(c)c.classList.remove('on');
+  aS=null;
+  var g=document.getElementById('sg');if(g)g.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function openResp(l){
+  if(aR){
+    var pd=document.getElementById('rd'+aR);if(pd){pd.classList.remove('on');setTimeout(function(){pd.style.display='none';},300);}
+    var pc=document.getElementById('r'+aR);if(pc)pc.classList.remove('on');
+  }
+  aR=l;
+  var d=document.getElementById('rd'+l),c=document.getElementById('r'+l);
+  if(c)c.classList.add('on');
+  if(d){d.style.display='block';requestAnimationFrame(function(){requestAnimationFrame(function(){d.classList.add('on');});});setTimeout(function(){d.scrollIntoView({behavior:'smooth',block:'start'});},80);}
+}
+function closeResp(){
+  if(!aR)return;
+  var d=document.getElementById('rd'+aR),c=document.getElementById('r'+aR);
+  if(d){d.classList.remove('on');setTimeout(function(){d.style.display='none';},300);}
+  if(c)c.classList.remove('on');
+  aR=null;
+  var g=document.getElementById('rg');if(g)g.scrollIntoView({behavior:'smooth',block:'start'});
+}
+document.addEventListener('DOMContentLoaded',function(){
+  load();
+  var i=document.getElementById('s0');i.classList.add('active');
+  requestAnimationFrame(function(){requestAnimationFrame(function(){i.classList.add('visible');});});
+  ['q1','q2','q3'].forEach(function(id){var el=document.getElementById(id);if(el){el.addEventListener('input',save);el.addEventListener('blur',save);}});
+  uf();
+});
+</script>
+</body>
+</html>
