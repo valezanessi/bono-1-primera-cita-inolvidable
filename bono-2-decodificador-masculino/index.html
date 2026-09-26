@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>EL DECODIFICADOR MASCULINO™ — ELEGIDA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --burgundy:#5B0F1A;--wine:#8E1C2A;--rose:#C99BA6;--nude:#E7D6C6;--cream:#FAF5EF;--charcoal:#1A1A1A;
+  --champagne:#C8A97E;--ink:#2C2320;--soft:#4A3F3A;--muted:#7A6A65;--border:#DDD0C5;
+  --serif:'Playfair Display',Georgia,serif;--sans:'Inter',system-ui,sans-serif;
+  --r:10px;--r-lg:18px;--r-xl:24px;--ease:cubic-bezier(.4,0,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height:100dvh;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+img{display:block;max-width:100%;}
+button{font:inherit;cursor:pointer;border:none;background:none;-webkit-tap-highlight-color:transparent;}
+#app{min-height:100dvh;}
+.screen{display:none;flex-direction:column;min-height:100dvh;opacity:0;transform:translateY(10px);transition:opacity .42s var(--ease),transform .42s var(--ease);}
+.screen.active{display:flex;opacity:1;transform:translateY(0);}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+.stagger>*{opacity:0;animation:fadeUp .55s var(--ease) forwards;}
+.stagger>*:nth-child(1){animation-delay:.06s;}.stagger>*:nth-child(2){animation-delay:.14s;}.stagger>*:nth-child(3){animation-delay:.22s;}.stagger>*:nth-child(4){animation-delay:.30s;}.stagger>*:nth-child(5){animation-delay:.38s;}.stagger>*:nth-child(6){animation-delay:.46s;}
+.fade-up{opacity:0;transform:translateY(14px);transition:opacity .55s var(--ease),transform .55s var(--ease);}
+.fade-up.in{opacity:1;transform:translateY(0);}
+.topbar{padding:36px 26px 0;max-width:540px;margin:0 auto;width:100%;display:flex;align-items:center;justify-content:space-between;}
+.btn-back{display:flex;align-items:center;gap:5px;font-family:var(--sans);font-size:.75rem;letter-spacing:.08em;color:var(--muted);padding:8px 0;transition:color .2s;background:none;border:none;cursor:pointer;}
+.btn-back:hover{color:var(--burgundy);}
+.btn-back svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.logo-micro{height:26px;width:auto;mix-blend-mode:multiply;opacity:.8;}
+.btn-primary{display:inline-flex;align-items:center;justify-content:center;font-family:var(--sans);font-size:.72rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;padding:17px 36px;border-radius:60px;min-height:54px;transition:background .3s var(--ease),border-color .3s,color .3s;-webkit-tap-highlight-color:transparent;width:100%;}
+.btn-outline-cream{background:transparent;color:var(--cream);border:1px solid rgba(250,245,239,.5);}
+.btn-outline-cream:hover{background:rgba(250,245,239,.13);border-color:rgba(250,245,239,.8);}
+.btn-solid{background:var(--burgundy);color:var(--cream);border:1px solid var(--burgundy);}
+.btn-solid:hover{background:var(--wine);border-color:var(--wine);}
+.btn-solid:active{background:#490c14;}
+.photo-wrap{position:relative;overflow:hidden;width:100%;}
+.photo-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
+.photo-fade-bot::after{content:'';position:absolute;bottom:0;left:0;right:0;height:55%;background:linear-gradient(to bottom,transparent,var(--cream));pointer-events:none;}
+#screen-cover{background:var(--ink);position:relative;justify-content:flex-end;min-height:100dvh;}
+.cover-photo{position:absolute;inset:0;overflow:hidden;}
+.cover-photo img{width:100%;height:100%;object-fit:cover;object-position:center 20%;}
+.cover-photo::after{content:'';position:absolute;inset:0;background:linear-gradient(175deg,rgba(26,13,20,.05) 0%,rgba(26,13,20,.18) 30%,rgba(26,13,20,.70) 65%,rgba(26,13,20,.92) 100%);}
+.cover-logo-wrap{position:absolute;top:0;left:0;right:0;z-index:10;display:flex;justify-content:center;}
+.cover-logo-badge{background:rgba(250,245,239,.93);border-radius:0 0 18px 18px;padding:10px 28px 13px;box-shadow:0 4px 24px rgba(0,0,0,.15);}
+.cover-logo-badge img{height:40px;width:auto;}
+.cover-content{position:relative;z-index:10;padding:0 28px 60px;max-width:480px;margin:0 auto;width:100%;text-align:center;}
+.cover-eyebrow{font-family:var(--sans);font-size:9px;letter-spacing:.42em;color:var(--rose);text-transform:uppercase;margin-bottom:16px;display:block;}
+.cover-title{font-family:var(--serif);font-size:clamp(2rem,8.5vw,2.8rem);font-weight:600;color:var(--cream);line-height:1.15;letter-spacing:.02em;margin-bottom:16px;}
+.cover-divider{width:1px;height:36px;background:linear-gradient(to bottom,transparent,rgba(201,155,166,.6),transparent);margin:0 auto 28px;}
+.cover-q{font-family:var(--serif);font-size:clamp(1.3rem,5vw,1.65rem);font-style:italic;color:rgba(250,245,239,.88);line-height:1.3;margin-bottom:20px;}
+.cover-subtitle{font-family:var(--sans);font-size:.88rem;font-weight:300;color:rgba(250,245,239,.72);line-height:1.68;margin:0 auto 36px;max-width:290px;}
+#screen-intro{background:var(--cream);}
+.intro-head{padding:52px 28px 28px;max-width:540px;margin:0 auto;width:100%;}
+.intro-logo{height:30px;width:auto;mix-blend-mode:multiply;margin-bottom:28px;}
+.intro-title{font-family:var(--serif);font-size:clamp(1.45rem,5.5vw,1.9rem);font-weight:600;color:var(--burgundy);line-height:1.2;margin-bottom:24px;}
+.intro-rule{width:32px;height:1px;background:var(--champagne);margin-bottom:28px;}
+.intro-prose{font-family:var(--sans);font-size:.92rem;font-weight:300;color:var(--soft);line-height:1.82;}
+.intro-prose p{margin-bottom:16px;}
+.intro-step{display:flex;align-items:flex-start;gap:14px;margin-bottom:16px;}
+.step-num{font-family:var(--serif);font-size:1.05rem;font-style:italic;color:var(--champagne);min-width:20px;flex-shrink:0;line-height:1.7;}
+.step-text{font-family:var(--sans);font-size:.92rem;font-weight:300;color:var(--soft);line-height:1.75;}
+.intro-note{border-left:2px solid var(--rose);padding:12px 0 12px 18px;margin:24px 0;font-family:var(--serif);font-size:.98rem;font-style:italic;color:var(--burgundy);line-height:1.5;}
+.intro-btn-wrap{padding:0 28px 56px;max-width:540px;margin:0 auto;width:100%;}
+#screen-menu{background:var(--cream);}
+.menu-head{padding:24px 28px 20px;max-width:540px;margin:0 auto;width:100%;}
+.menu-logo{height:28px;width:auto;mix-blend-mode:multiply;display:block;margin:0 auto 20px;}
+.menu-title{font-family:var(--serif);font-size:clamp(1.4rem,5.5vw,1.8rem);font-weight:600;color:var(--burgundy);line-height:1.2;margin-bottom:8px;text-align:center;}
+.menu-sub{font-family:var(--sans);font-size:.88rem;font-weight:300;color:var(--muted);text-align:center;}
+.menu-list{padding:16px 20px 20px;max-width:540px;margin:0 auto;width:100%;}
+.sit-card{display:flex;align-items:flex-start;gap:16px;padding:18px 16px;border-radius:var(--r-lg);border:1px solid var(--border);margin-bottom:9px;cursor:pointer;transition:background .22s,border-color .22s,transform .18s;-webkit-tap-highlight-color:transparent;width:100%;text-align:left;background:#fff;}
+.sit-card:hover{background:var(--nude);border-color:var(--rose);}
+.sit-card:active{transform:scale(.985);}
+.sit-card.alt{background:var(--cream);}
+.sit-card.dark{background:var(--burgundy);border-color:var(--burgundy);}
+.sit-card.dark .sit-num{color:rgba(250,245,239,.5);}
+.sit-card.dark .sit-title{color:var(--cream);}
+.sit-card.dark:hover{background:var(--wine);border-color:var(--wine);}
+.sit-card.dark .sit-arrow{color:rgba(201,155,166,.7);}
+.sit-num{font-family:var(--serif);font-size:.78rem;font-style:italic;color:var(--champagne);min-width:22px;flex-shrink:0;padding-top:2px;line-height:1.6;}
+.sit-body{flex:1;}
+.sit-title{font-family:var(--serif);font-size:1rem;font-weight:500;color:var(--burgundy);line-height:1.3;}
+.sit-arrow{color:var(--rose);font-size:1rem;flex-shrink:0;padding-top:1px;font-style:normal;}
+.menu-close-link{display:flex;align-items:center;justify-content:center;gap:8px;padding:24px 28px 48px;max-width:540px;margin:0 auto;width:100%;cursor:pointer;font-family:var(--sans);font-size:.78rem;letter-spacing:.08em;color:var(--muted);transition:color .2s;border:none;background:none;}
+.menu-close-link:hover{color:var(--burgundy);}
+#screen-dec{background:var(--cream);}
+.dec-photo-wrap{position:relative;overflow:hidden;width:100%;height:clamp(180px,44vw,280px);flex-shrink:0;}
+.dec-photo-wrap img{width:100%;height:100%;object-fit:cover;object-position:center 22%;}
+.dec-photo-wrap::after{content:'';position:absolute;bottom:0;left:0;right:0;height:60%;background:linear-gradient(to bottom,transparent,var(--cream));pointer-events:none;}
+.dec-head{padding:8px 28px 12px;max-width:540px;margin:0 auto;width:100%;}
+.dec-num{font-family:var(--sans);font-size:9px;letter-spacing:.38em;color:var(--champagne);text-transform:uppercase;display:block;margin-bottom:10px;}
+.dec-title{font-family:var(--serif);font-size:clamp(1.25rem,5.2vw,1.7rem);font-weight:600;color:var(--burgundy);line-height:1.2;margin-bottom:18px;}
+.dec-rule{width:32px;height:1px;background:var(--champagne);}
+.dec-body{padding:20px 28px 0;max-width:540px;margin:0 auto;width:100%;}
+.dec-prose{font-family:var(--sans);font-size:.92rem;font-weight:300;color:var(--soft);line-height:1.85;}
+.dec-prose p{margin-bottom:18px;}
+.dec-thought{font-family:var(--serif);font-size:.93rem;font-style:italic;color:var(--muted);padding:6px 0 6px 16px;border-left:2px solid var(--rose);margin:4px 0 10px;}
+.dec-emphasis{font-family:var(--serif);font-size:1.02rem;font-style:italic;color:var(--burgundy);line-height:1.5;border-left:2px solid var(--rose);padding:12px 0 12px 18px;margin:22px 0;}
+.dec-question{font-family:var(--serif);font-size:1.05rem;font-style:italic;color:var(--burgundy);line-height:1.45;margin:20px 0;}
+.semaforo-wrap{padding:36px 28px 0;max-width:540px;margin:0 auto;width:100%;}
+.semaforo-overline{font-family:var(--sans);font-size:9px;letter-spacing:.42em;color:var(--champagne);text-transform:uppercase;display:block;margin-bottom:20px;}
+.semaforo-title{font-family:var(--serif);font-size:1.4rem;font-weight:600;color:var(--burgundy);margin-bottom:20px;}
+.sem-btn{display:flex;align-items:center;gap:14px;width:100%;padding:16px 18px;border-radius:var(--r-lg);border:1.5px solid var(--border);margin-bottom:0;cursor:pointer;transition:background .22s,border-color .22s,transform .18s;-webkit-tap-highlight-color:transparent;background:#fff;text-align:left;}
+.sem-btn:hover{border-color:var(--rose);}
+.sem-btn:active{transform:scale(.985);}
+.sem-item{margin-bottom:10px;}
+.sem-dot{width:10px;height:10px;min-width:10px;border-radius:50%;flex-shrink:0;}
+.sem-dot-green{background:#4A8A63;}
+.sem-dot-amber{background:#B8962A;}
+.sem-dot-red{background:#8E1C2A;}
+.sem-btn-label{font-family:var(--sans);font-size:.76rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;flex:1;}
+.label-green{color:#3D6B4F;}
+.label-amber{color:#7A5F10;}
+.label-red{color:#6B1420;}
+.sem-arrow{font-size:.85rem;color:var(--muted);transition:transform .22s var(--ease);font-style:normal;}
+.sem-btn.is-open .sem-arrow{transform:rotate(90deg);}
+.sem-btn.green-open{background:#EFF5F1;border-color:#4A8A63;border-bottom-left-radius:0;border-bottom-right-radius:0;border-bottom:none;}
+.sem-btn.amber-open{background:#FBF6EC;border-color:#B8962A;border-bottom-left-radius:0;border-bottom-right-radius:0;border-bottom:none;}
+.sem-btn.red-open{background:#FAF0F1;border-color:#8E1C2A;border-bottom-left-radius:0;border-bottom-right-radius:0;border-bottom:none;}
+.sem-panel{overflow:hidden;max-height:0;opacity:0;transition:max-height .38s var(--ease),opacity .32s var(--ease);}
+.sem-panel.open{max-height:400px;opacity:1;}
+.sem-panel-inner{padding:14px 18px 18px;font-family:var(--sans);font-size:.88rem;font-weight:300;color:var(--soft);line-height:1.78;border:1.5px solid transparent;border-top:none;border-radius:0 0 var(--r-lg) var(--r-lg);}
+.panel-green{background:#EFF5F1;border-color:#4A8A63;}
+.panel-amber{background:#FBF6EC;border-color:#B8962A;}
+.panel-red{background:#FAF0F1;border-color:#8E1C2A;}
+.dec-closing{padding:32px 28px 24px;max-width:540px;margin:0 auto;width:100%;}
+.dec-closing-rule{width:32px;height:1px;background:var(--champagne);margin-bottom:20px;}
+.dec-closing-text{font-family:var(--serif);font-size:.97rem;font-style:italic;color:var(--muted);line-height:1.7;}
+.dec-back-wrap{padding:32px 28px 56px;max-width:540px;margin:0 auto;width:100%;}
+#screen-close{background:var(--ink);justify-content:flex-end;position:relative;min-height:100dvh;}
+.close-photo{position:absolute;inset:0;overflow:hidden;}
+.close-photo img{width:100%;height:100%;object-fit:cover;object-position:center 30%;}
+.close-photo::after{content:'';position:absolute;inset:0;background:linear-gradient(175deg,rgba(26,13,20,.05) 0%,rgba(26,13,20,.15) 30%,rgba(26,13,20,.65) 65%,rgba(26,13,20,.9) 100%);}
+.close-logo-wrap{position:absolute;top:0;left:0;right:0;z-index:10;display:flex;justify-content:center;}
+.close-logo-badge{background:rgba(250,245,239,.9);border-radius:0 0 18px 18px;padding:10px 28px 13px;box-shadow:0 4px 24px rgba(0,0,0,.15);}
+.close-logo-badge img{height:38px;width:auto;}
+.close-content{position:relative;z-index:10;padding:0 28px 60px;max-width:480px;margin:0 auto;width:100%;text-align:center;}
+.close-quote{font-family:var(--serif);font-size:clamp(1.5rem,6vw,2.1rem);font-weight:500;font-style:italic;color:var(--cream);line-height:1.3;margin-bottom:20px;}
+.close-divider{width:1px;height:32px;background:linear-gradient(to bottom,transparent,rgba(201,155,166,.6),transparent);margin:0 auto 20px;}
+.close-sub{font-family:var(--sans);font-size:.86rem;font-weight:300;color:rgba(250,245,239,.68);line-height:1.65;max-width:290px;margin:0 auto 36px;}
+@media(min-width:640px){
+  .cover-content,.close-content{max-width:520px;}
+  .intro-head,.intro-btn-wrap,.menu-head,.menu-list,.dec-head,.dec-body,.semaforo-wrap,.dec-closing,.dec-back-wrap{max-width:600px;}
+  .dec-photo-wrap{height:300px;}
+}
+@media(min-width:1024px){
+  .intro-head,.intro-btn-wrap,.menu-head,.menu-list,.dec-head,.dec-body,.semaforo-wrap,.dec-closing,.dec-back-wrap{max-width:700px;}
+  .dec-photo-wrap{height:340px;}
+}
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- ======================== PORTADA ======================== -->
+<section id="screen-cover" class="screen active">
+  <div class="cover-photo">
+    <img src="foto-01-portada.png.png" alt="Fotografia de portada El Decodificador Masculino"/>
+  </div>
+  <div class="cover-logo-wrap">
+    <div class="cover-logo-badge">
+      <img src="LOGOTIPO PNG.png" alt="ELEGIDA"/>
+    </div>
+  </div>
+  <div class="cover-content stagger">
+    <span class="cover-eyebrow">ELEGIDA&#x2122; &middot; BONO 2</span>
+    <h1 class="cover-title">EL DECODIFICADOR<br>MASCULINO&#x2122;</h1>
+    <div class="cover-divider"></div>
+    <p class="cover-q">&iquest;Qu&eacute; est&aacute; pasando con &eacute;l?</p>
+    <p class="cover-subtitle">Una herramienta para esos momentos en los que algo de su comportamiento te genera dudas y no sab&eacute;s muy bien c&oacute;mo interpretarlo.</p>
+    <button class="btn-primary btn-outline-cream" onclick="goTo('screen-intro')">QUIERO ENTENDER QU&Eacute; EST&Aacute; PASANDO &rarr;</button>
+  </div>
+</section>
+
+<!-- ======================== INTRODUCCION ======================== -->
+<section id="screen-intro" class="screen">
+  <div class="intro-head stagger">
+    <img src="LOGOTIPO PNG.png" alt="ELEGIDA" class="intro-logo"/>
+    <h2 class="intro-title">&iquest;C&Oacute;MO USAR EL DECODIFICADOR?</h2>
+    <div class="intro-rule"></div>
+    <div class="intro-prose">
+      <p>No ten&eacute;s que recorrerlo en orden ni pasar por las 12 decodificaciones.</p>
+      <p>Entr&aacute; cuando algo te genere dudas.</p>
+    </div>
+    <div style="height:20px;"></div>
+    <div class="intro-step">
+      <span class="step-num">1.</span>
+      <span class="step-text">Eleg&iacute; la situaci&oacute;n que m&aacute;s se parece a lo que est&aacute;s viviendo.</span>
+    </div>
+    <div class="intro-step">
+      <span class="step-num">2.</span>
+      <span class="step-text">Le&eacute; la decodificaci&oacute;n.</span>
+    </div>
+    <div class="intro-step">
+      <span class="step-num">3.</span>
+      <span class="step-text">Mir&aacute; el sem&aacute;foro y fijate d&oacute;nde se parece m&aacute;s a lo que est&aacute; pasando entre ustedes.</span>
+    </div>
+    <div style="height:20px;"></div>
+    <div class="intro-note">No est&aacute;s clasific&aacute;ndolo a &eacute;l.</div>
+    <div class="intro-prose">
+      <p>El sem&aacute;foro solamente te ayuda a mirar esa situaci&oacute;n con un poco m&aacute;s de claridad.</p>
+      <p>Y si todav&iacute;a no ten&eacute;s suficiente informaci&oacute;n, no intentes completar lo que no sab&eacute;s.</p>
+      <p>Quedate con los hechos y date tiempo para conocer el resto.</p>
+    </div>
+  </div>
+  <div class="intro-btn-wrap">
+    <button class="btn-primary btn-solid" onclick="goTo('screen-menu')">VER LAS SITUACIONES &rarr;</button>
+  </div>
+</section>
+
+<!-- ======================== MENU ======================== -->
+<section id="screen-menu" class="screen">
+  <div class="photo-wrap photo-fade-bot" style="height:clamp(240px,58vw,360px);flex-shrink:0;">
+    <img src="foto-02-situaciones.png.png" alt="Las 12 situaciones" style="object-position:center 20%;"/>
+  </div>
+  <div class="menu-head">
+    <img src="LOGOTIPO PNG.png" alt="ELEGIDA" class="menu-logo"/>
+    <h2 class="menu-title">&iquest;QU&Eacute; EST&Aacute; PASANDO CON &Eacute;L?</h2>
+    <p class="menu-sub">Eleg&iacute; la situaci&oacute;n que m&aacute;s se parece a lo que est&aacute;s viviendo.</p>
+  </div>
+  <div class="menu-list">
+    <button class="sit-card" onclick="openDec(1)">
+      <span class="sit-num">01</span>
+      <span class="sit-body"><span class="sit-title">Me escribe, pero nunca concreta para vernos</span></span>
+      <span class="sit-arrow">&rsaquo;</span>
+    </button>
+    <button class="sit-card alt" onclick="openDec(2)">
+      <span class="sit-num">02</span>
+      <span class="sit-body"><span class="sit-title">Cuando estamos juntos es s&uacute;per cari&ntilde;oso, pero despu&eacute;s se enfr&iacute;a</span></span>
+      <span class="sit-arrow">&rsaquo;</span>
+    </button>
+    <button class="sit-card dark" onclick="openDec(3)">
+      <span class="sit-num">03</span>
+      <span class="sit-body"><span class="sit-title">Despu&eacute;s de que tuvimos intimidad, siento que algo cambi&oacute;</span></span>
+      <span class="sit-arrow">&rsaquo;</span>
+    </button>
+    <button class="sit-card" onclick="openDec(4)">
+      <span class="sit-num">04</span>
+      <span class="sit-body"><span class="sit-title">Me busca sobre todo cuando necesita hablar o est&aacute; pasando por algo</span></span>
+      <span class="sit-arrow">&rsaquo;</span>
+    </button>
+    <button class="sit-card alt" onclick="openDec(5)">
+      <span class="sit-num">05</span>
+      <span class="sit-body"><span class="sit-title">Me dice cosas muy intensas para el poco tiempo que llevamos conoci&eacute;ndonos</span></span>
+      <span class="sit-arrow">&rsaquo;</span>
+    </button>
+    <button class="sit-card dark" onclick="openDec(6)">
+      <span class="sit-num">06</span>
+      <span class="sit-body"><span class="sit-title">Cuando estamos juntos evita hablar de su vida</span></span>
+      <span class="sit-arrow">&rsaquo;</span>
+    </button>
+    <button class="sit-card" onclick="openDec(7)">
+      <span class="sit-num">07</span>
+      <span class="sit-body"><span class="sit-title">Me busca cuando estamos solos, pero delante de otras personas cambia conmigo</span></span>
+      <span class="sit-arrow">&rsaquo;</span>
+    </button>
+    <button class="sit-card alt" onclick="openDec(8)">
+      <span class="sit-num">08</span>
+      <span class="sit-body"><span class="sit-title">Quiere verme, pero siempre hace planes a &uacute;ltimo momento</span></span>
+      <span class="sit-arrow">&rsaquo;</span>
+    </button>
+    <button class="sit-card dark" onclick="openDec(9)">
+      <span class="sit-num">09</span>
+      <span class="sit-body"><span class="sit-title">Me halaga mucho, pero siento que casi no se interesa por conocerme</span></span>
+      <span class="sit-arrow">&rsaquo;</span>
+    </button>
+    <button class="sit-card" onclick="openDec(10)">
+      <span class="sit-num">10</span>
+      <span class="sit-body"><span class="sit-title">Me busca mucho cuando siente que me alejo</span></span>
+      <span class="sit-arrow">&rsaquo;</span>
+    </button>
+    <button class="sit-card alt" onclick="openDec(11)">
+      <span class="sit-num">11</span>
+      <span class="sit-body"><span class="sit-title">Desapareci&oacute; durante un tiempo y ahora volvi&oacute; a buscarme</span></span>
+      <span class="sit-arrow">&rsaquo;</span>
+    </button>
+    <button class="sit-card dark" onclick="openDec(12)">
+      <span class="sit-num">12</span>
+      <span class="sit-body"><span class="sit-title">Siento que si yo no hago nada, el v&iacute;nculo no avanza</span></span>
+      <span class="sit-arrow">&rsaquo;</span>
+    </button>
+    <button class="menu-close-link" onclick="goTo('screen-close')">Ver el cierre de la herramienta</button>
+  </div>
+</section>
+
+<!-- ======================== DECODIFICACION ======================== -->
+<section id="screen-dec" class="screen">
+  <div class="topbar">
+    <button class="btn-back" onclick="goTo('screen-menu')">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      VOLVER AL DECODIFICADOR
+    </button>
+    <img src="LOGOTIPO PNG.png" alt="ELEGIDA" class="logo-micro"/>
+  </div>
+  <div class="dec-photo-wrap">
+    <img src="foto-03-decodificaciones.png.png" alt="Decodificacion" style="object-position:center 22%;"/>
+  </div>
+  <div class="dec-head">
+    <span class="dec-num" id="dec-num-display"></span>
+    <h2 class="dec-title" id="dec-title-display"></h2>
+    <div class="dec-rule"></div>
+  </div>
+  <div class="dec-body">
+    <div class="dec-prose" id="dec-body-display"></div>
+  </div>
+  <div class="semaforo-wrap">
+    <span class="semaforo-overline">TU SEM&Aacute;FORO</span>
+    <div class="sem-item">
+      <button class="sem-btn" id="sem-btn-green" onclick="toggleSem('green')" aria-expanded="false">
+        <span class="sem-dot sem-dot-green" aria-hidden="true"></span>
+        <span class="sem-btn-label label-green">HAY COHERENCIA</span>
+        <span class="sem-arrow">&rsaquo;</span>
+      </button>
+      <div class="sem-panel" id="sem-panel-green" role="region" aria-labelledby="sem-btn-green">
+        <div class="sem-panel-inner panel-green" id="sem-text-green"></div>
+      </div>
+    </div>
+    <div class="sem-item">
+      <button class="sem-btn" id="sem-btn-amber" onclick="toggleSem('amber')" aria-expanded="false">
+        <span class="sem-dot sem-dot-amber" aria-hidden="true"></span>
+        <span class="sem-btn-label label-amber">NECESIT&Aacute;S M&Aacute;S INFORMACI&Oacute;N</span>
+        <span class="sem-arrow">&rsaquo;</span>
+      </button>
+      <div class="sem-panel" id="sem-panel-amber" role="region" aria-labelledby="sem-btn-amber">
+        <div class="sem-panel-inner panel-amber" id="sem-text-amber"></div>
+      </div>
+    </div>
+    <div class="sem-item">
+      <button class="sem-btn" id="sem-btn-red" onclick="toggleSem('red')" aria-expanded="false">
+        <span class="sem-dot sem-dot-red" aria-hidden="true"></span>
+        <span class="sem-btn-label label-red">PREST&Aacute; ATENCI&Oacute;N</span>
+        <span class="sem-arrow">&rsaquo;</span>
+      </button>
+      <div class="sem-panel" id="sem-panel-red" role="region" aria-labelledby="sem-btn-red">
+        <div class="sem-panel-inner panel-red" id="sem-text-red"></div>
+      </div>
+    </div>
+  </div>
+  <div class="dec-closing">
+    <div class="dec-closing-rule"></div>
+    <p class="dec-closing-text" id="dec-closing-display"></p>
+  </div>
+  <div class="dec-back-wrap">
+    <button class="btn-primary btn-solid" onclick="goTo('screen-menu')">&larr; VOLVER AL DECODIFICADOR</button>
+  </div>
+</section>
+
+<!-- ======================== CIERRE ======================== -->
+<section id="screen-close" class="screen">
+  <div class="close-photo">
+    <img src="foto-04-cierre.png.png" alt="Cierre de la herramienta"/>
+  </div>
+  <div class="close-logo-wrap">
+    <div class="close-logo-badge">
+      <img src="LOGOTIPO PNG.png" alt="ELEGIDA"/>
+    </div>
+  </div>
+  <div class="close-content stagger">
+    <p class="close-quote">No necesit&aacute;s entender todo hoy.</p>
+    <div class="close-divider"></div>
+    <p class="close-sub">Volv&eacute; cuando algo te genere dudas y necesites mirar la situaci&oacute;n con un poco m&aacute;s de claridad.</p>
+    <button class="btn-primary btn-outline-cream" onclick="goTo('screen-menu')">VOLVER A LAS SITUACIONES &rarr;</button>
+  </div>
+</section>
+
+</div><!-- #app -->
+
+<script>
+/* ===== NAVIGATION ===== */
+function goTo(id){
+  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
+  var el=document.getElementById(id);
+  el.classList.add('active');
+  window.scrollTo({top:0,behavior:'instant'});
+  if(id==='screen-dec'){closeSem('green');closeSem('amber');closeSem('red');}
+}
+/* ===== SEMAFORO ===== */
+function closeSem(color){
+  var btn=document.getElementById('sem-btn-'+color);
+  var panel=document.getElementById('sem-panel-'+color);
+  btn.classList.remove('is-open',color+'-open');
+  btn.setAttribute('aria-expanded','false');
+  panel.classList.remove('open');
+}
+function toggleSem(color){
+  var panel=document.getElementById('sem-panel-'+color);
+  var isOpen=panel.classList.contains('open');
+  closeSem('green');closeSem('amber');closeSem('red');
+  if(!isOpen){
+    var btn=document.getElementById('sem-btn-'+color);
+    btn.classList.add('is-open',color+'-open');
+    btn.setAttribute('aria-expanded','true');
+    panel.classList.add('open');
+  }
+}
+/* ===== CONTENT ===== */
+var decs=[
+null,
+{num:'01 &middot; SITUACI&Oacute;N',
+title:'Me escribe, pero nunca concreta para vernos',
+body:'<p>Hablan seguido. Te escribe, la conversaci&oacute;n fluye, se r&iacute;en, quiz&aacute;s hasta te dice que tiene ganas de verte.</p><p>Y vos pens&aacute;s: \u201cBueno\u2026 entonces, &iquest;cu&aacute;ndo nos vemos?\u201d</p><p>Pero pasan los d&iacute;as y nunca termina de concretar nada.</p><p>Y ac&aacute; es muy f&aacute;cil empezar a darle vueltas:</p><div class="dec-thought">\u201c&iquest;Le gusto de verdad?\u201d</div><div class="dec-thought">\u201c&iquest;Estar&aacute; esperando que se lo proponga yo?\u201d</div><div class="dec-thought">\u201c&iquest;Ser&aacute; que est&aacute; ocupado?\u201d</div><div class="dec-thought">\u201c&iquest;Por qu&eacute; me escribe tanto si despu&eacute;s no hace nada?\u201d</div><p>Puede haber un mont&oacute;n de explicaciones. Y justamente por eso no necesit&aacute;s adivinar cu&aacute;l es la correcta.</p><p>Quedate con lo que s&iacute; sab&eacute;s.</p><p>A &eacute;l puede gustarle hablar con vos. Puede disfrutar de la conversaci&oacute;n, buscarte y pasarla bien escribi&eacute;ndote.</p><p>Pero si esto lleva un tiempo y nunca termina convirtiendo en un encuentro real, eso tambi&eacute;n es informaci&oacute;n.</p><p>No significa autom&aacute;ticamente que no le gust&eacute;s.</p><p>Significa que, por ahora, todo ese inter&eacute;s que aparece en el tel&eacute;fono no se est&aacute; traduciendo en algo concreto fuera de &eacute;l.</p><p>Y esa diferencia importa.</p><p>Porque vos no necesit&aacute;s descubrir qu&eacute; pasa exactamente por su cabeza. Necesit&aacute;s mirar qu&eacute; est&aacute; pasando entre ustedes.</p><p>Si reci&eacute;n est&aacute;n empezando a hablar, dale espacio a la situaci&oacute;n para desarrollarse.</p><p>Si alguna vez intentaron verse y justo no pudieron, tampoco hace falta sacar conclusiones por una sola vez.</p><div class="dec-emphasis">Pero si una y otra vez aparece el \u201ctenemos que vernos\u201d, el \u201cme encantar&iacute;a verte\u201d o conversaciones interminables y nunca hay un d&iacute;a, una hora, un plan\u2026<br><br>no ignores esa parte solo porque hablar con &eacute;l se siente lindo.</div>',
+green:'Te escribe, muestra ganas de verte y esas ganas tambi&eacute;n aparecen en la vida real: propone, concreta y los encuentros suceden.',
+amber:'Hay intenci&oacute;n de verse, pero todav&iacute;a es muy pronto o hubo alguna situaci&oacute;n puntual que hizo que no pudieran concretar. No hace falta decidir nada todav&iacute;a.',
+red:'Pasa el tiempo, hablan much&iacute;simo, dice que quiere verte o lo insin&uacute;a\u2026 pero los planes nunca llegan, quedan en el aire o sos vos la que siempre intenta llevarlos a la realidad.',
+closing:'Disfrutá de hablar con él, pero dejá que el tiempo también te muestre si esas ganas de verte empiezan a convertirse en encuentros reales.'},
+
+{num:'02 &middot; SITUACI&Oacute;N',
+title:'Cuando estamos juntos es súper cariñoso, pero después se enfría',
+body:'<p>Cuando est&aacute;n juntos, todo parece clar&iacute;simo.</p><p>Es cari&ntilde;oso, est&aacute; cerca tuyo, te presta atenci&oacute;n, te abraza, te busca\u2026 y vos sent&iacute;s que entre ustedes realmente est&aacute; pasando algo.</p><p>Pero despu&eacute;s cada uno vuelve a su casa y cambia.</p><p>Quiz&aacute;s tarda mucho m&aacute;s en aparecer, est&aacute; distante o simplemente no sent&iacute;s la misma cercan&iacute;a que sent&iacute;as unas horas antes.</p><p>Y ah&iacute; aparece la confusi&oacute;n:</p><div class="dec-thought">\u201c&iquest;C&oacute;mo puede ser tan cari&ntilde;oso conmigo cuando estamos juntos y despu&eacute;s ponerse as&iacute;?\u201d</div><div class="dec-thought">\u201c&iquest;Lo que pas&oacute; fue real?\u201d</div><div class="dec-thought">\u201c&iquest;Habr&aacute; cambiado de opini&oacute;n?\u201d</div><div class="dec-thought">\u201c&iquest;Hice algo que no le gust&oacute;?\u201d</div><p>Antes de empezar a buscar qu&eacute; hiciste mal, acord&aacute;te de algo.</p><p>Lo que viviste cuando estaban juntos puede haber sido completamente genuino y, aun as&iacute;, no contarte toda la historia.</p><p>Hay personas que conectan much&iacute;simo en el momento. Se dejan llevar, son demostrativas, disfrutan de estar con alguien y expresan naturalmente lo que sienten mientras est&aacute;n ah&iacute;.</p><p>Lo importante es no tomar solamente esos momentos de mucha cercan&iacute;a como prueba de todo lo dem&aacute;s.</p><p>Tampoco hace falta irse al otro extremo y pensar que, porque despu&eacute;s estuvo m&aacute;s distante, entonces todo lo anterior fue mentira.</p><p>Mir&aacute; el conjunto.</p><p>Si despu&eacute;s de verse sigue existiendo inter&eacute;s, vuelve a buscarte, mantiene el contacto y con el tiempo esa cercan&iacute;a empieza a sentirse tambi&eacute;n entre un encuentro y otro, probablemente est&aacute;s viendo una forma de vincularse que todav&iacute;a se est&aacute; acomodando.</p><div class="dec-emphasis">Pero si cada vez que est&aacute;n juntos sent&iacute;s una cercan&iacute;a enorme y despu&eacute;s aparece una distancia que te deja confundida, y esto se repite una y otra vez, prestale atenci&oacute;n a esa diferencia.</div><p>No para descubrir cu&aacute;l de sus dos versiones es \u201cla verdadera\u201d.</p><p>Las dos forman parte de c&oacute;mo se est&aacute; relacionando con vos.</p>',
+green:'Es cari&ntilde;oso cuando est&aacute;n juntos y, aunque obviamente no tenga la misma intensidad todo el tiempo, despu&eacute;s sigue presente, mantiene el contacto y la cercan&iacute;a no desaparece por completo.',
+amber:'Pas&oacute; una vez o reci&eacute;n est&aacute;n empezando a conocerse. Notaste cierta distancia despu&eacute;s de verse, pero todav&iacute;a no sab&eacute;s si fue algo puntual o si realmente es una din&aacute;mica que se repite.',
+red:'Cada vez que est&aacute;n juntos hay much&iacute;sima cercan&iacute;a, pero despu&eacute;s se distancia de una manera que te deja confundida. Cuando vuelven a verse, la intensidad reaparece y despu&eacute;s vuelve a desaparecer.',
+closing:'No te quedes solamente con cómo es cuando están juntos. Fijate también cómo te sentís con él cuando cada uno vuelve a su vida.'},
+
+{num:'03 &middot; SITUACI&Oacute;N',
+title:'Después de que tuvimos intimidad, siento que algo cambió',
+body:'<p>Estuvieron juntos, hubo intimidad y ahora sent&iacute;s que algo cambi&oacute;.</p><p>Quiz&aacute;s te escribe menos. Lo sent&iacute;s un poco m&aacute;s distante. O simplemente hay algo diferente que no sab&eacute;s explicar del todo.</p><p>Y claro que tu cabeza empieza a hacer cuentas.</p><div class="dec-thought">\u201c&iquest;Habr&aacute; perdido el inter&eacute;s?\u201d</div><div class="dec-thought">\u201c&iquest;Para &eacute;l era solamente sexo?\u201d</div><div class="dec-thought">\u201c&iquest;Me habr&eacute; apurado?\u201d</div><div class="dec-thought">\u201c&iquest;Cambi&oacute; algo porque estuvimos juntos?\u201d</div><p>Y esta &uacute;ltima pregunta puede engancharte much&iacute;simo, porque es muy f&aacute;cil empezar a mirar todo lo que pas&oacute; despu&eacute;s buscando una respuesta.</p><p>Pero no te castigues por haber compartido algo que en ese momento tambi&eacute;n quer&iacute;as compartir.</p><p>Haber tenido intimidad con &eacute;l no significa que ahora tengas que arrepentirte, ni que hayas hecho algo para que pierda el inter&eacute;s.</p><p>Y tampoco hace falta convencerte de que no cambi&oacute; nada si vos realmente est&aacute;s sintiendo una diferencia.</p><p>Pod&eacute;s registrar las dos cosas.</p><p>Pod&eacute;s haber disfrutado much&iacute;simo lo que pas&oacute; entre ustedes y, al mismo tiempo, prestar atenci&oacute;n a c&oacute;mo se est&aacute; comportando despu&eacute;s.</p><p>Si notaste un cambio una sola vez, dale un poquito de tiempo antes de convertirlo en una conclusi&oacute;n.</p><p>A veces despu&eacute;s de un momento &iacute;ntimo aparecen nervios, expectativas o simplemente cada uno vuelve a su ritmo habitual.</p><p>Pero si con los d&iacute;as empez&aacute;s a notar que la cercan&iacute;a que hab&iacute;a antes disminuy&oacute; claramente, que dej&oacute; de buscarte o que su forma de relacionarse con vos cambi&oacute; de manera sostenida, no necesit&aacute;s buscar una explicaci&oacute;n que haga que eso duela menos.</p><p>Mir&aacute; lo que est&aacute; pasando ahora.</p><p>Porque la pregunta no tiene que ser \u201c&iquest;qu&eacute; hice mal?\u201d</p><div class="dec-question">La pregunta puede ser mucho m&aacute;s sencilla:<br><br>\u201c&iquest;C&oacute;mo me est&aacute; tratando despu&eacute;s de haber compartido algo tan &iacute;ntimo con &eacute;l?\u201d</div>',
+green:'Despu&eacute;s de la intimidad sigue relacion&aacute;ndose con vos con naturalidad. Puede cambiar el ritmo de alg&uacute;n d&iacute;a, pero contin&uacute;a presente, cercano y el v&iacute;nculo sigue desarroll&aacute;ndose.',
+amber:'Sentiste alguna diferencia despu&eacute;s, pero pas&oacute; poco tiempo o todav&iacute;a no sab&eacute;s si realmente cambi&oacute; su manera de relacionarse con vos. Date unos d&iacute;as antes de sacar conclusiones.',
+red:'Despu&eacute;s de la intimidad aparece una distancia clara y sostenida: deja de buscarte como antes, cambia considerablemente el trato o la cercan&iacute;a que exist&iacute;a pr&aacute;cticamente desaparece.',
+closing:'No te arrepientas de algo que también elegiste y disfrutaste. Ahora simplemente fijate cómo sigue relacionándose con vos después de haber compartido algo tan íntimo.'},
+
+{num:'04 &middot; SITUACI&Oacute;N',
+title:'Me busca sobre todo cuando necesita hablar o está pasando por algo',
+body:'<p>Hay momentos en los que sent&iacute;s que te busca much&iacute;simo.</p><p>Te cuenta lo que le pasa, te habla de sus problemas, te pide tu opini&oacute;n o termina cont&aacute;ndote cosas que quiz&aacute;s no habla con cualquiera.</p><p>Y eso puede hacerte sentir muy cerca de &eacute;l.</p><p>Porque pens&aacute;s:</p><div class="dec-thought">\u201cSi conf&iacute;a as&iacute; en m&iacute;, debe ser porque soy importante para &eacute;l.\u201d</div><p>Y puede serlo.</p><p>Pero hay otra pregunta que vale la pena hacerte:</p><div class="dec-emphasis">&iquest;Tambi&eacute;n te busca cuando est&aacute; bien?</div><p>Porque una cosa es que un hombre conf&iacute;e en vos y encuentre en vos a alguien con quien puede hablar.</p><p>Y otra es que gran parte de la cercan&iacute;a entre ustedes aparezca solamente cuando &eacute;l necesita apoyo.</p><p>Fijate qu&eacute; pasa despu&eacute;s de esas conversaciones.</p><p>&iquest;Sigue interesado en vos cuando el problema ya pas&oacute;?<br>&iquest;Te pregunta c&oacute;mo est&aacute;s?<br>&iquest;Tambi&eacute;n aparece para compartir algo lindo, hacer un plan o simplemente saber de vos?<br>&iquest;O sent&iacute;s que, una vez que est&aacute; mejor, vuelve a alejarse hasta la pr&oacute;xima vez que necesita hablar?</p><p>No hace falta dejar de escucharlo ni empezar a medir cada conversaci&oacute;n.</p><p>Si te nace estar para &eacute;l, pod&eacute;s hacerlo.</p><p>Pero tampoco confundas el lugar que ocup&aacute;s cuando necesita contenci&oacute;n con el lugar que est&aacute; construyendo para vos en su vida.</p>',
+green:'Conf&iacute;a en vos cuando necesita hablar, pero tambi&eacute;n te busca en otros momentos. Se interesa por c&oacute;mo est&aacute;s, comparte cosas lindas con vos y la relaci&oacute;n no gira solamente alrededor de sus problemas.',
+amber:'Se abri&oacute; con vos en momentos dif&iacute;ciles y todav&iacute;a no sab&eacute;s si eso es simplemente una parte de la cercan&iacute;a que est&aacute;n construyendo o si va a convertirse en la principal raz&oacute;n por la que te busca.',
+red:'La mayor parte de la cercan&iacute;a aparece cuando &eacute;l est&aacute; mal, necesita hablar o quiere apoyo. Cuando se siente mejor, vuelve a alejarse y el inter&eacute;s por vos queda en segundo plano.',
+closing:'Que confíe en vos es lindo. Pero fijate si también quiere compartir con vos la parte de su vida en la que no necesita que lo sostengas.'},
+
+{num:'05 &middot; SITUACI&Oacute;N',
+title:'Me dice cosas muy intensas para el poco tiempo que llevamos conociéndonos',
+body:'<p>Hace poco que se conocen, pero a veces pareciera que &eacute;l ya estuviera varios cap&iacute;tulos m&aacute;s adelante.</p><p>Te dice que sos diferente, que nunca hab&iacute;a conectado as&iacute; con alguien, que siente que te conoce de toda la vida.</p><p>Quiz&aacute;s incluso empieza a hablar de cosas que podr&iacute;an hacer juntos m&aacute;s adelante o de lo especial que siente lo que est&aacute; pasando entre ustedes.</p><p>Y obvio que puede ser lindo escucharlo.</p><p>Sobre todo si vos tambi&eacute;n est&aacute;s entusiasmada.</p><p>Pero en alg&uacute;n momento puede aparecer esa peque&ntilde;a duda:</p><div class="dec-thought">\u201c&iquest;No ser&aacute; demasiado para el poco tiempo que llevamos?\u201d</div><p>Y no hace falta que te asustes porque alguien se entusiasme r&aacute;pido.</p><p>Hay personas que son m&aacute;s expresivas, m&aacute;s intensas o que simplemente dicen con facilidad lo que est&aacute;n sintiendo en ese momento.</p><p>El punto no es desconfiar autom&aacute;ticamente de todo lo lindo que te dice.</p><p>Es recordar que todav&iacute;a se est&aacute;n conociendo.</p><p>Porque por m&aacute;s fuerte que se sienta una conexi&oacute;n al principio, hay cosas que solamente aparecen con el tiempo.</p><p>C&oacute;mo se tratan cuando no est&aacute;n de acuerdo.<br>C&oacute;mo se comportan cuando alguno est&aacute; ocupado.<br>Si cumple lo que dice.<br>C&oacute;mo te sent&iacute;s con &eacute;l cuando baja un poco la emoci&oacute;n de lo nuevo.</p><div class="dec-emphasis">As&iacute; que pod&eacute;s disfrutar de lo que est&aacute; pasando sin tener que correr al mismo ritmo que sus palabras.</div><p>No necesit&aacute;s decidir ahora si todo eso que te dice va a convertirse en algo importante.</p><p>Dej&aacute; que la historia entre ustedes alcance, de a poco, todo lo que hoy est&aacute; diciendo.</p>',
+green:'Es expresivo y entusiasta, pero no te apura. A medida que se conocen, sus acciones van acompa&ntilde;ando naturalmente lo que te dice y te sent&iacute;s c&oacute;moda con el ritmo.',
+amber:'Te est&aacute; diciendo cosas muy intensas y todav&iacute;a llevan poco tiempo. Puede ser entusiasmo genuino, pero simplemente todav&iacute;a no hubo tiempo suficiente para saber cu&aacute;nto de eso se va a sostener.',
+red:'Las palabras son cada vez m&aacute;s grandes y el v&iacute;nculo avanza a una velocidad que te incomoda, te genera presi&oacute;n o parece pedirte una cercan&iacute;a que todav&iacute;a no tuvieron tiempo de construir.',
+closing:'Disfrutá de lo lindo que te dice, pero no sientas que tenés que correr para alcanzarlo. Dejá que el tiempo te muestre cuánto de esas palabras también se va construyendo entre ustedes.'},
+
+{num:'06 &middot; SITUACI&Oacute;N',
+title:'Cuando estamos juntos evita hablar de su vida',
+body:'<p>Se ven, hablan, la pasan bien.</p><p>&Eacute;l te pregunta cosas, escucha lo que le cont&aacute;s y quiz&aacute;s hasta se acuerda de detalles que le dijiste.</p><p>Pero cuando la conversaci&oacute;n va hacia &eacute;l, algo cambia.</p><p>Responde por arriba, cambia de tema o termina devolviendo la pregunta.</p><p>Y despu&eacute;s de varios encuentros te das cuenta de algo:</p><div class="dec-emphasis">&eacute;l sabe bastante de vos\u2026 pero vos todav&iacute;a sab&eacute;s muy poco de &eacute;l.</div><p>Y empez&aacute;s a preguntarte:</p><div class="dec-thought">\u201c&iquest;Ser&aacute; simplemente reservado?\u201d</div><div class="dec-thought">\u201c&iquest;Necesitar&aacute; m&aacute;s tiempo para entrar en confianza?\u201d</div><div class="dec-thought">\u201c&iquest;O hay una parte de su vida a la que no quiere dejarme entrar?\u201d</div><p>Puede ser cualquiera de esas cosas.</p><p>Hay personas que necesitan m&aacute;s tiempo para hablar de s&iacute; mismas. No todo el mundo cuenta su vida con la misma facilidad, y ser reservado no significa necesariamente que est&eacute; escondiendo algo.</p><p>Pero tampoco hace falta inventarle una explicaci&oacute;n para quedarte tranquila.</p><p>Si reci&eacute;n se est&aacute;n conociendo, pod&eacute;s darle tiempo.</p><p>Fijate si, de a poco, empieza a compartir m&aacute;s de su mundo con vos.</p><p>No tiene que contarte sus mayores secretos ni abrirte toda su vida de golpe.</p><p>A veces alcanza con cosas mucho m&aacute;s cotidianas.</p><p>Que empieces a conocer c&oacute;mo es su d&iacute;a a d&iacute;a, qu&eacute; le importa, qu&eacute; disfruta, qui&eacute;nes forman parte de su vida, qu&eacute; piensa o qu&eacute; cosas le preocupan.</p><p>Porque conocer a alguien tambi&eacute;n necesita cierta reciprocidad.</p><p>No se trata de hacerle m&aacute;s preguntas ni de encontrar la forma correcta de conseguir que se abra.</p><p>Se trata de notar si, con el tiempo, &eacute;l tambi&eacute;n te va dejando conocerlo.</p>',
+green:'Al principio puede ser reservado, pero de a poco empieza a compartir m&aacute;s de s&iacute; mismo. Sent&iacute;s que el conocimiento entre ustedes va creciendo de los dos lados.',
+amber:'Todav&iacute;a llevan poco tiempo y not&aacute;s que le cuesta hablar de algunas cosas. No sab&eacute;s a&uacute;n si simplemente necesita m&aacute;s confianza o si esa distancia va a mantenerse.',
+red:'Pasa el tiempo y &eacute;l sigue sabiendo cada vez m&aacute;s de vos mientras vos apenas pod&eacute;s conocer aspectos de su vida. Evita sistem&aacute;ticamente hablar de s&iacute; mismo o mantiene partes importantes de su mundo completamente fuera del v&iacute;nculo.',
+closing:'No necesitás apurarlo para que se abra. Dale tiempo y fijate si, mientras él te conoce a vos, también empieza a dejar que vos lo conozcas a él.'}
+];
+var decs2=[
+{num:'07 &middot; SITUACI&Oacute;N',
+title:'Me busca cuando estamos solos, pero delante de otras personas cambia conmigo',
+body:'<p>Cuando est&aacute;n solos, sent&iacute;s una cosa.</p><p>Se acerca, te busca, es cari&ntilde;oso, hay complicidad y quiz&aacute;s hasta tiene gestos que te hacen sentir que entre ustedes hay algo bastante claro.</p><p>Pero cuando aparecen otras personas, cambia.</p><p>Puede ponerse m&aacute;s distante, tratarte como si fueras una m&aacute;s o evitar esa cercan&iacute;a que tiene con vos cuando nadie est&aacute; mirando.</p><p>Y obviamente te deja pensando:</p><div class="dec-thought">\u201c&iquest;Por qu&eacute; conmigo es de una manera cuando estamos solos y de otra cuando hay gente?\u201d</div><div class="dec-thought">\u201c&iquest;Le incomoda que sepan que estamos juntos?\u201d</div><div class="dec-thought">\u201c&iquest;Estar&aacute; intentando ocultar algo?\u201d</div><p>Antes de llegar a una conclusi&oacute;n, fijate en algo importante: no todas las personas muestran afecto de la misma manera en p&uacute;blico.</p><p>Puede ser alguien reservado, poco demostrativo o simplemente sentirse m&aacute;s c&oacute;modo con ciertas muestras de cari&ntilde;o cuando est&aacute;n solos.</p><p>Eso, por s&iacute; solo, no significa necesariamente que haya un problema.</p><div class="dec-emphasis">La diferencia est&aacute; en c&oacute;mo te hace sentir ese cambio.</div><p>Una cosa es que sea menos demostrativo delante de otros.</p><p>Otra muy distinta es que sientas que, cuando hay gente alrededor, pr&aacute;cticamente deja de reconocerte como la persona con la que est&aacute; compartiendo algo.</p><p>No necesit&aacute;s que est&eacute; pendiente de vos toda la noche ni que demuestre nada delante de nadie.</p><p>Pero tampoco tendr&iacute;as que sentir que el v&iacute;nculo entre ustedes solamente existe cuando est&aacute;n a solas.</p><p>Dale tiempo para conocer c&oacute;mo es &eacute;l en distintos contextos.</p><p>Y fijate si, aunque sea m&aacute;s reservado delante de otros, segu&iacute;s sintiendo que te trata con naturalidad y que no necesita borrar la cercan&iacute;a que existe entre ustedes.</p>',
+green:'En p&uacute;blico puede ser menos demostrativo, pero sigue trat&aacute;ndote con naturalidad, te incluye y no sent&iacute;s que necesite esconder la cercan&iacute;a que existe entre ustedes.',
+amber:'Notaste que cambia un poco cuando hay otras personas, pero todav&iacute;a no sab&eacute;s si simplemente es menos demostrativo en p&uacute;blico o si realmente existe una diferencia m&aacute;s profunda.',
+red:'Cuando est&aacute;n solos es muy cercano, pero delante de otras personas se distancia de forma marcada, evita mostrar cualquier v&iacute;nculo con vos o te hace sentir que necesita ocultar lo que pasa entre ustedes.',
+closing:'No hace falta que se comporte igual en privado que delante de todo el mundo. Pero fijate si esa diferencia te sigue haciendo sentir parte de su vida o si te hace sentir escondida.'},
+
+{num:'08 &middot; SITUACI&Oacute;N',
+title:'Quiere verme, pero siempre hace planes a último momento',
+body:'<p>Te busca para verte.</p><p>El problema es que muchas veces aparece cuando el plan pr&aacute;cticamente tendr&iacute;a que estar empezando.</p><div class="dec-thought">\u201c&iquest;Qu&eacute; hac&eacute;s hoy?\u201d</div><div class="dec-thought">\u201c&iquest;Nos vemos en un rato?\u201d</div><div class="dec-thought">\u201cEstoy cerca, &iquest;quer&eacute;s que hagamos algo?\u201d</div><p>Y quiz&aacute;s al principio hasta te resulta espont&aacute;neo.</p><p>Si est&aacute;s libre y ten&eacute;s ganas, dec&iacute;s que s&iacute; y la pasan bien.</p><p>Pero cuando empieza a repetirse, aparece otra sensaci&oacute;n.</p><div class="dec-thought">\u201c&iquest;Por qu&eacute; nunca organiza algo conmigo con un poco m&aacute;s de tiempo?\u201d</div><div class="dec-thought">\u201c&iquest;Se acordar&aacute; de m&iacute; solamente cuando queda libre?\u201d</div><div class="dec-thought">\u201c&iquest;Estoy siendo el plan de &uacute;ltimo momento?\u201d</div><p>Y ac&aacute; no hace falta convertir cada propuesta espont&aacute;nea en una se&ntilde;al negativa.</p><p>A veces un plan de &uacute;ltimo momento es simplemente eso: surgi&oacute;, los dos ten&iacute;an ganas y se vieron.</p><div class="dec-emphasis">El punto es mirar si esa es siempre la &uacute;nica forma en la que hace lugar para verte.</div><p>Porque hay una diferencia entre alguien espont&aacute;neo y una din&aacute;mica en la que vos sent&iacute;s que ten&eacute;s que estar disponible cada vez que a &eacute;l se le ocurre aparecer.</p><p>No necesit&aacute;s rechazar un plan que realmente te gustar&iacute;a hacer solamente para demostrar algo.</p><p>Si est&aacute;s libre, te dan ganas y quer&eacute;s verlo, pod&eacute;s ir.</p><p>Pero tampoco necesit&aacute;s cambiar tus planes, dejar cosas de lado o mantener tu tiempo disponible por si &eacute;l aparece.</p><p>Segu&iacute; haciendo tu vida normalmente.</p><p>Y fijate si, con el tiempo, adem&aacute;s de esos encuentros espont&aacute;neos, tambi&eacute;n empieza a existir un poco de intenci&oacute;n para organizar algo con vos.</p>',
+green:'A veces surgen planes espont&aacute;neos, pero no es la &uacute;nica manera en la que se ven. Tambi&eacute;n propone encuentros con tiempo, organiza cosas con vos y sent&iacute;s que puede hacerte un lugar dentro de sus planes.',
+amber:'Todav&iacute;a se est&aacute;n conociendo y varios encuentros surgieron a &uacute;ltimo momento. Te gusta verlo y todav&iacute;a no sab&eacute;s si simplemente coincidi&oacute; as&iacute; o si va a convertirse en una din&aacute;mica habitual.',
+red:'Pasa el tiempo y pr&aacute;cticamente todas sus propuestas aparecen cuando &eacute;l ya est&aacute; libre o con muy poca anticipaci&oacute;n. Sent&iacute;s que para verlo sos vos la que tiene que acomodarse cada vez a su disponibilidad.',
+closing:'Si un plan espontáneo te gusta, disfrutalo. Pero no organices tu vida alrededor de la posibilidad de que él aparezca. Fijate si, con el tiempo, también empieza a hacerte un lugar en sus planes.'},
+
+{num:'09 &middot; SITUACI&Oacute;N',
+title:'Me halaga mucho, pero siento que casi no se interesa por conocerme',
+body:'<p>Te dice que sos linda.</p><p>Que le encantas.</p><p>Que le gusta c&oacute;mo te vest&iacute;s, tu cuerpo, tu sonrisa o la forma en la que lo mir&aacute;s.</p><p>Y obviamente, si &eacute;l tambi&eacute;n te gusta, recibir esos halagos se siente bien.</p><p>Pero despu&eacute;s de un tiempo empez&aacute;s a notar algo.</p><p>Te dice muchas cosas sobre lo que le gusta de vos\u2026 pero parece tener poca curiosidad por conocerte.</p><p>No te pregunta demasiado sobre tu vida.</p><p>No profundiza mucho cuando le cont&aacute;s algo.</p><p>Quiz&aacute;s ni siquiera recuerda algunas cosas que ya le dijiste.</p><p>Y ah&iacute; aparece la duda:</p><div class="dec-question">\u201c&iquest;Le gusto yo o simplemente le atra&iacute;go?\u201d</div><p>No hace falta desconfiar de sus halagos.</p><p>Puede sentirse realmente atra&iacute;do por vos y estar siendo completamente sincero cuando te dice esas cosas.</p><p>La atracci&oacute;n tambi&eacute;n forma parte de conocer a alguien.</p><p>Pero sentir atracci&oacute;n y tener curiosidad por una persona no son exactamente lo mismo.</p><p>Cuando alguien empieza a conocerte de verdad, poco a poco aparecen otras cosas.</p><p>Quiere saber qu&eacute; pens&aacute;s.<br>Se acuerda de algo que le contaste.<br>Te pregunta c&oacute;mo sali&oacute; eso que ten&iacute;as pendiente.<br>Quiere conocer qu&eacute; te gusta, qu&eacute; te importa o c&oacute;mo ves ciertas cosas.</p><p>No porque tenga que hacerte una entrevista cada vez que se ven.</p><p>Simplemente porque hay inter&eacute;s por descubrir qui&eacute;n sos m&aacute;s all&aacute; de lo que le atrae de vos.</p><p>As&iacute; que disfrutá de los halagos si te gustan.</p><p>No necesit&aacute;s quitarles valor ni pensar que necesariamente esconden algo.</p><p>Pero tampoco dejes que sean lo &uacute;nico que us&eacute;s para medir cu&aacute;nto inter&eacute;s hay en conocerte.</p>',
+green:'Te halaga y demuestra atracci&oacute;n, pero tambi&eacute;n tiene curiosidad por vos. Te escucha, recuerda cosas que le contaste y, con el tiempo, sent&iacute;s que realmente va conociendo qui&eacute;n sos.',
+amber:'Hay mucha atracci&oacute;n y halagos, pero todav&iacute;a llevan poco tiempo. A&uacute;n no sab&eacute;s si esa curiosidad por conocerte m&aacute;s profundamente va a aparecer a medida que avance el v&iacute;nculo.',
+red:'Pasa el tiempo y la atenci&oacute;n sigue concentrada principalmente en tu apariencia, la qu&iacute;mica o lo mucho que le atra&eacute;s, mientras muestra poco inter&eacute;s por conocer tu mundo, tus ideas o lo que es importante para vos.',
+closing:'Que le atraigas es lindo. Pero también fijate si, con el tiempo, muestra interés por conocer todo lo demás que hay en vos.'},
+
+{num:'10 &middot; SITUACI&Oacute;N',
+title:'Me busca mucho cuando siente que me alejo',
+body:'<p>Hay momentos en los que sent&iacute;s que sos vos la que est&aacute; m&aacute;s pendiente del v&iacute;nculo.</p><p>&Eacute;l est&aacute;, te habla, se ven\u2026 pero quiz&aacute;s no con la intensidad que a vos te gustar&iacute;a.</p><p>Y despu&eacute;s pasa algo.</p><p>Te ocup&aacute;s con otras cosas, dej&aacute;s de estar tan pendiente, est&aacute;s menos disponible o simplemente empez&aacute;s a poner tu atenci&oacute;n en tu propia vida.</p><p>Y &eacute;l aparece mucho m&aacute;s.</p><p>Te escribe m&aacute;s.<br>Te busca.<br>Propone verte.<br>Est&aacute; m&aacute;s atento.</p><p>Y claro, ese cambio puede hacerte pensar:</p><div class="dec-thought">\u201c&iquest;Ser&aacute; que reci&eacute;n ahora se dio cuenta de que le importo?\u201d</div><div class="dec-thought">\u201c&iquest;Necesita sentir que me pierde para reaccionar?\u201d</div><div class="dec-thought">\u201c&iquest;Entonces tendr&iacute;a que alejarme un poco para que me busque?\u201d</div><p>Y con esta &uacute;ltima, cuidado.</p><div class="dec-emphasis">Porque si cada vez que te alej&aacute;s &eacute;l se acerca, es muy f&aacute;cil empezar a creer que encontraste la f&oacute;rmula para mantener su inter&eacute;s.</div><p>Pero vos no deber&iacute;as tener que administrar tu distancia para conseguir cercan&iacute;a.</p><p>Tampoco hace falta asumir que lo hace conscientemente.</p><p>A veces alguien registra cu&aacute;nto le importa una persona cuando siente que ya no la tiene tan disponible. O simplemente nota el cambio y eso hace que vuelva a acercarse.</p><p>Lo importante es mirar qu&eacute; pasa cuando vuelve a sentirte cerca.</p><p>&iquest;Ese inter&eacute;s se sostiene?<br>&iquest;Sigue buscando compartir con vos?<br>&iquest;O, apenas recupera tu atenci&oacute;n, vuelve poco a poco al mismo lugar de antes?</p><p>Porque ah&iacute; est&aacute; la parte que realmente te da informaci&oacute;n.</p><p>No en cu&aacute;nto te busca cuando siente distancia, sino en qu&eacute; hace con la cercan&iacute;a una vez que vuelve a tenerla.</p>',
+green:'Not&oacute; cierta distancia y se acerc&oacute; m&aacute;s, pero despu&eacute;s ese inter&eacute;s no desaparece cuando volv&eacute;s a estar presente. La cercan&iacute;a puede tener distintos ritmos, pero no necesit&aacute;s alejarte para sentir que &eacute;l participa del v&iacute;nculo.',
+amber:'Notaste que te busc&oacute; m&aacute;s justo cuando estabas menos pendiente, pero todav&iacute;a no sab&eacute;s si fue una coincidencia, un momento puntual o una din&aacute;mica que realmente se repite.',
+red:'El patr&oacute;n se repite: cuando siente que te alej&aacute;s, intensifica much&iacute;simo la b&uacute;squeda; cuando volv&eacute;s a acercarte y se siente seguro de tu atenci&oacute;n, su inter&eacute;s vuelve a bajar. Termin&aacute;s sintiendo que para que &eacute;l se acerque, vos primero ten&eacute;s que alejarte.',
+closing:'No conviertas la distancia en una estrategia para conseguir que te busque. Lo importante es ver si ese interés también se mantiene cuando volvés a estar cerca.'},
+
+{num:'11 &middot; SITUACI&Oacute;N',
+title:'Desapareció durante un tiempo y ahora volvió a buscarme',
+body:'<p>Pas&oacute; un tiempo sin saber pr&aacute;cticamente nada de &eacute;l.</p><p>Quiz&aacute;s dejaron de hablar de golpe. Quiz&aacute;s la conversaci&oacute;n se fue apagando hasta que desapareci&oacute; por completo.</p><p>Y cuando ya estabas empezando a asumir que eso hab&iacute;a quedado ah&iacute;\u2026</p><p>volvi&oacute;.</p><p>Un mensaje.<br>Una reacci&oacute;n a una historia.<br>Un \u201c&iquest;c&oacute;mo est&aacute;s?\u201d<br>O incluso volvi&oacute; habl&aacute;ndote con la misma confianza que ten&iacute;a antes.</p><p>Y claro que puede moverte cosas.</p><p>Porque si todav&iacute;a te gustaba, una parte tuya puede alegrarse de verlo aparecer.</p><p>Pero tambi&eacute;n puede aparecer la pregunta:</p><div class="dec-thought">\u201c&iquest;Por qu&eacute; volvi&oacute; ahora?\u201d</div><div class="dec-thought">\u201c&iquest;Me habr&aacute; extra&ntilde;ado?\u201d</div><div class="dec-thought">\u201c&iquest;Se habr&aacute; dado cuenta de que quiere estar conmigo?\u201d</div><div class="dec-thought">\u201c&iquest;Le doy otra oportunidad?\u201d</div><p>La verdad es que puede haber much&iacute;simas razones por las que alguien vuelve a buscarte.</p><p>Puede haberte extra&ntilde;ado.<br>Puede haber pensado en vos.<br>Puede sentir curiosidad por saber c&oacute;mo est&aacute;s.<br>Puede querer retomar lo que ten&iacute;an.<br>O simplemente puede haber tenido ganas de hablarte en ese momento.</p><p>Y vos no necesit&aacute;s elegir una de esas explicaciones para decidir qu&eacute; hacer con su regreso.</p><div class="dec-emphasis">Porque volver a aparecer es solamente el principio de la informaci&oacute;n.</div><p>Ahora fijate qu&eacute; hace.</p><p>Si realmente intenta retomar el contacto.<br>Si se interesa por vos.<br>Si busca volver a verte.<br>Si esta vez su presencia empieza a tener cierta continuidad.</p><p>Y tambi&eacute;n acord&aacute;te de algo: que haya vuelto no significa que vos tengas que retomar autom&aacute;ticamente el v&iacute;nculo desde el mismo lugar en el que lo dejaron.</p><p>Durante ese tiempo vos tambi&eacute;n seguiste con tu vida.</p><p>Pod&eacute;s alegrarte de que haya aparecido y, al mismo tiempo, tomarte tu tiempo para ver qu&eacute; lugar quer&eacute;s darle ahora.</p>',
+green:'Vuelve a buscarte y no queda solamente en ese primer mensaje. Retoma el contacto, muestra inter&eacute;s por saber de vos y su presencia empieza a sostenerse nuevamente con el tiempo.',
+amber:'Reci&eacute;n volvi&oacute; a aparecer y todav&iacute;a no sab&eacute;s qu&eacute; significa ese regreso. No hace falta interpretarlo enseguida. Dej&aacute; que los pr&oacute;ximos d&iacute;as te muestren qu&eacute; hace despu&eacute;s de ese primer acercamiento.',
+red:'Reaparece despu&eacute;s de un tiempo, genera nuevamente cercan&iacute;a o expectativa y poco despu&eacute;s vuelve a desaparecer. Este irse y volver empieza a convertirse en una din&aacute;mica entre ustedes.',
+closing:'Que haya vuelto puede darte curiosidad o incluso ilusión. Pero no necesitás decidir qué significa todavía. Primero fijate qué hace después de volver.'},
+
+{num:'12 &middot; SITUACI&Oacute;N',
+title:'Siento que si yo no hago nada, el vínculo no avanza',
+body:'<p>&Eacute;l responde.</p><p>Si le propon&eacute;s verse, muchas veces acepta.</p><p>Si empez&aacute;s una conversaci&oacute;n, habla con vos.</p><p>Cuando est&aacute;n juntos, incluso pueden pasarla muy bien.</p><p>Pero hay algo que empez&aacute;s a notar.</p><div class="dec-emphasis">Casi siempre sos vos la que pone las cosas en movimiento.</div><p>La que escribe primero.<br>La que propone.<br>La que retoma una conversaci&oacute;n.<br>La que busca la pr&oacute;xima oportunidad para verse.</p><p>Y en alg&uacute;n momento te pregunt&aacute;s:</p><div class="dec-thought">\u201c&iquest;Qu&eacute; pasar&iacute;a si yo dejara de hacer todo esto?\u201d</div><div class="dec-thought">\u201c&iquest;&Eacute;l tambi&eacute;n me buscar&iacute;a?\u201d</div><div class="dec-thought">\u201c&iquest;O esto sigue avanzando porque yo lo estoy empujando?\u201d</div><p>Y ac&aacute; no se trata de empezar a contar qui&eacute;n escribi&oacute; primero cada d&iacute;a.</p><p>Tampoco de dejar de hacer cosas que genuinamente te nacen solamente para ponerlo a prueba.</p><p>Pod&eacute;s escribirle.<br>Pod&eacute;s proponer un plan.<br>Pod&eacute;s demostrar inter&eacute;s.</p><p>No hay nada malo en tomar iniciativa.</p><div class="dec-emphasis">El problema aparece cuando empez&aacute;s a sentir que toda la iniciativa depende de vos.</div><p>Porque una cosa es participar activamente de un v&iacute;nculo y otra muy distinta sentir que, si vos dej&aacute;s de moverlo, todo se queda quieto.</p><p>As&iacute; que no necesit&aacute;s desaparecer para comprobar qu&eacute; har&iacute;a &eacute;l.</p><p>Simplemente dej&aacute; de hacerte responsable de que todo siga avanzando.</p><p>Segu&iacute; relacion&aacute;ndote con naturalidad y prest&aacute; atenci&oacute;n a algo muy sencillo:</p><p>&iquest;&Eacute;l tambi&eacute;n genera movimiento entre ustedes?<br>&iquest;Te busca porque quiere hablar con vos?<br>&iquest;Propone verte?<br>&iquest;Retoma el contacto?<br>&iquest;Aparecen iniciativas que no empezaron siempre de tu lado?</p><p>No hace falta que todo sea exactamente mitad y mitad.</p><p>Pero s&iacute; deber&iacute;a existir la sensaci&oacute;n de que hay dos personas participando.</p>',
+green:'Los dos toman iniciativa de distintas maneras. A veces propon&eacute;s vos y otras veces &eacute;l. No sent&iacute;s que el v&iacute;nculo dependa de que est&eacute;s constantemente poni&eacute;ndolo en movimiento.',
+amber:'Hasta ahora tomaste m&aacute;s iniciativa vos, pero todav&iacute;a llevan poco tiempo o no sab&eacute;s si simplemente se dio as&iacute;. Dale espacio para ver c&oacute;mo se desarrolla sin empezar a medir cada movimiento.',
+red:'Con el tiempo, segu&iacute;s siendo vos la que inicia, propone, retoma y genera pr&aacute;cticamente todas las oportunidades para que el v&iacute;nculo avance. Cuando vos no hac&eacute;s nada, entre ustedes casi no pasa nada.',
+closing:'Mostrar interés está bien. Lo importante es que no termines sintiendo que sos vos la encargada de hacer que todo entre ustedes funcione.'}
+];
+
+/* combine both data arrays */
+var allDecs = [null].concat(decs.slice(1)).concat(decs2);
+
+function openDec(n){
+  var d=allDecs[n];
+  if(!d)return;
+  document.getElementById('dec-num-display').innerHTML=d.num;
+  document.getElementById('dec-title-display').textContent=d.title;
+  document.getElementById('dec-body-display').innerHTML=d.body;
+  document.getElementById('sem-text-green').innerHTML=d.green;
+  document.getElementById('sem-text-amber').innerHTML=d.amber;
+  document.getElementById('sem-text-red').innerHTML=d.red;
+  document.getElementById('dec-closing-display').textContent=d.closing;
+  goTo('screen-dec');
+}
+</script>
+</body>
+</html>
