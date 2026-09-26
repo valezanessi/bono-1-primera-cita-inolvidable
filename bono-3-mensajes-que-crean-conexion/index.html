@@ -1,0 +1,632 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Mensajes que Crean Conexión™ — ELEGIDA™</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--borgona:#5B0F1A;--vino:#8E1C2A;--rosa:#C99BA6;--nude:#E7D6C6;--crema:#FAF5EF;--carbon:#1A1A1A;--champagne:#D4B896;--text-body:#2C2020;--text-soft:#6B5252}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:"Inter","Helvetica Neue",Arial,sans-serif;background:var(--crema);color:var(--text-body);line-height:1.7;overflow-x:hidden}
+img{display:block;max-width:100%}
+.screen{display:none !important;min-height:100vh;animation:fadeIn .45s ease both}
+.screen.active{display:block !important}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.screen{animation:none}*{transition-duration:.01ms !important}}
+#screen-portada{flex-direction:column;min-height:100vh;background:var(--carbon)}
+#screen-portada.active{display:flex !important}
+.portada-image-wrap{position:relative;width:100%;height:clamp(280px,72vw,480px);overflow:hidden;flex-shrink:0}
+.portada-image-wrap img{width:100%;height:100%;object-fit:cover;object-position:center 42%;position:absolute;inset:0}
+.portada-hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(26,5,10,.08) 0%,rgba(26,5,10,.02) 50%,rgba(26,5,10,.38) 100%)}
+.portada-logo-wrap{margin-bottom:28px}
+.portada-logo-wrap img{height:48px;width:auto;filter:brightness(0) invert(1)}
+.portada-text-wrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:44px 28px 52px;background:var(--carbon)}
+.portada-content{display:flex;flex-direction:column;align-items:center;text-align:center;max-width:490px;width:100%}
+.portada-eyebrow{font-family:"Inter",sans-serif;font-size:10px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--champagne);margin-bottom:16px;opacity:.9}
+.portada-titulo{font-family:"Playfair Display",Georgia,serif;font-size:clamp(26px,7vw,52px);font-weight:500;line-height:1.15;color:#fff;letter-spacing:.01em;margin-bottom:20px;max-width:640px}
+.portada-subtitle{font-family:"Inter",sans-serif;font-size:clamp(14px,3.5vw,17px);font-weight:300;color:rgba(255,255,255,.82);line-height:1.65;max-width:480px;margin-bottom:36px}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--vino);color:#fff;font-family:"Inter",sans-serif;font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:16px 32px;border:none;cursor:pointer;border-radius:2px;transition:background .25s ease,transform .18s ease;min-height:52px}
+.btn-primary:hover{background:var(--borgona);transform:translateY(-1px)}
+.btn-primary:active{transform:translateY(0)}
+.btn-primary:focus-visible{outline:2px solid var(--champagne);outline-offset:3px}
+#screen-menu{background:var(--crema)}
+.menu-hero{position:relative;height:clamp(220px,38vw,360px);overflow:hidden;background:var(--carbon)}
+.menu-hero img{width:100%;height:100%;object-fit:cover;object-position:center 30%}
+.menu-hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(26,5,10,.2) 0%,rgba(91,15,26,.5) 100%)}
+.menu-logo-wrap{position:absolute;top:24px;left:50%;transform:translateX(-50%);z-index:10}
+.menu-logo-wrap img{height:40px;width:auto;filter:brightness(0) invert(1)}
+.menu-hero-text{position:absolute;bottom:0;left:0;right:0;padding:24px 28px 28px;z-index:5;text-align:center}
+.menu-hero-text h1{font-family:"Playfair Display",Georgia,serif;font-size:clamp(22px,5.5vw,38px);font-weight:600;color:#fff;letter-spacing:.03em;margin-bottom:8px}
+.menu-hero-text p{font-family:"Inter",sans-serif;font-size:clamp(13px,3vw,15px);font-weight:300;color:rgba(255,255,255,.85);line-height:1.55}
+.menu-grid-wrap{max-width:800px;margin:0 auto;padding:32px 16px 60px}
+.situaciones-grid{display:flex;flex-direction:column;gap:10px}
+.sit-card{background:#fff;border:1px solid rgba(201,155,166,.25);border-radius:4px;padding:0;cursor:pointer;transition:border-color .2s ease,box-shadow .2s ease,transform .15s ease;text-align:left;width:100%;display:flex;align-items:stretch;overflow:hidden;min-height:64px}
+.sit-card:hover{border-color:var(--rosa);box-shadow:0 4px 18px rgba(91,15,26,.1);transform:translateY(-1px)}
+.sit-card:active{transform:translateY(0)}
+.sit-card:focus-visible{outline:2px solid var(--vino);outline-offset:2px}
+.sit-card-num{display:flex;align-items:center;justify-content:center;min-width:52px;background:var(--borgona);color:rgba(255,255,255,.9);font-family:"Playfair Display",Georgia,serif;font-size:15px;font-weight:400;font-style:italic;padding:16px 12px;flex-shrink:0}
+.sit-card-body{padding:16px 18px;display:flex;align-items:center;flex:1}
+.sit-card-title{font-family:"Inter",sans-serif;font-size:clamp(11.5px,2.8vw,13.5px);font-weight:500;color:var(--carbon);line-height:1.5;letter-spacing:.01em}
+#screen-situacion{background:var(--crema)}
+.sit-header{background:var(--borgona);position:relative;overflow:hidden}
+.sit-header-photo{position:absolute;inset:0;opacity:.18}
+.sit-header-photo img{width:100%;height:100%;object-fit:cover;object-position:center 25%}
+.sit-header-content{position:relative;z-index:2;padding:32px 24px 28px;text-align:center}
+.sit-header-logo{display:flex;justify-content:center;margin-bottom:20px}
+.sit-header-logo img{height:32px;width:auto;filter:brightness(0) invert(1);opacity:.85}
+.sit-number-badge{display:inline-block;font-family:"Playfair Display",Georgia,serif;font-size:13px;font-style:italic;font-weight:400;color:var(--champagne);letter-spacing:.1em;margin-bottom:10px}
+.sit-titulo{font-family:"Playfair Display",Georgia,serif;font-size:clamp(15px,3.8vw,21px);font-weight:500;color:#fff;line-height:1.35;max-width:600px;margin:0 auto}
+.situacion-inner{max-width:700px;margin:0 auto}
+.sit-body{padding:0 20px 60px}
+.sit-section{margin-top:36px}
+.section-label{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.section-label-text{font-family:"Inter",sans-serif;font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--vino)}
+.section-label-line{flex:1;height:1px;background:rgba(201,155,166,.4)}
+.sit-section--objetivo .sit-section-body{background:#fff;border-radius:4px;padding:24px;border-left:3px solid var(--vino)}
+.sit-section--evita .sit-section-body{background:rgba(231,214,198,.35);border-radius:4px;padding:24px}
+.sit-section--que{margin-top:40px}
+.sit-section--observa .sit-section-body{background:rgba(91,15,26,.05);border-radius:4px;padding:24px;border-top:2px solid var(--rosa)}
+.sit-section-body,.sit-section-body p{font-family:"Inter",sans-serif;font-size:clamp(14px,3.2vw,15.5px);color:var(--text-body);line-height:1.75}
+.sit-section-body p+p{margin-top:12px}
+.cite-block{font-style:italic;color:var(--text-soft);margin:8px 0 4px;padding-left:16px;border-left:2px solid rgba(201,155,166,.6);line-height:1.6;font-family:"Inter",sans-serif;font-size:clamp(14px,3.2vw,15.5px)}
+.msg-group{margin-bottom:22px}
+.msg-context{font-family:"Inter",sans-serif;font-size:clamp(13px,3vw,14.5px);color:var(--text-soft);line-height:1.6;margin-bottom:10px}
+.msg-bubble-wrap{display:flex;flex-direction:column;gap:10px}
+.msg-bubble{background:#fff;border:1px solid rgba(201,155,166,.35);border-radius:12px 12px 12px 3px;padding:16px 18px}
+.msg-bubble-text{font-family:"Inter",sans-serif;font-size:clamp(14px,3.3vw,15.5px);color:var(--carbon);line-height:1.65;font-style:italic}
+.msg-bubble-actions{display:flex;justify-content:flex-end;margin-top:10px}
+.btn-copy{display:inline-flex;align-items:center;background:transparent;border:1px solid rgba(142,28,42,.35);color:var(--vino);font-family:"Inter",sans-serif;font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:6px 12px;border-radius:2px;cursor:pointer;transition:background .2s,color .2s,border-color .2s;min-height:32px}
+.btn-copy:hover{background:var(--vino);color:#fff;border-color:var(--vino)}
+.btn-copy.copied{background:#2A6B3C;color:#fff;border-color:#2A6B3C}
+.btn-copy:focus-visible{outline:2px solid var(--vino);outline-offset:2px}
+.msg-outro{font-family:"Inter",sans-serif;font-size:clamp(14px,3.2vw,15.5px);color:var(--text-body);line-height:1.75;margin-top:16px}
+.btn-back{display:inline-flex;align-items:center;gap:8px;background:transparent;border:1px solid rgba(142,28,42,.4);color:var(--vino);font-family:"Inter",sans-serif;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;padding:14px 22px;border-radius:2px;cursor:pointer;transition:background .2s,color .2s;margin-top:44px;min-height:48px}
+.btn-back:hover{background:var(--vino);color:#fff}
+.btn-back:focus-visible{outline:2px solid var(--vino);outline-offset:2px}
+.back-wrap{display:flex;justify-content:center;padding:0 20px 48px}
+.cierre-strip{margin-top:48px;position:relative;height:clamp(140px,25vw,220px);overflow:hidden}
+.cierre-strip img{width:100%;height:100%;object-fit:cover;object-position:center 35%}
+.cierre-strip-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(26,5,10,.5) 0%,transparent 60%)}
+.menu-cierre{position:relative;height:clamp(130px,20vw,190px);overflow:hidden;border-radius:4px;margin-top:32px}
+.menu-cierre img{width:100%;height:100%;object-fit:cover;object-position:center 40%}
+.menu-cierre-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(91,15,26,.4) 0%,transparent 70%)}
+@media(min-width:768px){
+.portada-image-wrap{height:clamp(340px,50vw,540px)}
+.portada-logo-wrap img{height:52px}
+.menu-hero{height:380px}
+.menu-grid-wrap{padding:40px 32px 80px}
+.sit-card{min-height:72px}
+.sit-header-content{padding:40px 40px 34px}
+.sit-body{padding:0 32px 80px}
+}
+@media(min-width:1024px){
+#screen-portada.active{flex-direction:row !important}
+.portada-image-wrap{flex:0 0 52%;height:100vh}
+.portada-image-wrap img{object-position:center 30%}
+.portada-text-wrap{min-height:100vh;padding:64px 56px;max-width:680px;margin:0 auto}
+.portada-logo-wrap img{height:60px}
+.menu-hero{height:420px}
+.menu-grid-wrap{padding:48px 40px 100px}
+}
+</style>
+</head>
+<body>
+<!-- PORTADA -->
+<section id="screen-portada" class="screen active" role="main" aria-label="Portada">
+  <div class="portada-image-wrap">
+    <img src="282e8629-ccf3-477b-b57e-81f3bd960a3f.png" alt="Mujer elegante mirando su teléfono con una sonrisa, en ambiente íntimo y cálido" loading="eager" />
+    <div class="portada-hero-overlay"></div>
+  </div>
+  <div class="portada-text-wrap">
+    <div class="portada-logo-wrap"><img src="logo-elegida.png.png" alt="ELEGIDA™" /></div>
+    <div class="portada-content">
+      <p class="portada-eyebrow">ELEGIDA™ · BONO 3</p>
+      <h1 class="portada-titulo">MENSAJES QUE CREAN CONEXIÓN<span style="font-size:.65em;vertical-align:super;line-height:0">™</span></h1>
+      <p class="portada-subtitle">Una herramienta para esos momentos en los que sabés qué querés decirle, pero no encontrás cómo hacerlo.</p>
+      <button class="btn-primary" onclick="irAMenu()">ELEGIR UNA SITUACIÓN →</button>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="screen-menu" class="screen" role="main" aria-label="Menú de situaciones">
+  <div class="menu-hero">
+    <img src="65cd7fa2-9b7f-42ce-93e7-ab72f725f777.png" alt="Mujer escribiendo en un cuaderno en un café elegante, reflexiva" loading="eager" />
+    <div class="menu-hero-overlay"></div>
+    <div class="menu-logo-wrap"><img src="logo-elegida.png.png" alt="ELEGIDA™" /></div>
+    <div class="menu-hero-text">
+      <h1>¿QUÉ QUERÉS DECIRLE?</h1>
+      <p>Elegí la situación que más se parece a lo que querés comunicar.</p>
+    </div>
+  </div>
+  <div class="menu-grid-wrap">
+    <nav class="situaciones-grid" aria-label="Lista de situaciones">
+      <button class="sit-card" onclick="irASituacion(1)"><span class="sit-card-num">01</span><div class="sit-card-body"><span class="sit-card-title">QUIERO ESCRIBIRLE PORQUE TENGO GANAS DE HABLAR CON ÉL, PERO NO SÉ CÓMO EMPEZAR</span></div></button>
+      <button class="sit-card" onclick="irASituacion(2)"><span class="sit-card-num">02</span><div class="sit-card-body"><span class="sit-card-title">QUIERO DECIRLE QUE ME GUSTÓ VERLO SIN SONAR DEMASIADO INTENSA</span></div></button>
+      <button class="sit-card" onclick="irASituacion(3)"><span class="sit-card-num">03</span><div class="sit-card-body"><span class="sit-card-title">QUIERO PROPONERLE VERNOS SIN SENTIR QUE ESTOY PERSIGUIÉNDOLO</span></div></button>
+      <button class="sit-card" onclick="irASituacion(4)"><span class="sit-card-num">04</span><div class="sit-card-body"><span class="sit-card-title">QUIERO RETOMAR UNA CONVERSACIÓN QUE QUEDÓ COLGADA</span></div></button>
+      <button class="sit-card" onclick="irASituacion(5)"><span class="sit-card-num">05</span><div class="sit-card-body"><span class="sit-card-title">QUIERO HACERLE UN CUMPLIDO SIN SENTIR QUE ESTOY EXAGERANDO</span></div></button>
+      <button class="sit-card" onclick="irASituacion(6)"><span class="sit-card-num">06</span><div class="sit-card-body"><span class="sit-card-title">ME DIJO ALGO LINDO Y QUIERO RESPONDER SIN QUEDARME EN UN SIMPLE "GRACIAS"</span></div></button>
+      <button class="sit-card" onclick="irASituacion(7)"><span class="sit-card-num">07</span><div class="sit-card-body"><span class="sit-card-title">QUIERO COQUETEAR CON ÉL POR MENSAJE SIN QUE SUENE FORZADO</span></div></button>
+      <button class="sit-card" onclick="irASituacion(8)"><span class="sit-card-num">08</span><div class="sit-card-body"><span class="sit-card-title">QUIERO DECIRLE QUE ALGO ME MOLESTÓ SIN CONVERTIRLO EN UNA PELEA</span></div></button>
+      <button class="sit-card" onclick="irASituacion(9)"><span class="sit-card-num">09</span><div class="sit-card-body"><span class="sit-card-title">NO PUEDO HACER EL PLAN QUE ME PROPUSO, PERO QUIERO QUE SEPA QUE SÍ TENGO GANAS DE VERLO</span></div></button>
+      <button class="sit-card" onclick="irASituacion(10)"><span class="sit-card-num">10</span><div class="sit-card-body"><span class="sit-card-title">QUIERO DECIRLE QUE NECESITO MI ESPACIO SIN QUE PAREZCA QUE PERDÍ EL INTERÉS</span></div></button>
+      <button class="sit-card" onclick="irASituacion(11)"><span class="sit-card-num">11</span><div class="sit-card-body"><span class="sit-card-title">QUIERO PEDIRLE ALGO QUE NECESITO SIN SONAR EXIGENTE</span></div></button>
+      <button class="sit-card" onclick="irASituacion(12)"><span class="sit-card-num">12</span><div class="sit-card-body"><span class="sit-card-title">QUIERO TERMINAR UNA CONVERSACIÓN DE FORMA NATURAL SIN SENTIR QUE TENGO QUE SEGUIR HABLANDO POR COMPROMISO</span></div></button>
+    </nav>
+    <div class="menu-cierre">
+      <img src="5d8f2423-4d9c-4ee9-af7f-02c216702648.png" alt="Pareja caminando en una calle elegante al atardecer" loading="lazy" />
+      <div class="menu-cierre-overlay"></div>
+    </div>
+  </div>
+</section>
+
+<!-- SITUACION -->
+<article id="screen-situacion" class="screen" role="main" aria-label="Situación seleccionada">
+  <div id="situacion-content"></div>
+</article>
+<script>
+var S=[
+/*** 01 ***/
+{num:"01",titulo:"QUIERO ESCRIBIRLE PORQUE TENGO GANAS DE HABLAR CON \u00c9L, PERO NO S\u00c9 C\u00d3MO EMPEZAR",
+objetivo:[
+  "Escribirle porque te nace hacerlo, sin convertir un mensaje sencillo en una decisi\u00f3n que ten\u00e9s que analizar durante media hora.",
+  "Probablemente sab\u00e9s perfectamente c\u00f3mo empezar una conversaci\u00f3n.\nLo hac\u00e9s todos los d\u00edas.",
+  "El problema aparece cuando \u00e9l te importa y empez\u00e1s a pensar:",
+  ["\u201c\u00bfLe escribo o espero?\u201d","\u201c\u00bfVoy a parecer demasiado interesada?\u201d","\u201c\u00bfQu\u00e9 le digo para que no parezca que estoy buscando una excusa?\u201d"],
+  "Y ah\u00ed algo completamente normal empieza a sentirse mucho m\u00e1s complicado de lo que realmente es."
+],evita:[
+  "Inventar un motivo para escribirle solamente para que no se note que quer\u00edas hacerlo.",
+  "Tambi\u00e9n evit\u00e1 revisar diez veces el mensaje intentando calcular c\u00f3mo podr\u00eda interpretarlo.",
+  "Mostrar inter\u00e9s no significa perseguir a nadie.",
+  "Si ten\u00e9s ganas de hablar con un hombre que est\u00e1s conociendo, pod\u00e9s iniciar una conversaci\u00f3n sin convertir ese gesto en algo m\u00e1s grande de lo que es."
+],que:[
+  {ctx:"Si sab\u00e9s que ten\u00eda algo importante:",msgs:["Me acord\u00e9 que hoy ten\u00edas la reuni\u00f3n. \u00bfC\u00f3mo te fue?"]},
+  {ctx:"Si quer\u00e9s retomar algo que te cont\u00f3:",msgs:["Me qued\u00e9 pensando en lo que me contaste el otro d\u00eda. \u00bfAl final c\u00f3mo termin\u00f3 eso?"]},
+  {ctx:"Si viste algo que genuinamente te hizo acordar a \u00e9l:",msgs:["Vi esto y me acord\u00e9 de vos."]},
+  {ctx:"Si simplemente quer\u00e9s saber c\u00f3mo est\u00e1:",msgs:["\u00bfC\u00f3mo est\u00e1s? \u00bfC\u00f3mo viene tu semana?"]},
+  {ctx:"Y tambi\u00e9n pod\u00e9s ser m\u00e1s directa:",msgs:["Me dieron ganas de saber de vos. \u00bfC\u00f3mo est\u00e1s?"]}
+],queOutro:[
+  "No necesit\u00e1s que cada mensaje tenga ingenio, misterio o una intenci\u00f3n escondida.",
+  "A veces quer\u00e9s hablar con alguien porque te gusta hablar con esa persona.",
+  "Y eso alcanza."
+],observa:[
+  "Una vez que le escribiste, solt\u00e1 un poco el mensaje.",
+  "No necesit\u00e1s compensar haber tomado la iniciativa intentando sostener despu\u00e9s toda la conversaci\u00f3n.",
+  "Vos abriste la puerta.",
+  "Ahora fijate qu\u00e9 hace \u00e9l con ese espacio.",
+  "Si pregunta por vos, si desarrolla la conversaci\u00f3n, si trae temas propios, si se queda porque tambi\u00e9n tiene ganas de hablar.",
+  "Porque escribir primero alguna vez no dice demasiado sobre un v\u00ednculo.",
+  "Lo que importa es que, una vez iniciada la conversaci\u00f3n, no sientas que tambi\u00e9n ten\u00e9s que hacer todo el trabajo para que exista."
+]},
+/*** 02 ***/
+{num:"02",titulo:"QUIERO DECIRLE QUE ME GUST\u00d3 VERLO SIN SONAR DEMASIADO INTENSA",
+objetivo:[
+  "Te gust\u00f3 verlo.",
+  "Ahora quer\u00e9s dec\u00edrselo, pero aparece esa duda bastante com\u00fan:",
+  ["\u201c\u00bfSe lo digo?\u201d","\u201c\u00bfSer\u00e1 demasiado?\u201d","\u201c\u00bfMe conviene esperar a que \u00e9l diga algo primero?\u201d"],
+  "No necesit\u00e1s esconder que disfrutaste estar con \u00e9l para proteger tu lugar.",
+  "Pod\u00e9s expresarlo de una manera sencilla, adulta y acorde a lo que realmente sentiste."
+],evita:[
+  "Restarle importancia a lo que sentiste solamente para parecer menos interesada.",
+  "Si la pasaste bien, no necesit\u00e1s responder con frialdad ni esperar estrat\u00e9gicamente para que \u00e9l no se d\u00e9 cuenta.",
+  "Y tampoco hace falta irte al otro extremo y cargar el mensaje de expectativas sobre lo que podr\u00eda pasar entre ustedes.",
+  "El mensaje puede hablar simplemente de lo que ya ocurri\u00f3: te gust\u00f3 compartir ese momento con \u00e9l."
+],que:[
+  {ctx:"Si quer\u00e9s algo sencillo:",msgs:["La pas\u00e9 muy bien con vos. Me encant\u00f3 verte."]},
+  {ctx:"Si disfrutaste especialmente la conversaci\u00f3n:",msgs:["Me encant\u00f3 la charla de hoy. La pas\u00e9 muy bien con vos."]},
+  {ctx:"Si hubo un momento particular que te qued\u00f3:",msgs:["Me qued\u00e9 pensando en lo que hablamos de [tema]. Me gust\u00f3 mucho compartir ese rato con vos."]},
+  {ctx:"Si \u00e9l te dice primero que la pas\u00f3 bien:",msgs:["Yo tambi\u00e9n. Disfru\u00e9 mucho estar con vos."]},
+  {ctx:"Tambi\u00e9n pod\u00e9s hacer referencia a algo propio de ese encuentro:",msgs:["Todav\u00eda me estoy riendo de lo de [situaci\u00f3n]. La pas\u00e9 muy bien."]}
+],queOutro:[
+  "No necesit\u00e1s encontrar una frase perfecta.",
+  "Lo importante es que el mensaje se parezca a vos y a lo que realmente pas\u00f3 entre ustedes."
+],observa:[
+  "Despu\u00e9s de decirlo, no necesit\u00e1s corregir tu inter\u00e9s ni compensarlo mostr\u00e1ndote m\u00e1s distante.",
+  "Ya expresaste algo genuino.",
+  "Ahora dej\u00e1 espacio para recibir lo que venga del otro lado.",
+  "No para analizar cada palabra de su respuesta, sino para permitir que \u00e9l tambi\u00e9n tenga la oportunidad de expresar c\u00f3mo vivi\u00f3 ese momento.",
+  "Mostrar que disfrutaste estar con alguien no es adelantarte al v\u00ednculo. Es simplemente ser clara con algo que ya sentiste."
+]},
+/*** 03 ***/
+{num:"03",titulo:"QUIERO PROPONERLE VERNOS SIN SENTIR QUE ESTOY PERSIGUI\u00c9NDOLO",
+objetivo:[
+  "Ten\u00e9s ganas de verlo y te gustar\u00eda propon\u00e9rselo.",
+  "Pero antes de hacerlo aparece la duda:",
+  ["\u201c\u00bfEspero a que me invite \u00e9l?\u201d","\u201c\u00bfVoy a parecer demasiado disponible?\u201d","\u201c\u00bfY si siente que lo estoy persiguiendo?\u201d"],
+  "Proponer un encuentro no significa que est\u00e9s ocupando el lugar del otro ni intentando empujar el v\u00ednculo.",
+  "A veces simplemente significa que ten\u00e9s ganas de verlo y tom\u00e1s la iniciativa para decirlo."
+],evita:[
+  "Convertir la propuesta en una prueba para medir cu\u00e1nto le import\u00e1s.",
+  "No necesit\u00e1s hacerla de una manera calculada para conseguir determinada reacci\u00f3n.",
+  "Y tampoco hace falta esconder tus ganas detr\u00e1s de una excusa que en realidad no existe.",
+  "Si quer\u00e9s verlo, pod\u00e9s propon\u00e9rselo con naturalidad y dejar que \u00e9l decida qu\u00e9 hacer con esa invitaci\u00f3n."
+],que:[
+  {ctx:"Si quer\u00e9s ser directa:",msgs:["Tengo ganas de verte. \u00bfEst\u00e1s libre esta semana?"]},
+  {ctx:"Si ya hablaron de alg\u00fan lugar o plan:",msgs:["Me acord\u00e9 del lugar que hablamos el otro d\u00eda. \u00bfVamos esta semana?"]},
+  {ctx:"Si sab\u00e9s qu\u00e9 d\u00eda podr\u00edas:",msgs:["El jueves estoy libre. Si vos tambi\u00e9n pod\u00e9s, podr\u00edamos vernos."]},
+  {ctx:"Si quer\u00e9s proponer algo concreto:",msgs:["Tengo ganas de ir a [lugar/plan]. \u00bfTe gustar\u00eda que vayamos juntos?"]}
+],queOutro:[
+  "No necesit\u00e1s suavizar tanto la invitaci\u00f3n que termine pareciendo que te da exactamente lo mismo si se ven o no.",
+  "Pod\u00e9s mostrar que ten\u00e9s ganas y, al mismo tiempo, dejar espacio para que \u00e9l tambi\u00e9n participe."
+],observa:[
+  "Una vez que hiciste la propuesta, no necesit\u00e1s seguir empuj\u00e1ndola para conseguir que suceda.",
+  "Si no puede ese d\u00eda, puede proponer otro.",
+  "Si necesita revisar su agenda, puede volver con una opci\u00f3n.",
+  "Si tambi\u00e9n quiere verte, tiene espacio para participar en convertir esa propuesta en un encuentro.",
+  "Vos ya hiciste tu parte: expresaste una intenci\u00f3n clara sin convertirte en la responsable de hacer que el plan ocurra."
+]},
+/*** 04 ***/
+{num:"04",titulo:"QUIERO RETOMAR UNA CONVERSACI\u00d3N QUE QUED\u00d3 COLGADA",
+objetivo:[
+  "Estaban hablando de algo y la conversaci\u00f3n qued\u00f3 ah\u00ed.",
+  "Pasaron unas horas, quiz\u00e1s un d\u00eda o un poco m\u00e1s, y ahora te gustar\u00eda retomarla.",
+  "Pero aparece esa peque\u00f1a incomodidad:",
+  ["\u201c\u00bfQuedar\u00e1 raro volver al tema?\u201d","\u201c\u00bfYa pas\u00f3 demasiado tiempo?\u201d","\u201c\u00bfTengo que esperar a que \u00e9l lo retome?\u201d"],
+  "No siempre una conversaci\u00f3n termina porque alguien perdi\u00f3 el inter\u00e9s.",
+  "A veces lleg\u00f3 el trabajo, se hizo tarde, apareci\u00f3 otro compromiso o simplemente el d\u00eda sigui\u00f3.",
+  "Si todav\u00eda ten\u00e9s ganas de continuar algo que estaban hablando, pod\u00e9s volver a ese punto sin hacer de la pausa un problema."
+],evita:[
+  "Retomar la conversaci\u00f3n desde el reproche cuando en realidad lo que quer\u00e9s es seguir hablando.",
+  "Frases como:",
+  ["\u201cBueno, desapareciste\u2026\u201d","\u201cVeo que qued\u00f3 ah\u00ed la conversaci\u00f3n.\u201d","\u201c\u00bfYa no me ibas a responder?\u201d"],
+  "cambian completamente el tono y convierten una conversaci\u00f3n que quer\u00edas recuperar en una explicaci\u00f3n que el otro tiene que darte.",
+  "Si lo que pas\u00f3 fue simplemente que la charla se cort\u00f3, no necesit\u00e1s tratar esa pausa como si ya significara algo."
+],que:[
+  {ctx:"Si qued\u00f3 pendiente algo que \u00e9l estaba cont\u00e1ndote:",msgs:["Me qued\u00e9 con ganas de saber c\u00f3mo termin\u00f3 lo que me estabas contando."]},
+  {ctx:"Si quer\u00e9s volver directamente al tema:",msgs:["Volviendo a lo que habl\u00e1bamos ayer\u2026"]},
+  {ctx:"Si despu\u00e9s te acordaste de algo relacionado:",msgs:["Me acord\u00e9 de algo sobre lo que est\u00e1bamos hablando el otro d\u00eda\u2026"]},
+  {ctx:"Si era un tema que genuinamente te interes\u00f3:",msgs:["Me qued\u00e9 pensando en eso que dijiste sobre [tema]. \u00bfPor qu\u00e9 lo ves as\u00ed?"]}
+],queOutro:[
+  "Y si la conversaci\u00f3n simplemente se interrumpi\u00f3 y quer\u00e9s continuarla, tampoco necesit\u00e1s justificar demasiado el regreso.",
+  "Pod\u00e9s volver al tema como har\u00edas en cualquier conversaci\u00f3n que te interesa seguir teniendo."
+],observa:[
+  "Retomar una conversaci\u00f3n una vez porque te interes\u00f3 lo que estaban hablando es completamente distinto de intentar revivir una charla que el otro deja caer una y otra vez.",
+  "Esta tarjeta no es para que encuentres nuevas formas de conseguir una respuesta.",
+  "Es para esos momentos en los que hay algo que genuinamente quer\u00e9s seguir conversando y una pausa te est\u00e1 haciendo dudar m\u00e1s de la cuenta.",
+  "Retom\u00e1lo con naturalidad.",
+  "Despu\u00e9s, dej\u00e1 que la conversaci\u00f3n vuelva a ser de dos."
+]},
+/*** 05 ***/
+{num:"05",titulo:"QUIERO HACERLE UN CUMPLIDO SIN SENTIR QUE ESTOY EXAGERANDO",
+objetivo:[
+  "Hay algo de \u00e9l que te gusta.",
+  "Puede ser c\u00f3mo piensa, algo que hizo, su sentido del humor, c\u00f3mo se desenvuelve en determinada situaci\u00f3n o, simplemente, algo f\u00edsico que te atrae.",
+  "Te nace dec\u00edrselo, pero enseguida empez\u00e1s a medirlo:",
+  ["\u201c\u00bfSer\u00e1 demasiado?\u201d","\u201c\u00bfLe estar\u00e9 dando mucha importancia?\u201d","\u201c\u00bfVa a quedar raro si se lo digo yo?\u201d"],
+  "Un cumplido no tiene que ser una gran declaraci\u00f3n.",
+  "A veces es simplemente decir en voz alta algo lindo que genuinamente pensaste del otro."
+],evita:[
+  "Decir algo que no sent\u00eds solamente porque quer\u00e9s agradarle.",
+  "Y tampoco necesit\u00e1s exagerar para que el cumplido tenga m\u00e1s efecto.",
+  "Hay una diferencia enorme entre reconocer algo que te gusta de alguien y ponerlo en un pedestal.",
+  ["\u201cSos el hombre m\u00e1s incre\u00edble que conoc\u00ed\u201d dice mucho m\u00e1s de lo que probablemente quer\u00edas expresar."],
+  "En cambio, algo concreto suele sentirse mucho m\u00e1s natural porque habla de algo que realmente viste en \u00e9l."
+],que:[
+  {ctx:"Si admiraste c\u00f3mo manej\u00f3 una situaci\u00f3n:",msgs:["Me gust\u00f3 mucho c\u00f3mo resolviste eso."]},
+  {ctx:"Si hay algo de su forma de pensar que te atrae:",msgs:["Me gusta c\u00f3mo pens\u00e1s. Siempre termin\u00e1s haci\u00e9ndome mirar algunas cosas desde otro lugar."]},
+  {ctx:"Si disfrutás una caracter\u00edstica suya:",msgs:["Ten\u00e9s un sentido del humor que me encanta."]},
+  {ctx:"Si quer\u00e9s decirle algo f\u00edsico:",msgs:["Ese color te queda muy bien.","Qu\u00e9 lindo est\u00e1s hoy."]},
+  {ctx:"Y si hizo algo que te pareci\u00f3 especialmente considerado:",msgs:["Me gust\u00f3 mucho ese gesto que tuviste."]}
+],queOutro:[
+  "No necesit\u00e1s convertir cada cumplido en algo profundo.",
+  "A veces puede ser admiraci\u00f3n. Otras, atracci\u00f3n. O simplemente algo que viste y te dieron ganas de decir."
+],observa:[
+  "Una vez que se lo dijiste, dej\u00e1 que el cumplido sea eso.",
+  "No necesit\u00e1s quitarle valor inmediatamente con un chiste porque te dio verg\u00fcenza haber sido directa.",
+  "Tampoco hace falta esperar que \u00e9l te devuelva otro cumplido para sentir que estuvo bien haberlo dicho.",
+  "Lo dijiste porque era verdad, no para conseguir algo a cambio.",
+  "Y poder reconocer algo que te gusta de la persona que est\u00e1s conociendo tambi\u00e9n es una forma adulta de mostrar inter\u00e9s."
+]},
+/*** 06 ***/
+{num:"06",titulo:"ME DIJO ALGO LINDO Y QUIERO RESPONDER SIN QUEDARME EN UN SIMPLE \u201cGRACIAS\u201d",
+objetivo:[
+  "Te dijo algo lindo.",
+  "Te gust\u00f3 recibirlo, quiz\u00e1s incluso te hizo sonre\u00edr, pero cuando vas a responder no sab\u00e9s muy bien qu\u00e9 agregar despu\u00e9s de:",
+  ["\u201cGracias.\u201d"],
+  "Y tampoco quer\u00e9s contestar algo que no se parezca a vos solamente para mantener el momento.",
+  "No necesit\u00e1s encontrar una respuesta brillante.",
+  "A veces alcanza con dejarle saber que lo que te dijo te gust\u00f3, te sorprendi\u00f3 o te hizo sentir bien."
+],evita:[
+  "Quitarle valor al cumplido porque te da un poco de verg\u00fcenza recibirlo.",
+  "Si te dice:",
+  ["\u201cEst\u00e1s hermosa.\u201d"],
+  "no necesit\u00e1s responder:",
+  ["\u201cNo, estoy hecha un desastre.\u201d"],
+  "Si reconoce algo de vos que le gusta, tampoco hace falta explicarle inmediatamente por qu\u00e9 quiz\u00e1s est\u00e1 equivocado.",
+  "Y no ten\u00e9s que devolverle otro cumplido por obligaci\u00f3n.",
+  "Si te nace, perfecto.",
+  "Pero recibir algo lindo no crea una deuda que ten\u00e9s que devolver en el mismo mensaje."
+],que:[
+  {ctx:"Si simplemente te gust\u00f3 lo que te dijo:",msgs:["Gracias. Me encant\u00f3 que me dijeras eso."]},
+  {ctx:"Si te tom\u00f3 por sorpresa:",msgs:["No me esperaba que me dijeras eso. Me sacaste una sonrisa."]},
+  {ctx:"Si fue algo m\u00e1s personal:",msgs:["Gracias. Me gust\u00f3 mucho que vieras eso en m\u00ed."]},
+  {ctx:"Si quer\u00e9s responder con un poquito m\u00e1s de cercan\u00eda:",msgs:["Qu\u00e9 lindo que me digas eso."]},
+  {ctx:"Y a veces incluso un:",msgs:["Gracias, me hiciste sonre\u00edr."]}
+],queOutro:[
+  "dice mucho m\u00e1s que intentar construir una respuesta perfecta.",
+  "La idea no es tener una frase preparada para cada cumplido.",
+  "Es permitirte recibirlo sin esconder que te gust\u00f3 recibirlo."
+],observa:[
+  "No necesit\u00e1s convertir ese momento en una conversaci\u00f3n m\u00e1s profunda ni preguntarte inmediatamente cu\u00e1nto significa lo que acaba de decirte.",
+  "Esta tarjeta tampoco es para analizar si su cumplido demuestra inter\u00e9s, atracci\u00f3n o sentimientos.",
+  "Eso ser\u00eda intentar sacar una conclusi\u00f3n de algo que, por ahora, puede simplemente disfrutarse.",
+  "Si te gust\u00f3 lo que te dijo, pod\u00e9s dejar que se note.",
+  "Recibir un cumplido con naturalidad tambi\u00e9n es dejar que se note que te gust\u00f3."
+]},
+/*** 07 ***/
+{num:"07",titulo:"QUIERO COQUETEAR CON \u00c9L POR MENSAJE SIN QUE SUENE FORZADO",
+objetivo:[
+  "Entre ustedes ya hay cierta qu\u00edmica.",
+  "Quiz\u00e1s \u00e9l te dijo algo con un poco de picard\u00eda o simplemente la conversaci\u00f3n tom\u00f3 ese tono y te dieron ganas de seguirle el juego.",
+  "Pero cuando vas a responder, empez\u00e1s a pensarlo demasiado.",
+  ["\u201c\u00bfQu\u00e9 le digo?\u201d","\u201c\u00bfEsto sonar\u00e1 forzado?\u201d","\u201c\u00bfSer\u00e1 mucho?\u201d"],
+  "Coquetear no significa convertirte de repente en una versi\u00f3n m\u00e1s atrevida de vos misma.",
+  "Muchas veces es simplemente animarte a seguir ese juego cuando tambi\u00e9n te divierte."
+],evita:[
+  "Mandar algo que no dir\u00edas nunca solamente porque sent\u00eds que \u201cdeber\u00edas\u201d responder de una manera m\u00e1s seductora.",
+  "No necesit\u00e1s subir el tono para mantener su inter\u00e9s.",
+  "Y tampoco hace falta convertir cada conversaci\u00f3n en coqueteo.",
+  "Si entre ustedes apareci\u00f3 naturalmente ese juego, pod\u00e9s participar desde tu propia personalidad."
+],que:[
+  {ctx:"Si te est\u00e1 provocando en broma:",msgs:["Mir\u00e1 que te est\u00e1s tomando demasiada confianza\u2026"]},
+  {ctx:"Si te dice algo con cierta picard\u00eda:",msgs:["Ah, \u00bfas\u00ed que por ah\u00ed viene la cosa?"]},
+  {ctx:"Si te est\u00e1 desafiando con algo:",msgs:["No est\u00e9s tan seguro\u2026"]},
+  {ctx:"Si hace un comentario que claramente busca tu reacci\u00f3n:",msgs:["Sab\u00edas perfectamente lo que estabas haciendo cuando me dijiste eso."]}
+],queOutro:[
+  "No necesit\u00e1s encontrar \u201cla frase correcta\u201d.",
+  "La idea es mucho m\u00e1s simple: si el intercambio te divierte y te nace seguirlo, respond\u00e9 desde ese mismo lugar."
+],observa:[
+  "No necesit\u00e1s preguntarte despu\u00e9s si tu respuesta consigui\u00f3 el efecto correcto.",
+  "Fijate simplemente si el intercambio sigue sinti\u00e9ndose c\u00f3modo y divertido para vos.",
+  "Si te sale naturalmente, disfrutalo.",
+  "Y si en alg\u00fan momento el tono deja de gustarte, no ten\u00e9s ninguna obligaci\u00f3n de seguirlo solamente porque empez\u00f3 como un juego.",
+  "La idea es que puedas seguirle el juego y seguir sinti\u00e9ndote vos."
+]},
+/*** 08 ***/
+{num:"08",titulo:"QUIERO DECIRLE QUE ALGO ME MOLEST\u00d3 SIN CONVERTIRLO EN UNA PELEA",
+objetivo:[
+  "Pas\u00f3 algo que te molest\u00f3.",
+  "Quiz\u00e1s fue un comentario, una actitud o una situaci\u00f3n puntual.",
+  "Y ahora est\u00e1s entre dos lugares:",
+  ["\u201cNo quiero hacer un problema de esto.\u201d"],
+  "Pero tampoco quer\u00e9s hacer como si no hubiera pasado nada.",
+  "Decir que algo te molest\u00f3 no significa empezar una pelea.",
+  "Pod\u00e9s hablar de una situaci\u00f3n concreta sin atacar, acumular otras cosas ni convertirla en algo m\u00e1s grande de lo que fue."
+],evita:[
+  "Empezar desde una acusaci\u00f3n cuando lo que quer\u00e9s es contarle c\u00f3mo te cay\u00f3 algo.",
+  "Por ejemplo:",
+  ["\u201cSos un desconsiderado.\u201d","\u201cSiempre hac\u00e9s lo mismo.\u201d","\u201cClaramente te da igual c\u00f3mo me siento.\u201d"],
+  "Ah\u00ed ya no est\u00e1s hablando solamente de lo que ocurri\u00f3.",
+  "Est\u00e1s definiendo qui\u00e9n es \u00e9l, suponiendo qu\u00e9 intenci\u00f3n tuvo o sumando situaciones que quiz\u00e1s no tienen nada que ver con esta.",
+  "Si hubo algo puntual que te molest\u00f3, empez\u00e1 por ah\u00ed."
+],que:[
+  {ctx:"Si fue un comentario:",msgs:["Lo que dijiste antes me incomod\u00f3. Capaz no fue tu intenci\u00f3n, pero quer\u00eda dec\u00edrtelo."]},
+  {ctx:"Si fue algo que hizo:",msgs:["Quer\u00eda decirte algo de ayer. Hubo una situaci\u00f3n que no me gust\u00f3 y prefer\u00eda hablarlo con vos."]},
+  {ctx:"Si quer\u00e9s explicar espec\u00edficamente qu\u00e9 te pas\u00f3:",msgs:["Cuando pas\u00f3 [situaci\u00f3n], me sent\u00ed inc\u00f3moda. No quer\u00eda quedarme con eso sin dec\u00edrtelo."]},
+  {ctx:"Si no quer\u00e9s dramatizarlo pero s\u00ed dejarlo claro:",msgs:["No quiero hacer algo enorme de esto, pero s\u00ed quer\u00eda decirte que eso me molest\u00f3."]}
+],queOutro:[
+  "No necesit\u00e1s preparar un discurso perfecto.",
+  "Dec\u00ed qu\u00e9 pas\u00f3 y c\u00f3mo te cay\u00f3, sin intentar demostrar que ten\u00e9s raz\u00f3n antes de que la conversaci\u00f3n siquiera empiece."
+],observa:[
+  "Una vez que lo dijiste, dej\u00e1 espacio para que \u00e9l tambi\u00e9n pueda hablar.",
+  "Quiz\u00e1s te explique c\u00f3mo lo vivi\u00f3, quiz\u00e1s no se hab\u00eda dado cuenta o quiz\u00e1s tenga una mirada diferente.",
+  "No necesit\u00e1s resolver toda la conversaci\u00f3n antes de escucharla.",
+  "Y tampoco ten\u00e9s que retirar lo que sentiste solamente porque \u00e9l lo vivi\u00f3 de otra manera.",
+  "Pod\u00e9s escuchar lo que tiene para decir y, al mismo tiempo, sostener que a vos esa situaci\u00f3n te molest\u00f3."
+]},
+/*** 09 ***/
+{num:"09",titulo:"NO PUEDO HACER EL PLAN QUE ME PROPUSO, PERO QUIERO QUE SEPA QUE S\u00cd TENGO GANAS DE VERLO",
+objetivo:[
+  "Te propuso verse y justo ese d\u00eda no pod\u00e9s.",
+  "Y aunque parece una situaci\u00f3n bastante simple, cuando alguien te gusta puede aparecer la duda:",
+  ["\u201c\u00bfLe digo solamente que no puedo?\u201d","\u201c\u00bfPensar\u00e1 que no tengo ganas de verlo?\u201d","\u201c\u00bfTengo que explicarle por qu\u00e9?\u201d"],
+  "No necesit\u00e1s aceptar un plan que no te viene bien para demostrar inter\u00e9s.",
+  "Pod\u00e9s decir que ese d\u00eda no pod\u00e9s y, al mismo tiempo, dejar claro que las ganas de verlo s\u00ed est\u00e1n."
+],evita:[
+  "Dar una explicaci\u00f3n larguis\u00edma para demostrarle que tu \u201cno\u201d es leg\u00edtimo.",
+  "No necesit\u00e1s justificar cada detalle de tu agenda para que entienda que realmente no pod\u00e9s.",
+  "Y tampoco hace falta aceptar algo que te complica solamente por miedo a que no vuelva a propon\u00e9rtelo.",
+  "Hay una diferencia muy sencilla entre:",
+  ["\u201cNo quiero verte.\u201d"],
+  "y",
+  ["\u201cQuiero verte, pero ese d\u00eda no puedo.\u201d"],
+  "Si lo segundo es lo que te pasa, pod\u00e9s decir exactamente eso."
+],que:[
+  {ctx:"Si quer\u00e9s mantenerlo sencillo:",msgs:["Ese d\u00eda no puedo, pero s\u00ed tengo ganas de verte. \u00bfVemos otro?"]},
+  {ctx:"Si ya sab\u00e9s cu\u00e1ndo podr\u00edas:",msgs:["El viernes se me complica, pero el domingo estoy libre. Si vos tambi\u00e9n pod\u00e9s, nos vemos."]},
+  {ctx:"Si el plan te gust\u00f3 pero el problema es el d\u00eda:",msgs:["Me encanta el plan. Ese d\u00eda justo no puedo, \u00bflo hacemos otro?"]},
+  {ctx:"Si todav\u00eda no sab\u00e9s cu\u00e1ndo vas a estar libre:",msgs:["Esta vez no puedo, pero me qued\u00e9 con ganas. Cuando vea c\u00f3mo viene mi semana te digo y buscamos otro momento."]}
+],queOutro:[
+  "No hace falta hacer que tu negativa suene fr\u00eda para que parezca que ten\u00e9s una vida propia.",
+  "Ya la ten\u00e9s.",
+  "Simplemente est\u00e1s acomodando un encuentro con alguien que quer\u00e9s ver."
+],observa:[
+  "Una vez que aclaraste que ten\u00e9s ganas de verlo, no necesit\u00e1s seguir demostrando inter\u00e9s para compensar haber dicho que no.",
+  "Si propusiste otra opci\u00f3n, dej\u00e1 que \u00e9l tambi\u00e9n vea si puede.",
+  "Si todav\u00eda no sab\u00e9s cu\u00e1ndo, retom\u00e1lo cuando realmente tengas una alternativa.",
+  "No pasa nada si justo ese d\u00eda no pod\u00e9s. Si los dos tienen ganas de verse, encontrar\u00e1n otro momento."
+]},
+/*** 10 ***/
+{num:"10",titulo:"QUIERO DECIRLE QUE NECESITO MI ESPACIO SIN QUE PAREZCA QUE PERD\u00cd EL INTER\u00c9S",
+objetivo:[
+  "Te gusta y segu\u00eds teniendo ganas de conocerlo.",
+  "Pero est\u00e1s en una semana complicada, ten\u00e9s muchas cosas en la cabeza o simplemente sent\u00eds que necesit\u00e1s unos d\u00edas m\u00e1s tranquilos para vos.",
+  "Y aparece la preocupaci\u00f3n:",
+  ["\u201c\u00bfC\u00f3mo se lo digo sin que piense que me estoy alejando?\u201d"],
+  "No necesit\u00e1s seguir estando igual de disponible cuando en realidad necesit\u00e1s bajar un poco el ritmo.",
+  "Pod\u00e9s decirlo con naturalidad y, si quer\u00e9s, aclarar que ese espacio tiene que ver con vos y no con un cambio en lo que sent\u00eds por \u00e9l."
+],evita:[
+  "Desaparecer sin decir nada esperando que \u00e9l entienda solo qu\u00e9 te pasa.",
+  "Pero tampoco necesit\u00e1s darle una explicaci\u00f3n detallada de todo lo que est\u00e1s viviendo si no quer\u00e9s hacerlo.",
+  "Y, sobre todo, no uses la distancia para comprobar si te busca, cu\u00e1nto insiste o si te extra\u00f1a.",
+  "Si necesit\u00e1s espacio, que sea porque realmente te hace bien tenerlo, no para provocar una reacci\u00f3n."
+],que:[
+  {ctx:"Si est\u00e1s teniendo unos d\u00edas complicados:",msgs:["Estoy con una semana bastante intensa y necesito bajar un cambio estos d\u00edas. No tiene que ver con vos."]},
+  {ctx:"Si quer\u00e9s dejar claro que segu\u00eds interesada:",msgs:["Estos d\u00edas voy a estar un poco m\u00e1s en la m\u00eda, pero quer\u00eda dec\u00edrtelo para que no lo interpretes como falta de inter\u00e9s."]},
+  {ctx:"Si necesit\u00e1s bajar el ritmo sin dar demasiadas explicaciones:",msgs:["Estoy necesitando unos d\u00edas m\u00e1s tranquilos para m\u00ed. Est\u00e1 todo bien entre nosotros, simplemente necesito bajar un poco el ritmo."]},
+  {ctx:"Si adem\u00e1s quer\u00e9s hacerle saber que despu\u00e9s te gustar\u00eda verlo:",msgs:["Esta semana necesito ocuparme un poco de m\u00ed y de algunas cosas que tengo pendientes. Cuando est\u00e9 m\u00e1s tranquila, me gustar\u00eda que nos veamos."]}
+],queOutro:[
+  "No necesit\u00e1s pedir perd\u00f3n por necesitar tiempo para vos.",
+  "Y tampoco convertirlo en una conversaci\u00f3n m\u00e1s seria de lo que realmente es."
+],observa:[
+  "Una vez que lo dijiste, permit\u00edtete tomar ese espacio de verdad.",
+  "No tiene mucho sentido avisarle que necesit\u00e1s unos d\u00edas para vos y despu\u00e9s pasar esos d\u00edas pendiente de c\u00f3mo reaccion\u00f3 a que se lo dijeras.",
+  "Cuando est\u00e9s m\u00e1s tranquila, podr\u00e1s volver a acercarte con naturalidad.",
+  "A veces necesit\u00e1s estar un poco m\u00e1s en la tuya. Pod\u00e9s decirlo sin hacer de eso un problema entre ustedes."
+]},
+/*** 11 ***/
+{num:"11",titulo:"QUIERO PEDIRLE ALGO QUE NECESITO SIN SONAR EXIGENTE",
+objetivo:[
+  "Hay algo que te gustar\u00eda pedirle.",
+  "No porque haya hecho algo mal, sino porque hay una forma de hacer las cosas que a vos te vendr\u00eda mejor.",
+  "Y aunque sab\u00e9s bastante bien qu\u00e9 necesit\u00e1s, aparece la duda:",
+  ["\u201c\u00bfSe lo digo?\u201d","\u201c\u00bfSer\u00e1 demasiado pedir?\u201d","\u201c\u00bfNo tendr\u00eda que darse cuenta solo?\u201d"],
+  "Pedir algo no significa exigir que el otro lo haga.",
+  "Significa darle la oportunidad de saber qu\u00e9 te gustar\u00eda, en lugar de esperar que lo adivine."
+],evita:[
+  "Dar vueltas alrededor de lo que quer\u00e9s esperando que \u00e9l entienda la indirecta.",
+  "Y tambi\u00e9n evit\u00e1 plantearlo como una obligaci\u00f3n antes de siquiera haberlo hablado.",
+  "No es lo mismo:",
+  ["\u201cNunca me avis\u00e1s con tiempo.\u201d"],
+  "que:",
+  ["\u201cSi podemos organizarlo con un poco m\u00e1s de tiempo, a m\u00ed me viene mucho mejor.\u201d"],
+  "Una habla desde el reproche.",
+  "La otra simplemente le cuenta algo que para vos es importante."
+],que:[
+  {ctx:"Si te ayuda organizar los planes con anticipaci\u00f3n:",msgs:["Si podemos organizarlo con un poco m\u00e1s de tiempo, a m\u00ed me viene mucho mejor."]},
+  {ctx:"Si necesit\u00e1s que te avise de algo:",msgs:["Cuando sepas qu\u00e9 vas a hacer, \u00bfme avis\u00e1s? As\u00ed yo tambi\u00e9n puedo organizarme."]},
+  {ctx:"Si hay algo sencillo que te har\u00eda sentir m\u00e1s c\u00f3moda:",msgs:["La pr\u00f3xima preferir\u00eda que hagamos [opci\u00f3n]. \u00bfTe parece?"]},
+  {ctx:"Si quer\u00e9s pedir algo sin asumir que \u00e9l tiene que poder hacerlo:",msgs:["\u00bfTe puedo pedir algo? Si pod\u00e9s [pedido concreto], me ayudar\u00eda mucho."]}
+],queOutro:[
+  "No necesit\u00e1s justificar durante diez minutos por qu\u00e9 quer\u00e9s algo para que tu pedido sea v\u00e1lido.",
+  "Pod\u00e9s decirlo de manera clara y dejar que \u00e9l tambi\u00e9n te diga qu\u00e9 piensa o qu\u00e9 puede hacer."
+],observa:[
+  "Una vez que lo pediste, no hace falta seguir explic\u00e1ndolo para conseguir que suene razonable.",
+  "Dej\u00e1 que \u00e9l responda.",
+  "Puede decirte que s\u00ed, proponerte otra manera o incluso decirte que no puede.",
+  "Pedir algo no garantiza que el otro vaya a hacerlo, pero s\u00ed evita que tengas que esperar que adivine qu\u00e9 necesit\u00e1s.",
+  "Si hay algo que te vendr\u00eda bien, pod\u00e9s decirlo. Despu\u00e9s ver\u00e1n entre los dos c\u00f3mo les funciona mejor."
+]},
+/*** 12 ***/
+{num:"12",titulo:"QUIERO TERMINAR UNA CONVERSACI\u00d3N DE FORMA NATURAL SIN SENTIR QUE TENGO QUE SEGUIR HABLANDO POR COMPROMISO",
+objetivo:[
+  "Est\u00e1n hablando, la conversaci\u00f3n est\u00e1 bien, pero vos ya ten\u00e9s que seguir con otra cosa.",
+  "Quiz\u00e1s te vas a dormir, ten\u00e9s trabajo, quedaste con alguien o simplemente ya no ten\u00e9s ganas de seguir pendiente del tel\u00e9fono.",
+  "Y aun as\u00ed te encontr\u00e1s estirando la charla porque pens\u00e1s:",
+  ["\u201c\u00bfQuedar\u00e1 mal si corto ahora?\u201d","\u201c\u00bfPensar\u00e1 que perd\u00ed el inter\u00e9s?\u201d","\u201c\u00bfTengo que seguir respondiendo mientras \u00e9l siga hablando?\u201d"],
+  "No.",
+  "Una conversaci\u00f3n puede estar buen\u00edsima y aun as\u00ed terminar.",
+  "No necesit\u00e1s quedarte disponible hasta que los dos encuentren el momento perfecto para dejar de escribir."
+],evita:[
+  "Inventar una excusa complicada para poder irte.",
+  "Tampoco necesit\u00e1s empezar a responder cada vez m\u00e1s seco esperando que \u00e9l entienda solo que quer\u00e9s terminar la conversaci\u00f3n.",
+  "Si ten\u00e9s que seguir con tu d\u00eda, pod\u00e9s simplemente decirlo.",
+  "Cerrar una charla con naturalidad es mucho m\u00e1s sencillo que intentar desaparecer de ella de a poco."
+],que:[
+  {ctx:"Si ten\u00e9s que seguir con tu d\u00eda:",msgs:["Me tengo que poner con unas cosas. Despu\u00e9s seguimos hablando."]},
+  {ctx:"Si te vas a dormir:",msgs:["Me voy a dormir que ma\u00f1ana arranco temprano. Que descanses."]},
+  {ctx:"Si est\u00e1s por hacer otra cosa:",msgs:["Me encant\u00f3 hablar con vos, pero ahora tengo que salir. Hablamos despu\u00e9s."]},
+  {ctx:"Si simplemente llevaban un rato largo hablando:",msgs:["Bueno, voy a seguir con mi d\u00eda. Despu\u00e9s hablamos."]}
+],queOutro:[
+  "No necesit\u00e1s agregar una explicaci\u00f3n enorme ni asegurarte de que la conversaci\u00f3n quede perfectamente cerrada.",
+  "A veces un \u201cdespu\u00e9s hablamos\u201d alcanza."
+],observa:[
+  "No hace falta que te quedes en una conversaci\u00f3n solamente porque est\u00e1 yendo bien.",
+  "Pod\u00e9s disfrutar hablar con \u00e9l y tambi\u00e9n seguir con tu vida cuando tengas otras cosas que hacer.",
+  "Y cuando vuelvan a hablar, simplemente vuelven a hablar.",
+  "Si ya ten\u00e9s que hacer otra cosa, segu\u00ed con tu d\u00eda. La conversaci\u00f3n puede continuar en otro momento."
+]}
+];
+function mostrar(id){
+  document.querySelectorAll(".screen").forEach(function(s){s.classList.remove("active");});
+  document.getElementById("screen-"+id).classList.add("active");
+  window.scrollTo({top:0,behavior:"instant"});
+}
+function irAMenu(){mostrar("menu");}
+
+function esc(s){
+  return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+function renderParas(arr){
+  return arr.map(function(item){
+    if(Array.isArray(item)){
+      return item.map(function(q){return "<p class=\"cite-block\">"+esc(q)+"</p>";}).join("");
+    }
+    var lines=item.split("\n");
+    if(lines.length>1){
+      return lines.map(function(l){return "<p class=\"cite-block\">"+esc(l)+"</p>";}).join("");
+    }
+    return "<p>"+esc(item)+"</p>";
+  }).join("");
+}
+
+function irASituacion(n){
+  var s=S[n-1];
+  if(!s)return;
+  var queHTML="";
+  s.que.forEach(function(g){
+    queHTML+='<div class="msg-group"><p class="msg-context">'+esc(g.ctx)+'</p><div class="msg-bubble-wrap">';
+    g.msgs.forEach(function(m){
+      queHTML+='<div class="msg-bubble"><p class="msg-bubble-text">'+esc(m)+'</p><div class="msg-bubble-actions"><button class="btn-copy" data-msg="'+esc(m)+'" onclick="copiar(this)" aria-label="Copiar mensaje">COPIAR</button></div></div>';
+    });
+    queHTML+='</div></div>';
+  });
+  var outroHTML=s.queOutro.map(function(p){return '<p class="msg-outro">'+esc(p)+'</p>';}).join("");
+  document.getElementById("situacion-content").innerHTML=
+    '<div class="sit-header">'
+    +'<div class="sit-header-photo" aria-hidden="true"><img src="909a4a99-0aa3-4abf-bb5e-6684b2c9529d.png" alt="" loading="lazy"/></div>'
+    +'<div class="sit-header-content">'
+    +'<div class="sit-header-logo"><img src="logo-elegida.png.png" alt="ELEGIDA\u2122"/></div>'
+    +'<span class="sit-number-badge">'+esc(s.num)+'</span>'
+    +'<h1 class="sit-titulo">'+esc(s.titulo)+'</h1>'
+    +'</div></div>'
+    +'<div class="situacion-inner"><div class="sit-body">'
+    +'<div class="sit-section sit-section--objetivo">'
+    +'<div class="section-label"><span class="section-label-text">OBJETIVO</span><span class="section-label-line" aria-hidden="true"></span></div>'
+    +'<div class="sit-section-body">'+renderParas(s.objetivo)+'</div></div>'
+    +'<div class="sit-section sit-section--evita">'
+    +'<div class="section-label"><span class="section-label-text">EVIT\u00c1</span><span class="section-label-line" aria-hidden="true"></span></div>'
+    +'<div class="sit-section-body">'+renderParas(s.evita)+'</div></div>'
+    +'<div class="sit-section sit-section--que">'
+    +'<div class="section-label"><span class="section-label-text">QU\u00c9 POD\u00c9S DECIR</span><span class="section-label-line" aria-hidden="true"></span></div>'
+    +queHTML+outroHTML
+    +'</div>'
+    +'<div class="sit-section sit-section--observa">'
+    +'<div class="section-label"><span class="section-label-text">OBSERV\u00c1</span><span class="section-label-line" aria-hidden="true"></span></div>'
+    +'<div class="sit-section-body">'+renderParas(s.observa)+'</div></div>'
+    +'<div class="cierre-strip" aria-hidden="true">'
+    +'<img src="5d8f2423-4d9c-4ee9-af7f-02c216702648.png" alt="" loading="lazy"/>'
+    +'<div class="cierre-strip-overlay"></div></div>'
+    +'</div></div>'
+    +'<div class="back-wrap"><button class="btn-back" onclick="irAMenu()">\u2190 VOLVER A LAS SITUACIONES</button></div>';
+  mostrar("situacion");
+}
+
+function copiar(btn){
+  var msg=btn.getAttribute("data-msg");
+  if(!msg)return;
+  navigator.clipboard.writeText(msg).then(function(){
+    btn.textContent="COPIADO";btn.classList.add("copied");btn.disabled=true;
+    setTimeout(function(){btn.textContent="COPIAR";btn.classList.remove("copied");btn.disabled=false;},2200);
+  }).catch(function(){
+    var ta=document.createElement("textarea");
+    ta.value=msg;ta.style.cssText="position:fixed;top:0;left:0;opacity:0;";
+    document.body.appendChild(ta);ta.focus();ta.select();
+    try{document.execCommand("copy");
+      btn.textContent="COPIADO";btn.classList.add("copied");btn.disabled=true;
+      setTimeout(function(){btn.textContent="COPIAR";btn.classList.remove("copied");btn.disabled=false;},2200);
+    }catch(e){}
+    document.body.removeChild(ta);
+  });
+}
+
+mostrar("portada");
+</script>
+</body>
+</html>
