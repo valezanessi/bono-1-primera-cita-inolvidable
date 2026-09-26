@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<title>RADAR DE COMPROMISO&trade; &middot; ELEGIDA&trade;</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --borgona:#5B0F1A;--vino:#8E1C2A;--rosa:#C99BA6;
+  --nude:#E7D6C6;--crema:#FAF5EF;--carbon:#1A1A1A;
+  --champagne:#C9A84C;--blanco:#FFFFFF;
+  --f-titulo:'Playfair Display',Georgia,serif;
+  --f-cuerpo:'Inter',sans-serif;
+}
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--f-cuerpo);background:var(--crema);color:var(--carbon);min-height:100vh;overflow-x:hidden;line-height:1.65}
+img{display:block;max-width:100%}
+button{font-family:var(--f-cuerpo);cursor:pointer;border:none;background:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.screen{display:none;min-height:100vh;animation:fadeIn .45s ease forwards}
+.screen.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* PORTADA */
+#screen-portada{position:relative;background:var(--borgona);display:flex;flex-direction:column;min-height:100vh}
+.portada-hero{position:relative;width:100%;height:62vh;min-height:340px;overflow:hidden;flex-shrink:0}
+.portada-hero img{width:100%;height:100%;object-fit:cover;object-position:center 20%}
+.portada-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(91,15,26,.10) 0%,rgba(91,15,26,.55) 70%,rgba(91,15,26,.92) 100%)}
+.portada-logo{position:absolute;top:22px;left:0;right:0;display:flex;justify-content:center;z-index:2;padding:0 24px}
+.portada-logo img{height:44px;width:auto;object-fit:contain;filter:brightness(0) invert(1)}
+.portada-content{position:relative;z-index:1;flex:1;background:var(--borgona);padding:36px 28px 52px;display:flex;flex-direction:column;align-items:center;text-align:center}
+.portada-eyebrow{font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--rosa);margin-bottom:14px}
+.portada-titulo{font-family:var(--f-titulo);font-size:clamp(2rem,8vw,3rem);font-weight:600;color:var(--crema);line-height:1.12;letter-spacing:-.01em;margin-bottom:6px}
+.portada-marca{font-size:11px;font-weight:400;letter-spacing:.28em;text-transform:uppercase;color:var(--rosa);margin-bottom:28px}
+.portada-sep{width:38px;height:1px;background:var(--champagne);opacity:.6;margin:0 auto 24px}
+.portada-bajada{font-size:clamp(.95rem,3.5vw,1.05rem);font-weight:300;color:var(--nude);line-height:1.7;max-width:380px;margin-bottom:40px}
+.btn-iniciar{background:var(--crema);color:var(--borgona);font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;padding:16px 38px;transition:background .22s,color .22s,transform .15s}
+.btn-iniciar:hover{background:var(--nude);transform:translateY(-1px)}
+.btn-iniciar:active{transform:translateY(0)}
+
+/* PREGUNTAS */
+#screen-preguntas{background:var(--crema);display:flex;flex-direction:column;min-height:100vh}
+.preg-header{background:var(--borgona);padding:18px 24px 0;display:flex;flex-direction:column;align-items:center;flex-shrink:0}
+.preg-logo img{height:32px;width:auto;object-fit:contain;filter:brightness(0) invert(1);opacity:.85;margin-bottom:16px}
+.preg-indicador{font-family:var(--f-titulo);font-size:12px;letter-spacing:.3em;color:var(--rosa);margin-bottom:12px;font-style:italic}
+.barra-wrap{width:100%;max-width:480px;height:2px;background:rgba(201,155,166,.25);position:relative;margin-bottom:0}
+.barra-fill{height:100%;background:var(--rosa);transition:width .4s cubic-bezier(.4,0,.2,1);position:relative}
+.barra-fill::after{content:'';position:absolute;right:-1px;top:-1px;width:4px;height:4px;border-radius:50%;background:var(--nude)}
+.foto-editorial{display:none}
+.preg-body{flex:1;padding:36px 24px 24px;max-width:560px;margin:0 auto;width:100%}
+.preg-num-titulo{font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--vino);margin-bottom:10px}
+.preg-texto{font-family:var(--f-titulo);font-size:clamp(1.1rem,4.5vw,1.4rem);font-weight:500;color:var(--carbon);line-height:1.45;margin-bottom:32px;letter-spacing:-.01em}
+.opciones-grid{display:flex;flex-direction:column;gap:12px;margin-bottom:36px}
+.opcion-btn{width:100%;background:var(--blanco);border:1.5px solid rgba(91,15,26,.12);padding:16px 20px;text-align:left;font-size:clamp(.87rem,3.2vw,.96rem);font-weight:400;color:var(--carbon);line-height:1.55;transition:border-color .2s,background .2s,color .2s;position:relative}
+.opcion-btn:hover{border-color:var(--rosa);background:rgba(201,155,166,.07)}
+.opcion-btn.sel{background:var(--borgona);border-color:var(--borgona);color:var(--crema)}
+.opcion-btn.sel::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--champagne);opacity:.7}
+.preg-nav{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-bottom:40px}
+.btn-anterior{font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--vino);padding:14px 0;opacity:.8;transition:opacity .2s}
+.btn-anterior:hover{opacity:1}
+.btn-anterior.oculto{visibility:hidden;pointer-events:none}
+.btn-siguiente{background:var(--borgona);color:var(--crema);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;padding:15px 30px;transition:background .22s,transform .15s}
+.btn-siguiente:hover{background:var(--vino);transform:translateY(-1px)}
+.btn-siguiente:active{transform:translateY(0)}
+.btn-siguiente:disabled{background:rgba(91,15,26,.25);cursor:not-allowed;transform:none}
+
+/* RESULTADO */
+#screen-resultado{background:var(--crema);min-height:100vh}
+.res-header{background:var(--borgona);padding:22px 24px;display:flex;justify-content:center}
+.res-header img{height:34px;width:auto;object-fit:contain;filter:brightness(0) invert(1);opacity:.85}
+.res-foto-hero{width:100%;height:46vh;min-height:260px;overflow:hidden;position:relative}
+.res-foto-hero img{width:100%;height:100%;object-fit:cover;object-position:center 30%}
+.res-foto-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(250,245,239,.85) 100%)}
+.res-contenido{max-width:600px;margin:0 auto;padding:44px 28px 64px}
+.res-eyebrow{font-size:10px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:var(--vino);margin-bottom:14px}
+.res-titulo{font-family:var(--f-titulo);font-size:clamp(1.9rem,7vw,2.8rem);font-weight:600;color:var(--borgona);line-height:1.1;letter-spacing:-.01em;margin-bottom:10px}
+.res-subtitulo{font-family:var(--f-titulo);font-size:clamp(1rem,3.5vw,1.15rem);font-weight:400;font-style:italic;color:var(--vino);margin-bottom:28px;line-height:1.4}
+.res-sep{width:40px;height:1px;background:var(--champagne);opacity:.7;margin-bottom:28px}
+.res-texto{font-size:clamp(.93rem,3.5vw,1rem);font-weight:300;color:var(--carbon);line-height:1.82;margin-bottom:40px}
+.res-texto p{margin-bottom:1em}
+.res-texto p:last-child{margin-bottom:0}
+.res-foto-sec{width:100%;margin:40px 0;overflow:hidden}
+.res-foto-sec img{width:100%;max-height:380px;object-fit:cover;object-position:center 25%}
+.res-radar-titulo{font-size:10px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--vino);margin-bottom:18px}
+.res-radar-bloque{border-left:2px solid var(--rosa);padding-left:22px;margin-bottom:48px}
+.res-radar-texto{font-size:clamp(.93rem,3.4vw,1rem);font-weight:300;color:var(--carbon);line-height:1.82}
+.res-radar-texto p{margin-bottom:.85em}
+.res-radar-texto p:last-child{margin-bottom:0}
+.btn-reiniciar-wrap{display:flex;justify-content:center;padding-top:8px}
+.btn-reiniciar{background:none;border:1.5px solid rgba(91,15,26,.3);color:var(--borgona);font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;padding:13px 28px;transition:border-color .2s,background .2s,color .2s}
+.btn-reiniciar:hover{border-color:var(--borgona);background:var(--borgona);color:var(--crema)}
+
+@media(min-width:768px){
+  #screen-portada{flex-direction:row}
+  .portada-hero{width:52%;height:100vh;min-height:100vh;flex-shrink:0}
+  .portada-logo{position:absolute;top:30px;left:0;right:auto;padding-left:36px;justify-content:flex-start}
+  .portada-content{width:48%;padding:80px 52px 60px;justify-content:center;text-align:left;align-items:flex-start}
+  .portada-bajada{text-align:left}
+  .portada-sep{margin:0 0 24px 0}
+  .foto-editorial{display:block;width:100%;max-height:200px;overflow:hidden;position:relative}
+  .foto-editorial img{width:100%;height:200px;object-fit:cover;object-position:center 25%;opacity:.88}
+  .foto-editorial::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(91,15,26,.05) 0%,rgba(250,245,239,.85) 100%)}
+  .preg-body{padding:44px 32px 32px}
+  .res-foto-hero{height:56vh}
+  .res-contenido{padding:56px 48px 80px}
+}
+@media(min-width:1024px){
+  .portada-hero{width:55%}
+  .portada-content{width:45%;padding:80px 64px}
+  .portada-titulo{font-size:3.2rem}
+  .preg-body{padding:48px 40px;max-width:600px}
+  .res-contenido{padding:64px 56px 96px;max-width:700px}
+}
+</style>
+</head>
+<body>
+
+<!-- PORTADA -->
+<section id="screen-portada" class="screen active">
+  <div class="portada-hero">
+    <img src="foto-01-portada.png.png" alt="RADAR DE COMPROMISO" />
+    <div class="portada-logo">
+      <img src="logo-elegida.png.png" alt="ELEGIDA" />
+    </div>
+  </div>
+  <div class="portada-content">
+    <p class="portada-eyebrow">BONO 4 &middot; ELEGIDA&trade;</p>
+    <h1 class="portada-titulo">RADAR DE<br>COMPROMISO&trade;</h1>
+    <p class="portada-marca">BONO 4 &middot; ELEGIDA&trade;</p>
+    <div class="portada-sep"></div>
+    <p class="portada-bajada">Una herramienta para mirar el v&iacute;nculo con m&aacute;s claridad y preguntarte si vos tambi&eacute;n elegir&iacute;as al hombre que ten&eacute;s delante.</p>
+    <button class="btn-iniciar" id="btn-iniciar">INICIAR MI RADAR &rarr;</button>
+  </div>
+</section>
+
+<!-- PREGUNTAS -->
+<section id="screen-preguntas" class="screen">
+  <div class="preg-header">
+    <div class="preg-logo">
+      <img src="logo-elegida.png.png" alt="ELEGIDA" />
+    </div>
+    <p class="preg-indicador" id="indicador">01 / 10</p>
+    <div class="barra-wrap" id="barra-wrap" role="progressbar" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0">
+      <div class="barra-fill" id="barra-fill" style="width:0%"></div>
+    </div>
+  </div>
+  <div class="foto-editorial">
+    <img src="foto-02-preguntas.png.png" alt="" aria-hidden="true" />
+  </div>
+  <div class="preg-body">
+    <p class="preg-num-titulo" id="preg-num-titulo"></p>
+    <h2 class="preg-texto" id="preg-texto"></h2>
+    <div class="opciones-grid" id="opciones-grid"></div>
+    <nav class="preg-nav">
+      <button class="btn-anterior oculto" id="btn-anterior">&larr; ANTERIOR</button>
+      <button class="btn-siguiente" id="btn-siguiente" disabled>SIGUIENTE &rarr;</button>
+    </nav>
+  </div>
+</section>
+
+<!-- RESULTADO -->
+<section id="screen-resultado" class="screen">
+  <div class="res-header">
+    <img src="logo-elegida.png.png" alt="ELEGIDA" />
+  </div>
+  <div class="res-foto-hero">
+    <img id="res-foto-principal" src="" alt="" />
+  </div>
+  <div class="res-contenido">
+    <p class="res-eyebrow">TU RADAR &middot; ELEGIDA&trade;</p>
+    <h2 class="res-titulo" id="res-titulo"></h2>
+    <p class="res-subtitulo" id="res-subtitulo"></p>
+    <div class="res-sep"></div>
+    <div class="res-texto" id="res-texto"></div>
+    <div class="res-foto-sec" id="res-foto-sec-wrap" style="display:none">
+      <img id="res-foto-sec" src="" alt="" />
+    </div>
+    <p class="res-radar-titulo">TU RADAR AHORA</p>
+    <div class="res-radar-bloque">
+      <div class="res-radar-texto" id="res-radar-texto"></div>
+    </div>
+    <div class="btn-reiniciar-wrap">
+      <button class="btn-reiniciar" id="btn-reiniciar">VOLVER A HACER EL RADAR</button>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+'use strict';
+
+var preguntas=[
+{num:'1',titulo:'M\u00c1S ALL\u00c1 DE LA PRIMERA IMPRESI\u00d3N',texto:'\u00bfSent\u00eds que ya est\u00e1s conociendo c\u00f3mo es \u00e9l realmente, m\u00e1s all\u00e1 de la primera impresi\u00f3n?',opciones:['Todav\u00eda estamos en esa primera etapa.','Empiezo a conocer algunas cosas m\u00e1s.','Siento que cada vez lo conozco de una manera m\u00e1s real.','Ya tengo una idea bastante realista de qui\u00e9n es.']},
+{num:'2',titulo:'PODER PENSAR DISTINTO',texto:'Cuando pens\u00e1s distinto a \u00e9l, \u00bfsent\u00eds que pod\u00e9s decir lo que realmente pens\u00e1s?',opciones:['Todav\u00eda no tuvimos muchas conversaciones de ese tipo.','A veces s\u00ed, aunque todav\u00eda me cuido un poco.','S\u00ed, cada vez me sale m\u00e1s naturalmente.','S\u00ed. Puedo decir lo que pienso aunque \u00e9l pueda verlo distinto.']},
+{num:'3',titulo:'\u00bfÉL O SU POTENCIAL?',texto:'\u00bfTe gusta el hombre que es hoy o tambi\u00e9n est\u00e1s enamor\u00e1ndote de lo que imagin\u00e1s que podr\u00eda llegar a ser?',opciones:['Todav\u00eda lo conozco poco y hay bastante que imagino.','Me gusta lo que conozco, aunque tambi\u00e9n tengo expectativas sobre \u00e9l.','Me gusta el hombre que estoy conociendo hoy.','Si siguiera siendo exactamente como es, igual lo elegir\u00eda.']},
+{num:'4',titulo:'\u00bfLO ADMIR\u00c1S?',texto:'M\u00e1s all\u00e1 de que te guste, \u00bfhay cosas de \u00e9l que realmente admir\u00e1s?',opciones:['Todav\u00eda lo estoy conociendo y no sabr\u00eda decirlo.','Hay cosas que valoro, aunque todav\u00eda necesito conocerlo m\u00e1s.','S\u00ed, hay varias cosas de \u00e9l que admiro.','S\u00ed. Cuanto m\u00e1s lo conozco, m\u00e1s admiro al hombre que es.']},
+{num:'5',titulo:'TUS NO NEGOCIABLES',texto:'Pensando en las cosas que para vos realmente importan en un hombre, \u00bflo que ven\u00eds conociendo de \u00e9l encaja con tus no negociables?',opciones:['Todav\u00eda no lo conozco lo suficiente para saberlo.','Hay algunas cosas sobre las que todav\u00eda tengo dudas.','En lo importante, s\u00ed.','S\u00ed. Hasta ahora, lo que conozco de \u00e9l est\u00e1 bastante alineado con lo que quiero.']},
+{num:'6',titulo:'SI FUERA TU AMIGA\u2026',texto:'Si una amiga tuya te contara exactamente lo que vos est\u00e1s viviendo con \u00e9l, \u00bfqu\u00e9 pensar\u00edas?',opciones:['Todav\u00eda hay demasiado poco como para sacar una conclusi\u00f3n.','Le dir\u00eda que siga conoci\u00e9ndolo, pero que no ignore las cosas que todav\u00eda le generan dudas.','Le dir\u00eda que, por lo que cuenta, parece estar conociendo a alguien que vale la pena.','\u201cSegu\u00ed conoci\u00e9ndolo. Hasta ahora, lo que me cont\u00e1s me gusta para vos.\u201d']},
+{num:'7',titulo:'\u00bfSUMA O RESTA?',texto:'Desde que lo est\u00e1s conociendo, \u00bfsent\u00eds que este v\u00ednculo suma a tu vida o te est\u00e1 costando m\u00e1s de lo que te aporta?',opciones:['Todav\u00eda es pronto para saberlo.','Hay cosas lindas, pero tambi\u00e9n algunas que me hacen dudar.','En general, siento que suma a mi vida.','S\u00ed. Me gusta lo que estoy viviendo con \u00e9l y tambi\u00e9n c\u00f3mo me siento mientras lo vivo.']},
+{num:'8',titulo:'\u00bfLO EST\u00c1S JUSTIFICANDO?',texto:'\u00bfHay cosas de \u00e9l que no te terminan de convencer, pero te encontr\u00e1s justific\u00e1ndolas porque te gusta?',opciones:['S\u00ed. Hay cosas que normalmente no aceptar\u00eda, pero con \u00e9l me encuentro busc\u00e1ndoles una explicaci\u00f3n.','A veces. Hay algunas cosas que me generan dudas, aunque todav\u00eda no s\u00e9 cu\u00e1nto me importan.','Hay cosas que no me encantan, pero puedo verlas como son sin necesidad de justificarlas.','No siento que tenga que convencerme de que \u00e9l es una buena elecci\u00f3n para m\u00ed.']},
+{num:'9',titulo:'\u00bfLO ELEG\u00cdS A \u00c9L O EVIT\u00c1S LA SOLEDAD?',texto:'\u00bfEst\u00e1s eligi\u00e9ndolo a \u00e9l o tambi\u00e9n est\u00e1s tratando de evitar la soledad?',opciones:['No estoy segura. A veces siento que el miedo a estar sola influye en lo que acepto.','Puede influir un poco, aunque tambi\u00e9n hay cosas de \u00e9l que realmente me gustan.','S\u00ed. Estar sola no ser\u00eda raz\u00f3n suficiente para quedarme con alguien que no quiero.','S\u00ed. Lo elijo porque quiero conocerlo a \u00e9l, no porque necesite tener a alguien.']},
+{num:'10',titulo:'\u00bfSEGUIR\u00cdAS ELIGI\u00c9NDOLO HOY?',texto:'Si lo conocieras hoy, sabiendo todo lo que ya sab\u00e9s de \u00e9l, \u00bfvolver\u00edas a elegir conocerlo?',opciones:['No estoy segura. Hay cosas que hoy me har\u00edan pensarlo m\u00e1s.','Probablemente s\u00ed, aunque tendr\u00eda algunas dudas.','S\u00ed. Con lo que s\u00e9 hoy, volver\u00eda a darle una oportunidad.','S\u00ed. Cuanto m\u00e1s lo conozco, m\u00e1s segura estoy de querer seguir conoci\u00e9ndolo.']}
+];
+
+var resultados={
+'ESTAN EMPEZANDO':{
+  titulo:'EST\u00c1N EMPEZANDO',
+  subtitulo:'Todav\u00eda hay m\u00e1s por conocer que por concluir.',
+  texto:['Lo que est\u00e1s viviendo puede gustarte, entusiasmarte y tener cosas que te den ganas de seguir. Pero, por tus respuestas, todav\u00eda hay bastante de \u00e9l \u2014y de c\u00f3mo se sienten juntos\u2014 que reci\u00e9n est\u00e1s empezando a conocer.','Y eso no es algo malo.','No necesit\u00e1s decidir ahora si esto \u201cva en serio\u201d ni adelantarte a lo que podr\u00eda llegar a ser. En esta etapa, lo m\u00e1s valioso es seguir conoci\u00e9ndolo sin completar con expectativas lo que todav\u00eda no sab\u00e9s.','Prest\u00e1 atenci\u00f3n tambi\u00e9n a vos: si te gusta el hombre que vas descubriendo, si lo que conoc\u00e9s encaja con lo que quer\u00e9s y si, a medida que aparece su versi\u00f3n m\u00e1s real, vos tambi\u00e9n segu\u00eds teniendo ganas de elegirlo.'],
+  radar:['No busques certezas antes de tiempo.','Segu\u00ed conoci\u00e9ndolo. Disfrutá lo que está pasando sin necesitar convertirlo rápidamente en una conclusión.','Porque ahora la pregunta no es solamente:','\u201c\u00bfÉl me va a elegir?\u201d','También es:','\u201cCon todo lo que voy descubriendo de él, \u00bfyo lo elegir\u00eda?\u201d'],
+  fotoPrincipal:'foto-04-resultado.png.png',fotoSecundaria:null
+},
+'TODAVIA ES INCIERTO':{
+  titulo:'TODAV\u00cdA ES INCIERTO',
+  subtitulo:'Hay algo entre ustedes, pero todav\u00eda faltan algunas respuestas.',
+  texto:['Por lo que contestaste, ya hay cosas que te gustan y motivos para seguir conoci\u00e9ndolo. Pero tambi\u00e9n aparecen aspectos que todav\u00eda no terminan de acomodarse o que simplemente necesit\u00e1s conocer mejor.','Y est\u00e1 bien.','No hace falta decidir ahora si este hombre es \u201cel indicado\u201d ni encontrarle una explicaci\u00f3n a cada cosa que te genera dudas. Hay preguntas que solo puede responder el tiempo y lo que vayan viviendo.','Mientras tanto, hay algo que s\u00ed pod\u00e9s hacer: mirar lo que est\u00e1 pasando sin idealizarlo, sin justificar lo que no te convence y sin dejar que el miedo a estar sola decida por vos.','Porque conocer a alguien tambi\u00e9n es descubrir, poco a poco, si la persona que ten\u00e9s delante realmente coincide con la que vos quer\u00e9s elegir.'],
+  radar:['No necesit\u00e1s una respuesta definitiva. Necesit\u00e1s m\u00e1s informaci\u00f3n real.','Segu\u00ed conoci\u00e9ndolo. Observ\u00e1 c\u00f3mo te sent\u00eds y qu\u00e9 vas descubriendo, sin forzar una conclusi\u00f3n antes de tiempo.','Que todav\u00eda no est\u00e9 claro no significa que sea un no.','Significa que todav\u00eda est\u00e1s descubriendo.'],
+  fotoPrincipal:'foto-04-resultado.png.png',fotoSecundaria:null
+},
+'AVANZAN DE A DOS':{
+  titulo:'AVANZAN DE A DOS',
+  subtitulo:'Hay algo que est\u00e1n construyendo entre los dos.',
+  texto:['Por tus respuestas, no parece que seas vos quien est\u00e1 intentando hacer que esto suceda. Hay disposici\u00f3n de los dos lados, y eso importa.','Tambi\u00e9n hay algo valioso en tu manera de estar en este v\u00ednculo: mientras lo conoc\u00e9s, no dejaste de mirar qui\u00e9n es \u00e9l realmente. Pod\u00e9s reconocer lo que admir\u00e1s, lo que te gusta y tambi\u00e9n lo que todav\u00eda est\u00e1s descubriendo.','Eso te permite disfrutar lo que est\u00e1 pasando sin tener que adelantarte a lo que todav\u00eda no sab\u00e9s.'],
+  radar:['Segu\u00ed conoci\u00e9ndolo, sin dejar de elegir.','No necesit\u00e1s apurarte. Segu\u00ed viendo c\u00f3mo se desarrolla el v\u00ednculo y si lo que descubr\u00eds de \u00e9l sigue siendo algo que quer\u00e9s.'],
+  fotoPrincipal:'foto-03-avanzan-de-a-dos.png.png',fotoSecundaria:'foto-04-resultado.png.png'
+},
+'VA EN SERIO':{
+  titulo:'VA EN SERIO',
+  subtitulo:'Por lo que contaste, esto ya se siente diferente.',
+  texto:['Hay algo importante en tus respuestas: no parece que est\u00e9s sosteniendo este v\u00ednculo solamente porque te gusta o porque quer\u00e9s que funcione. A medida que lo conoc\u00e9s, aparecen razones concretas para valorar al hombre que ten\u00e9s delante.','Lo admir\u00e1s por qui\u00e9n es, lo que descubr\u00eds de \u00e9l encaja con lo que busc\u00e1s y, al mismo tiempo, no parece que est\u00e9s pasando por alto aquello que no te convence.','Tambi\u00e9n hay algo que habla de tu propia posici\u00f3n: no necesit\u00e1s que este v\u00ednculo funcione para sentir que est\u00e1s bien. Pod\u00e9s elegirlo porque quer\u00e9s, no porque necesit\u00e1s evitar estar sola.','Eso hace una diferencia.','No significa que podamos saber qu\u00e9 va a pasar m\u00e1s adelante. Todav\u00eda lo est\u00e1s conociendo. Pero con la informaci\u00f3n que ten\u00e9s hoy, hay suficientes elementos para tomar lo que est\u00e1n viviendo en serio.'],
+  radar:['No necesit\u00e1s apurarte.','Segu\u00ed conoci\u00e9ndolo y prestando atenci\u00f3n a lo que vas descubriendo. Si lo que encontr\u00e1s sigue estando alineado con lo que quer\u00e9s para tu vida, pod\u00e9s disfrutar de este v\u00ednculo sin convertir cada momento en una prueba de lo que vendr\u00e1 despu\u00e9s.','Tomalo en serio, pero segu\u00ed eligiendo.'],
+  fotoPrincipal:'foto-04-resultado.png.png',fotoSecundaria:null
+}
+};
+
+var respuestas=new Array(10).fill(null);
+var pregActual=0;
+
+var sPortada=document.getElementById('screen-portada');
+var sPreguntas=document.getElementById('screen-preguntas');
+var sResultado=document.getElementById('screen-resultado');
+var btnIniciar=document.getElementById('btn-iniciar');
+var btnAnterior=document.getElementById('btn-anterior');
+var btnSiguiente=document.getElementById('btn-siguiente');
+var btnReiniciar=document.getElementById('btn-reiniciar');
+var indicador=document.getElementById('indicador');
+var barraWrap=document.getElementById('barra-wrap');
+var barraFill=document.getElementById('barra-fill');
+var pregNumTitulo=document.getElementById('preg-num-titulo');
+var pregTexto=document.getElementById('preg-texto');
+var opcionesGrid=document.getElementById('opciones-grid');
+var resTitulo=document.getElementById('res-titulo');
+var resSubtitulo=document.getElementById('res-subtitulo');
+var resTexto=document.getElementById('res-texto');
+var resRadarTexto=document.getElementById('res-radar-texto');
+var resFotoPrincipal=document.getElementById('res-foto-principal');
+var resFotoSecWrap=document.getElementById('res-foto-sec-wrap');
+var resFotoSec=document.getElementById('res-foto-sec');
+
+function mostrarScreen(s){
+  [sPortada,sPreguntas,sResultado].forEach(function(x){x.classList.remove('active')});
+  s.classList.add('active');
+  // Scroll al comienzo del screen activo, no al top del documento
+  s.scrollIntoView({behavior:'instant',block:'start'});
+}
+
+function renderPregunta(idx){
+  var p=preguntas[idx];
+  indicador.textContent=String(idx+1).padStart(2,'0')+' / 10';
+  barraFill.style.width=(idx/10*100)+'%';
+  barraWrap.setAttribute('aria-valuenow',idx);
+  pregNumTitulo.textContent=(idx+1)+' \u00b7 '+p.titulo;
+  pregTexto.textContent=p.texto;
+  opcionesGrid.innerHTML='';
+  p.opciones.forEach(function(op,oi){
+    var btn=document.createElement('button');
+    btn.type='button';
+    btn.className='opcion-btn'+(respuestas[idx]===oi?' sel':'');
+    btn.textContent=op;
+    btn.addEventListener('click',function(){seleccionar(idx,oi)});
+    opcionesGrid.appendChild(btn);
+  });
+  btnAnterior.className='btn-anterior'+(idx===0?' oculto':'');
+  btnSiguiente.textContent=idx===9?'VER MI RADAR \u2192':'SIGUIENTE \u2192';
+  btnSiguiente.disabled=(respuestas[idx]===null);
+}
+
+function seleccionar(pi,oi){
+  respuestas[pi]=oi;
+  var btns=opcionesGrid.querySelectorAll('.opcion-btn');
+  btns.forEach(function(b,i){b.className='opcion-btn'+(i===oi?' sel':'')});
+  btnSiguiente.disabled=false;
+}
+
+function calcular(){
+  var suma=0;
+  for(var i=0;i<10;i++) suma+=(respuestas[i]+1);
+  var base;
+  if(suma<=18) base='ESTAN EMPEZANDO';
+  else if(suma<=26) base='TODAVIA ES INCIERTO';
+  else if(suma<=33) base='AVANZAN DE A DOS';
+  else base='VA EN SERIO';
+  var alertasFuertes=0;
+  if(respuestas[7]===0) alertasFuertes++;
+  if(respuestas[8]===0) alertasFuertes++;
+  var orden=['ESTAN EMPEZANDO','TODAVIA ES INCIERTO','AVANZAN DE A DOS','VA EN SERIO'];
+  var maxPerm=alertasFuertes===0?'VA EN SERIO':alertasFuertes===1?'AVANZAN DE A DOS':'TODAVIA ES INCIERTO';
+  var idxFinal=Math.min(orden.indexOf(base),orden.indexOf(maxPerm));
+  return orden[idxFinal];
+}
+
+function mostrarResultado(){
+  var clave=calcular();
+  var r=resultados[clave];
+  resTitulo.textContent=r.titulo;
+  resSubtitulo.textContent=r.subtitulo;
+  resTexto.innerHTML='';
+  r.texto.forEach(function(p){var el=document.createElement('p');el.textContent=p;resTexto.appendChild(el)});
+  resRadarTexto.innerHTML='';
+  r.radar.forEach(function(p){var el=document.createElement('p');el.textContent=p;resRadarTexto.appendChild(el)});
+  resFotoPrincipal.src=r.fotoPrincipal;
+  resFotoPrincipal.alt=r.titulo;
+  if(r.fotoSecundaria){resFotoSec.src=r.fotoSecundaria;resFotoSecWrap.style.display='block'}
+  else{resFotoSecWrap.style.display='none'}
+  mostrarScreen(sResultado);
+}
+
+function reiniciar(){
+  respuestas=new Array(10).fill(null);
+  pregActual=0;
+  renderPregunta(0);
+  mostrarScreen(sPreguntas);
+}
+
+btnIniciar.addEventListener('click',function(){reiniciar()});
+btnAnterior.addEventListener('click',function(){
+  if(pregActual>0){
+    pregActual--;
+    renderPregunta(pregActual);
+    sPreguntas.scrollIntoView({behavior:'instant',block:'start'});
+  }
+});
+btnSiguiente.addEventListener('click',function(){
+  if(respuestas[pregActual]===null) return;
+  if(pregActual<9){
+    pregActual++;
+    renderPregunta(pregActual);
+    sPreguntas.scrollIntoView({behavior:'instant',block:'start'});
+  } else {
+    var ok=respuestas.every(function(r){return r!==null});
+    if(!ok){
+      for(var i=0;i<10;i++){
+        if(respuestas[i]===null){
+          pregActual=i;
+          renderPregunta(i);
+          sPreguntas.scrollIntoView({behavior:'instant',block:'start'});
+          return;
+        }
+      }
+    }
+    barraFill.style.width='100%';barraWrap.setAttribute('aria-valuenow',10);
+    mostrarResultado();
+  }
+});
+btnReiniciar.addEventListener('click',function(){reiniciar()});
+})();
+</script>
+</body>
+</html>
