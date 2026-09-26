@@ -1,0 +1,1943 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>El Hombre Para Mí™ — ELEGIDA™</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --burgundy: #5B0F1A;
+      --wine: #8E1C2A;
+      --dusty-rose: #C99BA6;
+      --nude: #E7D6C6;
+      --cream: #FAF5EF;
+      --charcoal: #1A1A1A;
+      --champagne: #D4AF6A;
+      --champagne-light: #F0E4C4;
+      --text-muted: #6B5B5B;
+      --border-light: rgba(199,155,166,0.25);
+      --border-selected: #8E1C2A;
+      --card-bg: #FFFFFF;
+      --card-hover: rgba(199,155,166,0.08);
+      --shadow-soft: 0 2px 16px rgba(91,15,26,0.07);
+      --shadow-card: 0 1px 6px rgba(91,15,26,0.06);
+      --radius: 10px;
+      --radius-sm: 6px;
+      --transition: 0.22s ease;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', 'Montserrat', sans-serif;
+      background-color: var(--cream);
+      color: var(--charcoal);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    /* ============================================================
+       TYPOGRAPHY
+    ============================================================ */
+    .serif { font-family: 'Playfair Display', Georgia, serif; }
+
+    h1, h2, h3, .heading {
+      font-family: 'Playfair Display', Georgia, serif;
+      line-height: 1.25;
+    }
+
+    /* ============================================================
+       VIEWS SYSTEM
+    ============================================================ */
+    .view {
+      display: none;
+      min-height: 100vh;
+      width: 100%;
+    }
+
+    .view.active {
+      display: block;
+    }
+
+    /* ============================================================
+       LOGO
+    ============================================================ */
+    .logo-wrap {
+      display: flex;
+      justify-content: center;
+      padding: 28px 24px 0;
+    }
+
+    .logo-wrap img {
+      height: 44px;
+      width: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    /* ============================================================
+       PROGRESS BAR
+    ============================================================ */
+    .progress-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 20px 32px 0;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .progress-step {
+      flex: 1;
+      height: 2px;
+      background: var(--nude);
+      border-radius: 2px;
+      transition: background var(--transition);
+    }
+
+    .progress-step.done {
+      background: var(--wine);
+    }
+
+    .progress-step.active {
+      background: var(--wine);
+      opacity: 0.6;
+    }
+
+    /* ============================================================
+       STEP LABEL
+    ============================================================ */
+    .step-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--dusty-rose);
+      text-align: center;
+      padding: 20px 24px 4px;
+    }
+
+    /* ============================================================
+       PAGE WRAPPER (for inner views)
+    ============================================================ */
+    .page-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    /* ============================================================
+       SECTION TITLE
+    ============================================================ */
+    .section-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 600;
+      color: var(--burgundy);
+      margin-bottom: 28px;
+      margin-top: 8px;
+    }
+
+    /* ============================================================
+       BODY TEXT
+    ============================================================ */
+    .body-text {
+      font-size: clamp(0.93rem, 2.2vw, 1rem);
+      color: var(--charcoal);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+
+    .body-text + .body-text {
+      margin-top: -4px;
+    }
+
+    /* ============================================================
+       DIVIDER
+    ============================================================ */
+    .divider {
+      height: 1px;
+      background: var(--border-light);
+      margin: 32px 0;
+    }
+
+    /* ============================================================
+       SELECTABLE CARDS
+    ============================================================ */
+    .cards-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 24px 0;
+    }
+
+    .card-option {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 18px;
+      background: var(--card-bg);
+      border: 1.5px solid var(--border-light);
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: border-color var(--transition), background var(--transition), box-shadow var(--transition);
+      box-shadow: var(--shadow-card);
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      text-align: left;
+      width: 100%;
+    }
+
+    .card-option:hover {
+      border-color: var(--dusty-rose);
+      background: var(--card-hover);
+    }
+
+    .card-option:focus-visible {
+      outline: 2px solid var(--wine);
+      outline-offset: 2px;
+    }
+
+    .card-check {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      border: 1.5px solid var(--dusty-rose);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background var(--transition), border-color var(--transition);
+      position: relative;
+    }
+
+    .card-check::after {
+      content: '';
+      width: 0;
+      height: 0;
+      border-right: 2px solid #fff;
+      border-bottom: 2px solid #fff;
+      transform: rotate(45deg) translate(-1px, -1px);
+      opacity: 0;
+      transition: opacity var(--transition), width var(--transition), height var(--transition);
+      position: absolute;
+      top: 5px;
+      left: 7px;
+      width: 5px;
+      height: 9px;
+    }
+
+    .card-option.selected .card-check {
+      background: var(--wine);
+      border-color: var(--wine);
+    }
+
+    .card-option.selected .card-check::after {
+      opacity: 1;
+    }
+
+    .card-option.selected {
+      border-color: var(--wine);
+      background: rgba(142,28,42,0.04);
+      box-shadow: 0 1px 10px rgba(91,15,26,0.1);
+    }
+
+    .card-option.disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .card-option.selected.disabled {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .card-text {
+      font-size: clamp(0.88rem, 2.1vw, 0.97rem);
+      color: var(--charcoal);
+      line-height: 1.5;
+    }
+
+    /* ============================================================
+       CUSTOM TEXT INPUTS
+    ============================================================ */
+    .custom-inputs-section {
+      margin: 8px 0 24px;
+    }
+
+    .custom-inputs-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .custom-input-wrap {
+      position: relative;
+      margin-bottom: 10px;
+    }
+
+    .custom-input-wrap .input-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--dusty-rose);
+      font-size: 0.9rem;
+      pointer-events: none;
+    }
+
+    .custom-field {
+      width: 100%;
+      padding: 13px 16px 13px 38px;
+      border: 1.5px solid var(--border-light);
+      border-radius: var(--radius-sm);
+      background: var(--card-bg);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.93rem;
+      color: var(--charcoal);
+      transition: border-color var(--transition);
+      outline: none;
+    }
+
+    .custom-field:focus {
+      border-color: var(--dusty-rose);
+    }
+
+    .custom-field::placeholder {
+      color: var(--dusty-rose);
+      opacity: 0.7;
+    }
+
+    /* preference heart icon */
+    .pref-input-wrap .input-icon {
+      color: var(--dusty-rose);
+      font-size: 0.95rem;
+    }
+
+    /* ============================================================
+       EDITORIAL NOTE
+    ============================================================ */
+    .editorial-note {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-style: italic;
+      font-size: clamp(0.9rem, 2.2vw, 1rem);
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin: 24px 0;
+    }
+
+    /* ============================================================
+       COUNTER
+    ============================================================ */
+    .counter {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--wine);
+      background: rgba(142,28,42,0.07);
+      border-radius: 20px;
+      display: inline-block;
+      padding: 5px 14px;
+      margin-bottom: 20px;
+      transition: background var(--transition);
+    }
+
+    .counter.complete {
+      background: rgba(142,28,42,0.13);
+      color: var(--burgundy);
+    }
+
+    /* ============================================================
+       VALIDATION MESSAGE
+    ============================================================ */
+    .validation-msg {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--wine);
+      padding: 10px 16px;
+      background: rgba(142,28,42,0.06);
+      border-left: 3px solid var(--wine);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin-bottom: 16px;
+      display: none;
+    }
+
+    .validation-msg.visible {
+      display: block;
+    }
+
+    /* ============================================================
+       BUTTONS
+    ============================================================ */
+    .btn-primary {
+      display: block;
+      width: 100%;
+      padding: 17px 24px;
+      background: var(--burgundy);
+      color: #FAF5EF;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+      margin-top: 32px;
+      box-shadow: 0 2px 12px rgba(91,15,26,0.18);
+    }
+
+    .btn-primary:hover {
+      background: var(--wine);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 18px rgba(91,15,26,0.22);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .btn-primary:focus-visible {
+      outline: 2px solid var(--champagne);
+      outline-offset: 3px;
+    }
+
+    .btn-secondary {
+      display: block;
+      width: 100%;
+      padding: 15px 24px;
+      background: transparent;
+      color: var(--burgundy);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border: 1.5px solid var(--dusty-rose);
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: background var(--transition), border-color var(--transition);
+      margin-top: 12px;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(199,155,166,0.12);
+      border-color: var(--wine);
+    }
+
+    .btn-secondary:focus-visible {
+      outline: 2px solid var(--wine);
+      outline-offset: 2px;
+    }
+
+    /* ============================================================
+       VIEW 1 — PORTADA
+    ============================================================ */
+    #view-portada {
+      background: var(--cream);
+    }
+
+    .portada-inner {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Mobile: logo + headline arriba, foto como acento visual debajo */
+    .portada-header {
+      padding: 32px 28px 0;
+      max-width: 640px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .portada-logo-inline {
+      margin-bottom: 24px;
+    }
+
+    .portada-logo-inline img {
+      height: 34px;
+      width: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    .portada-photo-wrap {
+      width: 92%;
+      max-width: 520px;
+      max-height: 30vh;
+      overflow: hidden;
+      position: relative;
+      background: var(--nude);
+      margin: 24px auto 0;
+      border-radius: 10px;
+      box-shadow: 0 4px 24px rgba(91,15,26,0.10);
+    }
+
+    .portada-photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 22%;
+      display: block;
+    }
+
+    /* Not used on mobile, preserved for desktop override */
+    .portada-logo {
+      display: none;
+    }
+
+    .portada-logo img {
+      height: 36px;
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 1px 4px rgba(0,0,0,0.18));
+    }
+
+    .portada-content {
+      flex: 1;
+      padding: 28px 28px 60px;
+      max-width: 640px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .portada-eyebrow {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--dusty-rose);
+      margin-bottom: 10px;
+    }
+
+    /* En mobile: portada-content oculta su copia del título/tagline
+       (ya están en portada-header arriba de la foto) */
+    .portada-content .portada-eyebrow,
+    .portada-content .portada-title,
+    .portada-content .portada-tagline {
+      display: none;
+    }
+
+    @media (min-width: 768px) {
+      /* En desktop: portada-header (mobile) se oculta; portada-content muestra el título */
+      .portada-header { display: none !important; }
+      .portada-content .portada-eyebrow,
+      .portada-content .portada-title,
+      .portada-content .portada-tagline {
+        display: block;
+      }
+    }
+
+    .portada-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(2rem, 7vw, 3rem);
+      font-weight: 700;
+      color: var(--burgundy);
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+
+    .portada-tm {
+      font-size: 0.55em;
+      vertical-align: super;
+      font-weight: 400;
+    }
+
+    .portada-tagline {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(0.88rem, 2.3vw, 0.98rem);
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin-bottom: 32px;
+      font-weight: 300;
+    }
+
+    .portada-divider {
+      width: 40px;
+      height: 1px;
+      background: var(--champagne);
+      margin-bottom: 28px;
+    }
+
+    .portada-body {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(0.93rem, 2.3vw, 1.01rem);
+      color: var(--charcoal);
+      line-height: 1.8;
+    }
+
+    .portada-body p {
+      margin-bottom: 16px;
+    }
+
+    .portada-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .portada-body .italic-line {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-style: italic;
+      color: var(--text-muted);
+      font-size: clamp(0.9rem, 2.2vw, 0.98rem);
+    }
+
+    .portada-body .emphasis {
+      font-weight: 600;
+      color: var(--burgundy);
+    }
+
+    /* ============================================================
+       VIEW 6 — RESULTADO
+    ============================================================ */
+    #view-resultado {
+      background: var(--cream);
+    }
+
+    .resultado-inner {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .resultado-photo-wrap {
+      width: 100%;
+      max-height: 42vh;
+      overflow: hidden;
+      background: var(--nude);
+      position: relative;
+    }
+
+    .resultado-photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    .resultado-logo {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+    }
+
+    .resultado-logo img {
+      height: 32px;
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 1px 4px rgba(0,0,0,0.18));
+    }
+
+    .resultado-content {
+      flex: 1;
+      padding: 40px 28px 60px;
+      max-width: 680px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .resultado-step {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--dusty-rose);
+      margin-bottom: 6px;
+    }
+
+    .resultado-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(1.6rem, 5vw, 2.2rem);
+      font-weight: 700;
+      color: var(--burgundy);
+      margin-bottom: 32px;
+      line-height: 1.15;
+    }
+
+    /* FICHA */
+    .ficha {
+      background: #FFFFFF;
+      border: 1px solid var(--border-light);
+      border-radius: 14px;
+      padding: 36px 32px;
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 36px;
+    }
+
+    .ficha-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--burgundy);
+      letter-spacing: 0.06em;
+      text-align: center;
+      margin-bottom: 28px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .ficha-section {
+      margin-bottom: 24px;
+    }
+
+    .ficha-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .ficha-section-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--dusty-rose);
+      margin-bottom: 10px;
+    }
+
+    .ficha-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(0.85rem, 2.1vw, 0.93rem);
+      color: var(--charcoal);
+      line-height: 1.6;
+      margin-bottom: 7px;
+      padding: 8px 12px;
+      background: var(--cream);
+      border-radius: var(--radius-sm);
+    }
+
+    .ficha-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .ficha-icon {
+      flex-shrink: 0;
+      font-size: 0.8rem;
+      margin-top: 3px;
+      font-style: normal;
+    }
+
+    .ficha-icon.check { color: var(--wine); }
+    .ficha-icon.cross { color: var(--burgundy); }
+    .ficha-icon.heart { color: var(--dusty-rose); }
+
+    /* RESULTADO TEXTO */
+    .resultado-body {
+      margin-bottom: 32px;
+    }
+
+    .resultado-body p {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(0.93rem, 2.2vw, 1rem);
+      color: var(--charcoal);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    .resultado-body .italic-q {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-style: italic;
+      color: var(--text-muted);
+    }
+
+    .resultado-cta-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--burgundy);
+      margin-bottom: 12px;
+    }
+
+    .resultado-final-q {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(1.3rem, 4vw, 1.7rem);
+      font-weight: 600;
+      font-style: italic;
+      color: var(--burgundy);
+      line-height: 1.35;
+      margin-bottom: 40px;
+      padding: 20px 24px;
+      border-left: 3px solid var(--champagne);
+      background: rgba(212,175,106,0.06);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+
+    /* ============================================================
+       PRINT STYLES
+    ============================================================ */
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .view { display: none !important; }
+      #print-sheet { display: block !important; }
+
+      #print-sheet {
+        font-family: 'Inter', Georgia, sans-serif;
+        color: #1A1A1A;
+        padding: 40px;
+        max-width: 680px;
+        margin: 0 auto;
+      }
+
+      #print-sheet .ps-logo {
+        text-align: center;
+        margin-bottom: 28px;
+      }
+
+      #print-sheet .ps-logo img {
+        height: 40px;
+        width: auto;
+      }
+
+      #print-sheet .ps-main-title {
+        font-family: Georgia, serif;
+        font-size: 22px;
+        font-weight: 700;
+        color: #5B0F1A;
+        text-align: center;
+        margin-bottom: 36px;
+        letter-spacing: 0.05em;
+      }
+
+      #print-sheet .ps-section-label {
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: #C99BA6;
+        margin-bottom: 8px;
+      }
+
+      #print-sheet .ps-item {
+        font-size: 12px;
+        color: #1A1A1A;
+        line-height: 1.7;
+        margin-bottom: 5px;
+      }
+
+      #print-sheet .ps-section {
+        margin-bottom: 24px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #E7D6C6;
+      }
+
+      #print-sheet .ps-section:last-child {
+        border-bottom: none;
+      }
+
+      #print-sheet .ps-final-q {
+        font-family: Georgia, serif;
+        font-size: 17px;
+        font-style: italic;
+        color: #5B0F1A;
+        margin-top: 32px;
+        padding: 18px 24px;
+        border-left: 3px solid #D4AF6A;
+        line-height: 1.45;
+      }
+
+      .no-print { display: none !important; }
+    }
+
+    /* Hidden print sheet (shown only on print) */
+    #print-sheet {
+      display: none;
+    }
+
+    /* ============================================================
+       ANIMATIONS
+    ============================================================ */
+    @media (prefers-reduced-motion: no-preference) {
+      .view.active {
+        animation: fadeIn 0.28s ease both;
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+    }
+
+    /* ============================================================
+       RESPONSIVE — DESKTOP
+    ============================================================ */
+    @media (min-width: 768px) {
+      .portada-inner {
+        flex-direction: row;
+        min-height: 100vh;
+        align-items: stretch;
+      }
+
+      /* Desktop: foto lateral derecha, contenida y elegante */
+      .portada-photo-wrap {
+        order: 2;
+        width: 34%;
+        max-width: none;
+        max-height: none;
+        min-height: 100vh;
+        flex-shrink: 0;
+        margin: 0;
+        border-radius: 0;
+        box-shadow: none;
+        position: sticky;
+        top: 0;
+        height: 100vh;
+      }
+
+      .portada-photo-wrap img {
+        height: 100%;
+        object-position: center 20%;
+      }
+
+      /* Desktop: contenido a la izquierda, ocupa el espacio mayor */
+      .portada-header {
+        display: none; /* logo inline se oculta; el logo del contenido toma el relevo */
+      }
+
+      .portada-content {
+        order: 1;
+        flex: 1;
+        padding: 60px 56px 80px;
+        overflow-y: auto;
+      }
+
+      /* En desktop mostramos el logo dentro del contenido */
+      .portada-eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .resultado-photo-wrap {
+        max-height: 50vh;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .portada-photo-wrap {
+        width: 32%;
+      }
+
+      .portada-content {
+        padding: 72px 72px 80px;
+      }
+    }
+
+    /* ============================================================
+       UTILITY
+    ============================================================ */
+    .spacer-sm { height: 12px; }
+    .spacer-md { height: 24px; }
+    .mt-0 { margin-top: 0 !important; }
+    .mb-0 { margin-bottom: 0 !important; }
+
+  </style>
+</head>
+<body>
+
+<!-- ============================================================
+     PRINT SHEET (only visible during print)
+============================================================ -->
+<div id="print-sheet" aria-hidden="true">
+  <div class="ps-logo">
+    <img src="logo-elegida.png.png" alt="ELEGIDA™" />
+  </div>
+  <div class="ps-main-title">EL HOMBRE PARA MÍ™</div>
+  <div id="ps-body"></div>
+  <div class="ps-final-q">«¿Este es el hombre que quiero elegir para mi vida?»</div>
+</div>
+
+<!-- ============================================================
+     VISTA 1 — PORTADA
+============================================================ -->
+<section id="view-portada" class="view active" role="main" aria-label="Portada">
+
+  <div class="portada-inner">
+
+    <!-- Logo + eyebrow visible en mobile arriba (se oculta en desktop) -->
+    <div class="portada-header">
+      <div class="portada-logo-inline" aria-label="ELEGIDA™">
+        <img src="logo-elegida.png.png" alt="ELEGIDA™" />
+      </div>
+      <p class="portada-eyebrow" style="margin-bottom:10px;">ELEGIDA™</p>
+      <h1 class="portada-title">
+        El Hombre<br>Para Mí<span class="portada-tm">™</span>
+      </h1>
+      <p class="portada-tagline">
+        Tu filtro personal para tener claros tus estándares y no negociables antes de elegir a quién querés en tu vida.
+      </p>
+    </div>
+
+    <!-- Foto: acento visual, no dominante -->
+    <div class="portada-photo-wrap" role="img" aria-label="Fotografía editorial ELEGIDA™">
+      <img src="foto-01-portada.png.png" alt="" aria-hidden="true" />
+    </div>
+
+    <div class="portada-content">
+
+      <!-- En desktop mostramos logo + título aquí (el portada-header se oculta) -->
+      <div class="portada-desktop-header" style="display:none;">
+        <img src="logo-elegida.png.png" alt="ELEGIDA™" style="height:32px;width:auto;object-fit:contain;margin-bottom:22px;display:block;" />
+      </div>
+      <p class="portada-eyebrow">ELEGIDA™</p>
+
+      <h1 class="portada-title">
+        El Hombre<br>Para Mí<span class="portada-tm">™</span>
+      </h1>
+
+      <p class="portada-tagline">
+        Tu filtro personal para tener claros tus estándares y no negociables antes de elegir a quién querés en tu vida.
+      </p>
+
+      <div class="portada-divider" aria-hidden="true"></div>
+
+      <div class="portada-body">
+        <p>Hay cosas que tenés clarísimas sobre el hombre que querés a tu lado.</p>
+        <p>Hasta que aparece uno que te gusta mucho.</p>
+        <p>Y algo que antes era <em>"esto para mí es importante"</em> puede empezar a convertirse en:</p>
+        <p class="italic-line">"Bueno… quizás tampoco es para tanto."</p>
+        <p class="italic-line">"En todo lo demás es increíble."</p>
+        <p class="italic-line">"Capaz esto con el tiempo cambia."</p>
+        <p>Por eso este filtro no está pensado para decirte cómo tiene que ser el hombre perfecto.</p>
+        <p>Está pensado para algo mucho más útil:</p>
+        <p class="emphasis">que tengas claro qué necesitás vos en un hombre antes de empezar a hacer excepciones porque te gusta.</p>
+      </div>
+
+      <button class="btn-primary" onclick="goTo('view-estandares')" aria-label="Crear mi filtro personal">
+        CREAR MI FILTRO →
+      </button>
+
+    </div>
+  </div>
+
+</section>
+
+<!-- ============================================================
+     VISTA 2 — 01 · MIS ESTÁNDARES
+============================================================ -->
+<section id="view-estandares" class="view" role="main" aria-label="Mis Estándares">
+
+  <div class="logo-wrap no-print">
+    <img src="logo-elegida.png.png" alt="ELEGIDA™" style="height:36px;width:auto;object-fit:contain;" />
+  </div>
+
+  <div class="progress-bar" role="progressbar" aria-label="Progreso: paso 1 de 5" aria-valuenow="1" aria-valuemin="1" aria-valuemax="5">
+    <div class="progress-step active"></div>
+    <div class="progress-step"></div>
+    <div class="progress-step"></div>
+    <div class="progress-step"></div>
+    <div class="progress-step"></div>
+  </div>
+
+  <div class="page-wrap">
+    <p class="step-label" aria-hidden="true">01 · MIS ESTÁNDARES</p>
+    <h2 class="section-title">Mis estándares</h2>
+
+    <p class="body-text">Primero, pensá en el hombre con el que realmente podrías construir la relación que querés.</p>
+    <p class="body-text">¿Qué necesitás encontrar en él?</p>
+    <p class="body-text">Seleccioná lo que sea importante para vos:</p>
+
+    <div class="cards-grid" id="estandares-cards" role="group" aria-label="Estándares seleccionables">
+      <!-- Generated by JS -->
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="custom-inputs-section">
+      <label class="custom-inputs-label" id="custom-estandares-label">Algo importante para mí que no está en la lista:</label>
+      <div class="custom-input-wrap">
+        <span class="input-icon" aria-hidden="true">+</span>
+        <input
+          type="text"
+          class="custom-field custom-est"
+          id="custom-est-1"
+          placeholder="Escribe tu estándar personalizado…"
+          aria-label="Estándar personalizado 1"
+          maxlength="160"
+        />
+      </div>
+      <div class="custom-input-wrap">
+        <span class="input-icon" aria-hidden="true">+</span>
+        <input
+          type="text"
+          class="custom-field custom-est"
+          id="custom-est-2"
+          placeholder="Escribe tu estándar personalizado…"
+          aria-label="Estándar personalizado 2"
+          maxlength="160"
+        />
+      </div>
+    </div>
+
+    <p class="editorial-note">
+      No marques lo que suena bien.<br>
+      Marcá lo que realmente importa para vos.
+    </p>
+
+    <div class="validation-msg" id="val-estandares" role="alert">
+      Elegí al menos 5 estándares para continuar.
+    </div>
+
+    <button class="btn-primary" onclick="goToImprescindibles()" aria-label="Elegir mis imprescindibles">
+      ELEGIR MIS IMPRESCINDIBLES →
+    </button>
+  </div>
+
+</section>
+
+<!-- ============================================================
+     VISTA 3 — 02 · MIS IMPRESCINDIBLES
+============================================================ -->
+<section id="view-imprescindibles" class="view" role="main" aria-label="Mis Imprescindibles">
+
+  <div class="logo-wrap no-print">
+    <img src="logo-elegida.png.png" alt="ELEGIDA™" style="height:36px;width:auto;object-fit:contain;" />
+  </div>
+
+  <div class="progress-bar" role="progressbar" aria-label="Progreso: paso 2 de 5" aria-valuenow="2" aria-valuemin="1" aria-valuemax="5">
+    <div class="progress-step done"></div>
+    <div class="progress-step active"></div>
+    <div class="progress-step"></div>
+    <div class="progress-step"></div>
+    <div class="progress-step"></div>
+  </div>
+
+  <div class="page-wrap">
+    <p class="step-label" aria-hidden="true">02 · MIS IMPRESCINDIBLES</p>
+    <h2 class="section-title">Mis imprescindibles</h2>
+
+    <p class="body-text">Ahora mirá todo lo que elegiste.</p>
+    <p class="body-text">Y hacete una pregunta un poco más difícil:</p>
+    <p class="body-text">¿Cuáles de estas cosas realmente necesito para elegir a un hombre como pareja?</p>
+    <p class="body-text">No cuáles preferís.</p>
+    <p class="body-text">No cuáles te encantaría que tuviera.</p>
+    <p class="body-text">Cuáles necesitás.</p>
+    <p class="body-text">Elegí tus 5 imprescindibles.</p>
+
+    <div class="spacer-sm"></div>
+
+    <div
+      class="counter"
+      id="imp-counter"
+      role="status"
+      aria-live="polite"
+      aria-label="Imprescindibles seleccionados"
+    >0 de 5 elegidos</div>
+
+    <div class="cards-grid" id="imprescindibles-cards" role="group" aria-label="Imprescindibles seleccionables">
+      <!-- Generated by JS -->
+    </div>
+
+    <p class="editorial-note">
+      Porque no todo lo que valorás tiene el mismo peso.<br><br>
+      Y tenerlo claro antes de estar muy involucrada hace que después sea bastante más difícil convencerte de que algo fundamental para vos "en realidad no importa tanto".
+    </p>
+
+    <div class="validation-msg" id="val-imprescindibles" role="alert">
+      Elegí exactamente 5 imprescindibles para continuar.
+    </div>
+
+    <button class="btn-primary" onclick="goToNoNegociables()" aria-label="Continuar a no negociables">
+      CONTINUAR →
+    </button>
+  </div>
+
+</section>
+
+<!-- ============================================================
+     VISTA 4 — 03 · MIS NO NEGOCIABLES
+============================================================ -->
+<section id="view-nonegociables" class="view" role="main" aria-label="Mis No Negociables">
+
+  <div class="logo-wrap no-print">
+    <img src="logo-elegida.png.png" alt="ELEGIDA™" style="height:36px;width:auto;object-fit:contain;" />
+  </div>
+
+  <div class="progress-bar" role="progressbar" aria-label="Progreso: paso 3 de 5" aria-valuenow="3" aria-valuemin="1" aria-valuemax="5">
+    <div class="progress-step done"></div>
+    <div class="progress-step done"></div>
+    <div class="progress-step active"></div>
+    <div class="progress-step"></div>
+    <div class="progress-step"></div>
+  </div>
+
+  <div class="page-wrap">
+    <p class="step-label" aria-hidden="true">03 · MIS NO NEGOCIABLES</p>
+    <h2 class="section-title">Mis no negociables</h2>
+
+    <p class="body-text">Ahora vamos al otro lado.</p>
+    <p class="body-text">¿Qué no estás dispuesta a aceptar en una relación?</p>
+    <p class="body-text">No hace falta llenar una lista enorme.</p>
+    <p class="body-text">Pensá en aquellas cosas que, si aparecen, no querés encontrarte justificando solamente porque ese hombre te importa.</p>
+
+    <div class="cards-grid" id="noneg-cards" role="group" aria-label="No negociables seleccionables">
+      <!-- Generated by JS -->
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="custom-inputs-section">
+      <label class="custom-inputs-label" id="custom-noneg-label">Mis propios no negociables:</label>
+      <div class="custom-input-wrap">
+        <span class="input-icon" aria-hidden="true">+</span>
+        <input
+          type="text"
+          class="custom-field custom-noneg"
+          id="custom-noneg-1"
+          placeholder="Escribe tu no negociable…"
+          aria-label="No negociable personalizado 1"
+          maxlength="160"
+        />
+      </div>
+      <div class="custom-input-wrap">
+        <span class="input-icon" aria-hidden="true">+</span>
+        <input
+          type="text"
+          class="custom-field custom-noneg"
+          id="custom-noneg-2"
+          placeholder="Escribe tu no negociable…"
+          aria-label="No negociable personalizado 2"
+          maxlength="160"
+        />
+      </div>
+      <div class="custom-input-wrap">
+        <span class="input-icon" aria-hidden="true">+</span>
+        <input
+          type="text"
+          class="custom-field custom-noneg"
+          id="custom-noneg-3"
+          placeholder="Escribe tu no negociable…"
+          aria-label="No negociable personalizado 3"
+          maxlength="160"
+        />
+      </div>
+    </div>
+
+    <p class="editorial-note">
+      Acá no importa lo que otra mujer aceptaría.<br>
+      Importa lo que vos sabés que no querés para tu vida.
+    </p>
+
+    <button class="btn-primary" onclick="goToPreferencias()" aria-label="Continuar a preferencias">
+      CONTINUAR →
+    </button>
+  </div>
+
+</section>
+
+<!-- ============================================================
+     VISTA 5 — 04 · LO QUE PREFIERO, PERO NO DEFINE MI ELECCIÓN
+============================================================ -->
+<section id="view-preferencias" class="view" role="main" aria-label="Mis Preferencias">
+
+  <div class="logo-wrap no-print">
+    <img src="logo-elegida.png.png" alt="ELEGIDA™" style="height:36px;width:auto;object-fit:contain;" />
+  </div>
+
+  <div class="progress-bar" role="progressbar" aria-label="Progreso: paso 4 de 5" aria-valuenow="4" aria-valuemin="1" aria-valuemax="5">
+    <div class="progress-step done"></div>
+    <div class="progress-step done"></div>
+    <div class="progress-step done"></div>
+    <div class="progress-step active"></div>
+    <div class="progress-step"></div>
+  </div>
+
+  <div class="page-wrap">
+    <p class="step-label" aria-hidden="true">04 · LO QUE PREFIERO, PERO NO DEFINE MI ELECCIÓN</p>
+    <h2 class="section-title">Lo que prefiero,<br>pero no define mi elección</h2>
+
+    <p class="body-text">Y después están las cosas que simplemente te gustan.</p>
+    <p class="body-text">Quizás preferís que sea muy sociable.</p>
+    <p class="body-text">Que practique deportes.</p>
+    <p class="body-text">Que adore viajar.</p>
+    <p class="body-text">Que comparta determinados hobbies.</p>
+    <p class="body-text">Que tenga cierto estilo o personalidad.</p>
+    <p class="body-text">Perfecto.</p>
+    <p class="body-text">¿Qué cosas te encantaría encontrar, pero no determinarían por sí solas si elegirías o no a un hombre?</p>
+
+    <div class="spacer-sm"></div>
+
+    <div class="custom-inputs-section">
+      <div class="custom-input-wrap pref-input-wrap">
+        <span class="input-icon" aria-hidden="true">♡</span>
+        <input
+          type="text"
+          class="custom-field custom-pref"
+          id="custom-pref-1"
+          placeholder="Una preferencia tuya…"
+          aria-label="Preferencia 1"
+          maxlength="160"
+        />
+      </div>
+      <div class="custom-input-wrap pref-input-wrap">
+        <span class="input-icon" aria-hidden="true">♡</span>
+        <input
+          type="text"
+          class="custom-field custom-pref"
+          id="custom-pref-2"
+          placeholder="Una preferencia tuya…"
+          aria-label="Preferencia 2"
+          maxlength="160"
+        />
+      </div>
+      <div class="custom-input-wrap pref-input-wrap">
+        <span class="input-icon" aria-hidden="true">♡</span>
+        <input
+          type="text"
+          class="custom-field custom-pref"
+          id="custom-pref-3"
+          placeholder="Una preferencia tuya…"
+          aria-label="Preferencia 3"
+          maxlength="160"
+        />
+      </div>
+    </div>
+
+    <p class="editorial-note">
+      Esta distinción importa porque una preferencia puede sumar muchísimo a la atracción sin necesariamente decir demasiado sobre la calidad de la relación que podrías construir con él.
+    </p>
+
+    <button class="btn-primary" onclick="goToResultado()" aria-label="Ver el hombre para mí">
+      VER EL HOMBRE PARA MÍ →
+    </button>
+  </div>
+
+</section>
+
+<!-- ============================================================
+     VISTA 6 — 05 · EL HOMBRE PARA MÍ™
+============================================================ -->
+<section id="view-resultado" class="view" role="main" aria-label="El Hombre Para Mí">
+
+  <div class="resultado-inner">
+
+    <div class="resultado-photo-wrap" role="img" aria-label="Fotografía editorial ELEGIDA™ resultado">
+      <div class="resultado-logo" aria-hidden="true">
+        <img src="logo-elegida.png.png" alt="ELEGIDA™" />
+      </div>
+      <img src="foto-02-resultado.png.png" alt="" aria-hidden="true" />
+    </div>
+
+    <div class="resultado-content">
+      <p class="resultado-step" aria-hidden="true">05 · EL HOMBRE PARA MÍ™</p>
+      <h2 class="resultado-title">El Hombre Para Mí<span style="font-size:0.55em;vertical-align:super;font-weight:400;">™</span></h2>
+
+      <!-- FICHA PERSONALIZADA -->
+      <div class="ficha" id="resultado-ficha" aria-label="Tu ficha personalizada El Hombre Para Mí">
+
+        <div class="ficha-title">EL HOMBRE PARA MÍ™</div>
+
+        <!-- MIS 5 IMPRESCINDIBLES -->
+        <div class="ficha-section" id="ficha-imprescindibles">
+          <p class="ficha-section-label">MIS 5 IMPRESCINDIBLES</p>
+          <div id="ficha-imp-list"></div>
+        </div>
+
+        <!-- OTROS ESTÁNDARES -->
+        <div class="ficha-section" id="ficha-otros" style="display:none;">
+          <p class="ficha-section-label">OTROS ESTÁNDARES QUE VALORO</p>
+          <div id="ficha-otros-list"></div>
+        </div>
+
+        <!-- MIS NO NEGOCIABLES -->
+        <div class="ficha-section" id="ficha-noneg" style="display:none;">
+          <p class="ficha-section-label">MIS NO NEGOCIABLES</p>
+          <div id="ficha-noneg-list"></div>
+        </div>
+
+        <!-- MIS PREFERENCIAS -->
+        <div class="ficha-section" id="ficha-pref" style="display:none;">
+          <p class="ficha-section-label">MIS PREFERENCIAS</p>
+          <div id="ficha-pref-list"></div>
+        </div>
+
+      </div>
+
+      <!-- COPY RESULTADO -->
+      <div class="resultado-body">
+        <p class="resultado-cta-label">GUARDALO.</p>
+        <p>No para comparar a cada hombre con una checklist perfecta.</p>
+        <p>Guardalo para volver a mirarlo cuando alguien te guste lo suficiente como para empezar a negociar con vos misma.</p>
+        <p>Porque puede encantarte.</p>
+        <p>Puede haber química.</p>
+        <p>Puede tener muchísimas cosas que te atraigan.</p>
+        <p>Pero cuando pensás en el hombre que querés realmente en tu vida, la pregunta no es solamente:</p>
+        <p class="italic-q">"¿Cuánto me gusta?"</p>
+        <p>También es:</p>
+      </div>
+
+      <blockquote class="resultado-final-q" aria-label="Pregunta clave">
+        «¿Este es el hombre que quiero elegir para mi vida?»
+      </blockquote>
+
+      <!-- BOTONES -->
+      <div class="no-print">
+        <button class="btn-primary" onclick="guardarFiltro()" aria-label="Guardar mi filtro como PDF">
+          GUARDAR MI FILTRO ↓
+        </button>
+        <button class="btn-secondary" onclick="editarFiltro()" aria-label="Editar mi filtro">
+          EDITAR MI FILTRO
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+<!-- ============================================================
+     JAVASCRIPT
+============================================================ -->
+<script>
+  /* ============================================================
+     DATA
+  ============================================================ */
+  const ESTANDARES_LIST = [
+    "Tiene un proyecto de vida compatible con el mío.",
+    "Es responsable con su propia vida.",
+    "Puedo confiar en él.",
+    "Me trata con respeto, incluso cuando pensamos distinto.",
+    "Podemos hablar de temas importantes.",
+    "Tiene una forma de vincularse afectivamente compatible conmigo.",
+    "Tenemos valores importantes en común.",
+    "Su manera de vivir es compatible con la vida que quiero.",
+    "Admiro quién es y cómo se maneja en la vida.",
+    "Hay atracción entre nosotros.",
+    "Quiere el mismo tipo de relación que yo."
+  ];
+
+  const NONEG_LIST = [
+    "Mentiras reiteradas.",
+    "Faltas de respeto.",
+    "Infidelidad o ruptura de acuerdos.",
+    "Conductas de control.",
+    "Irresponsabilidad constante con su propia vida.",
+    "Una incompatibilidad importante en el proyecto de vida.",
+    "Una manera de relacionarse que va en contra de mis valores.",
+    "Que espere que yo me haga cargo constantemente de cosas que le corresponden a él."
+  ];
+
+  const IMPRESCINDIBLES_LIST = [
+    "Hay atracción entre nosotros.",
+    "Quiere el mismo tipo de relación que yo.",
+    "Podemos hablar de temas importantes.",
+    "Tiene una forma de vincularse afectivamente compatible conmigo.",
+    "Tenemos valores importantes en común.",
+    "Sus acciones son coherentes con lo que dice.",
+    "Puede reconocer cuando se equivoca y hacerse cargo de su parte.",
+    "Me siento escuchada, tenida en cuenta y valorada por él.",
+    "Respeta mi espacio, mis vínculos y mi individualidad.",
+    "Hay reciprocidad: los dos aportamos al vínculo."
+  ];
+
+  /* ============================================================
+     STATE
+  ============================================================ */
+  let state = loadState();
+
+  function defaultState() {
+    return {
+      estandaresSelected: [],    // indices into ESTANDARES_LIST
+      estandaresCustom: ['', ''],
+      imprescindibles: [],       // strings (text content)
+      nonegSelected: [],         // indices into NONEG_LIST
+      nonegCustom: ['', '', ''],
+      preferencias: ['', '', '']
+    };
+  }
+
+  function loadState() {
+    try {
+      const raw = localStorage.getItem('elegida_hmpm');
+      if (raw) return JSON.parse(raw);
+    } catch (e) {}
+    return defaultState();
+  }
+
+  function saveState() {
+    try {
+      localStorage.setItem('elegida_hmpm', JSON.stringify(state));
+    } catch (e) {}
+  }
+
+  /* ============================================================
+     NAVIGATION
+  ============================================================ */
+  function goTo(viewId) {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    const target = document.getElementById(viewId);
+    target.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }
+
+  /* ============================================================
+     VIEW 1 → VIEW 2
+  ============================================================ */
+  // Overriding goTo for view-estandares to also build cards
+  const _origGoTo = goTo;
+
+  /* ============================================================
+     BUILD ESTÁNDARES CARDS (Vista 2)
+  ============================================================ */
+  function buildEstandaresCards() {
+    const container = document.getElementById('estandares-cards');
+    container.innerHTML = '';
+
+    ESTANDARES_LIST.forEach((text, idx) => {
+      const isSelected = state.estandaresSelected.includes(idx);
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'card-option' + (isSelected ? ' selected' : '');
+      btn.setAttribute('role', 'checkbox');
+      btn.setAttribute('aria-checked', isSelected ? 'true' : 'false');
+      btn.setAttribute('data-idx', idx);
+      btn.innerHTML = `
+        <span class="card-check" aria-hidden="true"></span>
+        <span class="card-text">${text}</span>
+      `;
+      btn.addEventListener('click', () => toggleEstandar(btn, idx));
+      container.appendChild(btn);
+    });
+  }
+
+  function toggleEstandar(btn, idx) {
+    const pos = state.estandaresSelected.indexOf(idx);
+    if (pos > -1) {
+      state.estandaresSelected.splice(pos, 1);
+      btn.classList.remove('selected');
+      btn.setAttribute('aria-checked', 'false');
+    } else {
+      state.estandaresSelected.push(idx);
+      btn.classList.add('selected');
+      btn.setAttribute('aria-checked', 'true');
+    }
+    saveState();
+    hideVal('val-estandares');
+  }
+
+  function getCustomEstandares() {
+    return [
+      document.getElementById('custom-est-1').value.trim(),
+      document.getElementById('custom-est-2').value.trim()
+    ].filter(v => v.length > 0);
+  }
+
+  function countTotalEstandares() {
+    return state.estandaresSelected.length + getCustomEstandares().length;
+  }
+
+  function restoreEstandaresInputs() {
+    document.getElementById('custom-est-1').value = state.estandaresCustom[0] || '';
+    document.getElementById('custom-est-2').value = state.estandaresCustom[1] || '';
+  }
+
+  function goToImprescindibles() {
+    // Save custom inputs
+    state.estandaresCustom = [
+      document.getElementById('custom-est-1').value.trim(),
+      document.getElementById('custom-est-2').value.trim()
+    ];
+    saveState();
+
+    if (countTotalEstandares() < 5) {
+      showVal('val-estandares');
+      return;
+    }
+
+    hideVal('val-estandares');
+    buildImprescindiblesCards();
+    goTo('view-imprescindibles');
+  }
+
+  /* ============================================================
+     BUILD IMPRESCINDIBLES CARDS (Vista 3)
+  ============================================================ */
+  function getAllEstandaresTexts() {
+    const fromList = state.estandaresSelected.map(idx => ESTANDARES_LIST[idx]);
+    const custom = state.estandaresCustom.filter(v => v.length > 0);
+    return [...fromList, ...custom];
+  }
+
+  function buildImprescindiblesCards() {
+    const container = document.getElementById('imprescindibles-cards');
+    container.innerHTML = '';
+
+    // Limpiar imprescindibles que ya no pertenecen a IMPRESCINDIBLES_LIST
+    state.imprescindibles = state.imprescindibles.filter(t => IMPRESCINDIBLES_LIST.includes(t));
+    saveState();
+
+    IMPRESCINDIBLES_LIST.forEach(text => {
+      const isSelected = state.imprescindibles.includes(text);
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'card-option' + (isSelected ? ' selected' : '');
+      btn.setAttribute('role', 'checkbox');
+      btn.setAttribute('aria-checked', isSelected ? 'true' : 'false');
+      btn.setAttribute('data-text', text);
+
+      if (!isSelected && state.imprescindibles.length >= 5) {
+        btn.classList.add('disabled');
+        btn.setAttribute('aria-disabled', 'true');
+      }
+
+      btn.innerHTML = `
+        <span class="card-check" aria-hidden="true"></span>
+        <span class="card-text">${text}</span>
+      `;
+      btn.addEventListener('click', () => toggleImprescindible(btn, text));
+      container.appendChild(btn);
+    });
+
+    updateImpCounter();
+  }
+
+  function toggleImprescindible(btn, text) {
+    const pos = state.imprescindibles.indexOf(text);
+    if (pos > -1) {
+      // Deselect
+      state.imprescindibles.splice(pos, 1);
+      btn.classList.remove('selected');
+      btn.setAttribute('aria-checked', 'false');
+    } else {
+      // Select only if < 5
+      if (state.imprescindibles.length >= 5) return;
+      state.imprescindibles.push(text);
+      btn.classList.add('selected');
+      btn.setAttribute('aria-checked', 'true');
+    }
+    saveState();
+    updateImpCounter();
+    updateImpDisabledStates();
+    hideVal('val-imprescindibles');
+  }
+
+  function updateImpCounter() {
+    const count = state.imprescindibles.length;
+    const counter = document.getElementById('imp-counter');
+    counter.textContent = count + ' de 5 elegidos';
+    counter.classList.toggle('complete', count === 5);
+  }
+
+  function updateImpDisabledStates() {
+    const cards = document.querySelectorAll('#imprescindibles-cards .card-option');
+    const full = state.imprescindibles.length >= 5;
+    cards.forEach(card => {
+      const isSelected = card.classList.contains('selected');
+      if (full && !isSelected) {
+        card.classList.add('disabled');
+        card.setAttribute('aria-disabled', 'true');
+      } else {
+        card.classList.remove('disabled');
+        card.removeAttribute('aria-disabled');
+      }
+    });
+  }
+
+  function goToNoNegociables() {
+    if (state.imprescindibles.length !== 5) {
+      showVal('val-imprescindibles');
+      return;
+    }
+    hideVal('val-imprescindibles');
+    buildNoNegCards();
+    restoreNoNegInputs();
+    goTo('view-nonegociables');
+  }
+
+  /* ============================================================
+     BUILD NO NEGOCIABLES CARDS (Vista 4)
+  ============================================================ */
+  function buildNoNegCards() {
+    const container = document.getElementById('noneg-cards');
+    container.innerHTML = '';
+
+    NONEG_LIST.forEach((text, idx) => {
+      const isSelected = state.nonegSelected.includes(idx);
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'card-option' + (isSelected ? ' selected' : '');
+      btn.setAttribute('role', 'checkbox');
+      btn.setAttribute('aria-checked', isSelected ? 'true' : 'false');
+      btn.setAttribute('data-idx', idx);
+      btn.innerHTML = `
+        <span class="card-check" aria-hidden="true"></span>
+        <span class="card-text">${text}</span>
+      `;
+      btn.addEventListener('click', () => toggleNoNeg(btn, idx));
+      container.appendChild(btn);
+    });
+  }
+
+  function toggleNoNeg(btn, idx) {
+    const pos = state.nonegSelected.indexOf(idx);
+    if (pos > -1) {
+      state.nonegSelected.splice(pos, 1);
+      btn.classList.remove('selected');
+      btn.setAttribute('aria-checked', 'false');
+    } else {
+      state.nonegSelected.push(idx);
+      btn.classList.add('selected');
+      btn.setAttribute('aria-checked', 'true');
+    }
+    saveState();
+  }
+
+  function restoreNoNegInputs() {
+    document.getElementById('custom-noneg-1').value = state.nonegCustom[0] || '';
+    document.getElementById('custom-noneg-2').value = state.nonegCustom[1] || '';
+    document.getElementById('custom-noneg-3').value = state.nonegCustom[2] || '';
+  }
+
+  function goToPreferencias() {
+    state.nonegCustom = [
+      document.getElementById('custom-noneg-1').value.trim(),
+      document.getElementById('custom-noneg-2').value.trim(),
+      document.getElementById('custom-noneg-3').value.trim()
+    ];
+    saveState();
+    restorePrefInputs();
+    goTo('view-preferencias');
+  }
+
+  /* ============================================================
+     PREFERENCES (Vista 5)
+  ============================================================ */
+  function restorePrefInputs() {
+    document.getElementById('custom-pref-1').value = state.preferencias[0] || '';
+    document.getElementById('custom-pref-2').value = state.preferencias[1] || '';
+    document.getElementById('custom-pref-3').value = state.preferencias[2] || '';
+  }
+
+  function goToResultado() {
+    state.preferencias = [
+      document.getElementById('custom-pref-1').value.trim(),
+      document.getElementById('custom-pref-2').value.trim(),
+      document.getElementById('custom-pref-3').value.trim()
+    ];
+    saveState();
+    buildResultado();
+    goTo('view-resultado');
+  }
+
+  /* ============================================================
+     BUILD RESULTADO (Vista 6)
+  ============================================================ */
+  function buildResultado() {
+    // MIS 5 IMPRESCINDIBLES
+    const impList = document.getElementById('ficha-imp-list');
+    impList.innerHTML = '';
+    state.imprescindibles.forEach(text => {
+      impList.appendChild(createFichaItem('✓', 'check', text));
+    });
+
+    // OTROS ESTÁNDARES (all estándares NOT in imprescindibles)
+    const allTexts = getAllEstandaresTexts();
+    const otros = allTexts.filter(t => !state.imprescindibles.includes(t));
+    const fichaOtros = document.getElementById('ficha-otros');
+    const fichaOtrosList = document.getElementById('ficha-otros-list');
+    fichaOtrosList.innerHTML = '';
+    if (otros.length > 0) {
+      otros.forEach(text => {
+        fichaOtrosList.appendChild(createFichaItem('✓', 'check', text));
+      });
+      fichaOtros.style.display = '';
+    } else {
+      fichaOtros.style.display = 'none';
+    }
+
+    // MIS NO NEGOCIABLES
+    const nonegTexts = state.nonegSelected.map(idx => NONEG_LIST[idx]);
+    const nonegCustom = state.nonegCustom.filter(v => v && v.length > 0);
+    const allNoneg = [...nonegTexts, ...nonegCustom];
+    const fichaNoneg = document.getElementById('ficha-noneg');
+    const fichaNonegList = document.getElementById('ficha-noneg-list');
+    fichaNonegList.innerHTML = '';
+    if (allNoneg.length > 0) {
+      allNoneg.forEach(text => {
+        fichaNonegList.appendChild(createFichaItem('✕', 'cross', text));
+      });
+      fichaNoneg.style.display = '';
+    } else {
+      fichaNoneg.style.display = 'none';
+    }
+
+    // MIS PREFERENCIAS
+    const prefs = state.preferencias.filter(v => v && v.length > 0);
+    const fichaPref = document.getElementById('ficha-pref');
+    const fichaPrefList = document.getElementById('ficha-pref-list');
+    fichaPrefList.innerHTML = '';
+    if (prefs.length > 0) {
+      prefs.forEach(text => {
+        fichaPrefList.appendChild(createFichaItem('♡', 'heart', text));
+      });
+      fichaPref.style.display = '';
+    } else {
+      fichaPref.style.display = 'none';
+    }
+  }
+
+  function createFichaItem(icon, iconClass, text) {
+    const div = document.createElement('div');
+    div.className = 'ficha-item';
+    div.innerHTML = `<span class="ficha-icon ${iconClass}" aria-hidden="true">${icon}</span><span>${escHtml(text)}</span>`;
+    return div;
+  }
+
+  function escHtml(str) {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  /* ============================================================
+     EDITAR MI FILTRO
+  ============================================================ */
+  function editarFiltro() {
+    buildEstandaresCards();
+    restoreEstandaresInputs();
+    goTo('view-estandares');
+  }
+
+  /* ============================================================
+     GUARDAR MI FILTRO (Print to PDF)
+  ============================================================ */
+  function guardarFiltro() {
+    buildPrintSheet();
+    window.print();
+  }
+
+  function buildPrintSheet() {
+    const psBody = document.getElementById('ps-body');
+    psBody.innerHTML = '';
+
+    // MIS 5 IMPRESCINDIBLES
+    if (state.imprescindibles.length > 0) {
+      psBody.appendChild(createPsSection('MIS 5 IMPRESCINDIBLES', state.imprescindibles, '✓'));
+    }
+
+    // OTROS ESTÁNDARES
+    const allTexts = getAllEstandaresTexts();
+    const otros = allTexts.filter(t => !state.imprescindibles.includes(t));
+    if (otros.length > 0) {
+      psBody.appendChild(createPsSection('OTROS ESTÁNDARES QUE VALORO', otros, '✓'));
+    }
+
+    // MIS NO NEGOCIABLES
+    const nonegTexts = state.nonegSelected.map(idx => NONEG_LIST[idx]);
+    const nonegCustom = state.nonegCustom.filter(v => v && v.length > 0);
+    const allNoneg = [...nonegTexts, ...nonegCustom];
+    if (allNoneg.length > 0) {
+      psBody.appendChild(createPsSection('MIS NO NEGOCIABLES', allNoneg, '✕'));
+    }
+
+    // MIS PREFERENCIAS
+    const prefs = state.preferencias.filter(v => v && v.length > 0);
+    if (prefs.length > 0) {
+      psBody.appendChild(createPsSection('MIS PREFERENCIAS', prefs, '♡'));
+    }
+  }
+
+  function createPsSection(label, items, icon) {
+    const div = document.createElement('div');
+    div.className = 'ps-section';
+    let html = `<div class="ps-section-label">${escHtml(label)}</div>`;
+    items.forEach(item => {
+      html += `<div class="ps-item">${icon} ${escHtml(item)}</div>`;
+    });
+    div.innerHTML = html;
+    return div;
+  }
+
+  /* ============================================================
+     VALIDATION HELPERS
+  ============================================================ */
+  function showVal(id) {
+    document.getElementById(id).classList.add('visible');
+  }
+
+  function hideVal(id) {
+    document.getElementById(id).classList.remove('visible');
+  }
+
+  /* ============================================================
+     INIT
+  ============================================================ */
+  function init() {
+    // Build estándares on load (in case user reloads mid-session)
+    buildEstandaresCards();
+    restoreEstandaresInputs();
+
+    // Auto-restore saved input values on input events (so state stays fresh)
+    document.querySelectorAll('.custom-est').forEach((input, i) => {
+      input.addEventListener('input', () => {
+        state.estandaresCustom[i] = input.value.trim();
+        saveState();
+      });
+    });
+
+    document.querySelectorAll('.custom-noneg').forEach((input, i) => {
+      input.addEventListener('input', () => {
+        state.nonegCustom[i] = input.value.trim();
+        saveState();
+      });
+    });
+
+    document.querySelectorAll('.custom-pref').forEach((input, i) => {
+      input.addEventListener('input', () => {
+        state.preferencias[i] = input.value.trim();
+        saveState();
+      });
+    });
+
+    // If state has data, check if we should restore a specific view
+    // (on reload, we always start at portada per spec — only localStorage persists data)
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
+</script>
+
+</body>
+</html>
