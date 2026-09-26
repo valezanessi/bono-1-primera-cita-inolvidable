@@ -1,0 +1,531 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>PRIMERA CITA INOLVIDABLE - ELEGIDA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+:root{--burgundy:#5B0F1A;--wine:#8E1C2A;--rose:#C99BA6;--nude:#E7D6C6;--cream:#FAF5EF;--charcoal:#1A1A1A;--champagne:#C8A97E;--ink:#2C2320;--soft:#4A3F3A;--muted:#7A6A65;--border:#DDD0C5;--serif:'Playfair Display',Georgia,serif;--sans:'Inter',system-ui,sans-serif;--r:10px;--r-lg:18px;--r-xl:24px;--ease:cubic-bezier(.4,0,.2,1);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);min-height:100dvh;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+img{display:block;max-width:100%;}
+button{font:inherit;cursor:pointer;border:none;background:none;-webkit-tap-highlight-color:transparent;}
+textarea{font:inherit;}
+#app{min-height:100dvh;}
+.screen{display:none;flex-direction:column;min-height:100dvh;opacity:0;transform:translateY(10px);transition:opacity .42s var(--ease),transform .42s var(--ease);}
+.screen.active{display:flex;opacity:1;transform:translateY(0);}
+.topbar{padding:40px 26px 0;max-width:500px;margin:0 auto;width:100%;display:flex;align-items:center;justify-content:space-between;}
+.btn-back{display:flex;align-items:center;gap:5px;font-family:var(--sans);font-size:.75rem;letter-spacing:.08em;color:var(--muted);padding:6px 0;transition:color .2s;}
+.btn-back:hover{color:var(--burgundy);}
+.btn-back svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.logo-micro{height:26px;width:auto;mix-blend-mode:multiply;opacity:.8;}
+.logo-micro-inv{height:26px;width:auto;filter:brightness(0) invert(1);opacity:.75;}
+.overline{font-family:var(--sans);font-size:9px;letter-spacing:.38em;color:var(--champagne);text-transform:uppercase;display:block;}
+.btn-primary{display:inline-flex;align-items:center;justify-content:center;font-family:var(--sans);font-size:.72rem;font-weight:500;letter-spacing:.28em;text-transform:uppercase;padding:17px 44px;border-radius:60px;min-height:54px;transition:background .3s var(--ease),border-color .3s var(--ease),color .3s var(--ease);-webkit-tap-highlight-color:transparent;}
+.btn-outline-cream{background:transparent;color:var(--cream);border:1px solid rgba(250,245,239,.5);}
+.btn-outline-cream:hover,.btn-outline-cream:focus-visible{background:rgba(250,245,239,.13);border-color:rgba(250,245,239,.8);outline:none;}
+.btn-solid{background:var(--burgundy);color:var(--cream);border:1px solid var(--burgundy);width:100%;}
+.btn-solid:hover,.btn-solid:focus-visible{background:var(--wine);border-color:var(--wine);outline:none;}
+.btn-solid:active{background:#490c14;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+.stagger>*{opacity:0;animation:fadeUp .55s var(--ease) forwards;}
+.stagger>*:nth-child(1){animation-delay:.06s;}.stagger>*:nth-child(2){animation-delay:.14s;}.stagger>*:nth-child(3){animation-delay:.22s;}.stagger>*:nth-child(4){animation-delay:.30s;}.stagger>*:nth-child(5){animation-delay:.38s;}.stagger>*:nth-child(6){animation-delay:.46s;}.stagger>*:nth-child(7){animation-delay:.54s;}.stagger>*:nth-child(8){animation-delay:.62s;}
+.fade-up{opacity:0;transform:translateY(14px);transition:opacity .55s var(--ease),transform .55s var(--ease);}
+.fade-up.in{opacity:1;transform:translateY(0);}
+#screen-cover{background:var(--ink);position:relative;justify-content:flex-end;min-height:100dvh;}
+.cover-photo{position:absolute;inset:0;overflow:hidden;}
+.cover-photo img{width:100%;height:100%;object-fit:cover;object-position:center 18%;}
+.cover-photo::after{content:'';position:absolute;inset:0;background:linear-gradient(175deg,rgba(26,13,20,.05) 0%,rgba(26,13,20,.2) 30%,rgba(26,13,20,.68) 68%,rgba(26,13,20,.88) 100%);}
+.cover-logo-wrap{position:absolute;top:0;left:0;right:0;z-index:10;display:flex;justify-content:center;padding:0 24px;}
+.cover-logo-badge{background:rgba(250,245,239,.93);border-radius:0 0 18px 18px;padding:10px 28px 13px;box-shadow:0 4px 24px rgba(0,0,0,.15);}
+.cover-logo-badge img{height:40px;width:auto;}
+.cover-content{position:relative;z-index:10;padding:0 28px 60px;max-width:480px;margin:0 auto;width:100%;text-align:center;}
+.cover-eyebrow{font-family:var(--sans);font-size:9px;letter-spacing:.42em;color:var(--rose);text-transform:uppercase;margin-bottom:16px;}
+.cover-title{font-family:var(--serif);font-size:clamp(2.1rem,9vw,2.9rem);font-weight:600;color:var(--cream);line-height:1.15;letter-spacing:.02em;margin-bottom:16px;}
+.cover-title sup{font-size:.45em;vertical-align:super;font-weight:400;letter-spacing:0;}
+.cover-divider{width:1px;height:36px;background:linear-gradient(to bottom,transparent,rgba(201,155,166,.6),transparent);margin:0 auto 28px;}
+.cover-subtitle{font-family:var(--sans);font-size:.88rem;font-weight:300;color:rgba(250,245,239,.72);line-height:1.68;margin:0 auto 36px;max-width:290px;}
+#screen-menu{background:var(--cream);}
+.menu-top{padding:52px 28px 32px;max-width:500px;margin:0 auto;width:100%;}
+.menu-logo{height:34px;width:auto;mix-blend-mode:multiply;margin-bottom:32px;}
+.menu-eyebrow{font-family:var(--serif);font-size:.82rem;font-style:italic;color:var(--muted);margin-bottom:4px;}
+.menu-title-big{font-family:var(--serif);font-size:1.65rem;font-weight:600;color:var(--burgundy);line-height:1.2;margin-bottom:20px;}
+.menu-rule{width:32px;height:1px;background:var(--champagne);}
+.menu-list{flex:1;padding:0 28px 52px;max-width:500px;margin:0 auto;width:100%;}
+.menu-item{display:flex;align-items:flex-start;gap:20px;padding:24px 0;border-bottom:1px solid var(--border);width:100%;text-align:left;cursor:pointer;transition:opacity .2s;}
+.menu-item:first-child{border-top:1px solid var(--border);}
+.menu-item:hover{opacity:.7;}.menu-item:active{opacity:.5;}
+.menu-num{font-family:var(--serif);font-size:.75rem;font-style:italic;color:var(--champagne);min-width:20px;flex-shrink:0;padding-top:3px;}
+.menu-body{flex:1;}
+.menu-item-title{font-family:var(--serif);font-size:1.15rem;font-weight:500;color:var(--burgundy);line-height:1.2;margin-bottom:5px;}
+.menu-item-desc{font-family:var(--sans);font-size:.8rem;font-weight:300;color:var(--muted);line-height:1.5;}
+.menu-arrow{color:var(--rose);font-size:1rem;padding-top:4px;flex-shrink:0;}
+.photo-wrap{position:relative;overflow:hidden;width:100%;}
+.photo-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
+.photo-wrap::after{content:'';position:absolute;bottom:0;left:0;right:0;height:55%;background:linear-gradient(to bottom,transparent,var(--cream));pointer-events:none;}
+.h-antes{height:clamp(220px,56vw,340px);}.h-lista{height:clamp(240px,60vw,380px);}.h-brujula{height:clamp(200px,48vw,300px);}.h-vuelves{height:clamp(230px,58vw,360px);}
+.pos-antes{object-position:center 15%;}.pos-lista{object-position:center 22%;}.pos-brujula{object-position:center 30%;}.pos-vuelves{object-position:center 20%;}
+.topbar-photo{position:absolute;top:0;left:0;right:0;z-index:10;padding:36px 26px 0;display:flex;align-items:center;justify-content:space-between;}
+.content-block{padding:12px 28px 60px;max-width:500px;margin:0 auto;width:100%;flex:1;}
+.prose{font-family:var(--sans);font-size:.92rem;font-weight:300;color:var(--soft);line-height:1.82;}
+.prose p{margin-bottom:16px;}.prose p:last-child{margin-bottom:0;}
+.thought-cards{display:flex;flex-direction:column;gap:8px;margin:4px 0 28px;}
+.thought{font-family:var(--serif);font-size:.95rem;font-style:italic;color:var(--muted);padding:10px 0 10px 16px;border-left:2px solid var(--rose);opacity:0;transform:translateX(-6px);transition:opacity .5s var(--ease),transform .5s var(--ease);}
+.thought.in{opacity:1;transform:translateX(0);}
+.pivot-dark{background:var(--burgundy);border-radius:var(--r-xl);padding:30px 26px;margin:28px 0;text-align:center;opacity:0;transform:translateY(12px);transition:opacity .58s var(--ease),transform .58s var(--ease);}
+.pivot-dark.in{opacity:1;transform:translateY(0);}
+.pivot-eyebrow{font-family:var(--sans);font-size:8px;letter-spacing:.35em;color:var(--rose);text-transform:uppercase;display:block;margin-bottom:12px;}
+.pivot-text{font-family:var(--serif);font-size:1.18rem;font-style:italic;color:var(--cream);line-height:1.5;}
+.pivot-light{border:1px solid var(--border);border-radius:var(--r-xl);padding:22px 24px;margin:0 0 26px;text-align:center;opacity:0;transform:translateY(12px);transition:opacity .58s var(--ease),transform .58s var(--ease);}
+.pivot-light.in{opacity:1;transform:translateY(0);}
+.pivot-light-text{font-family:var(--serif);font-size:1.1rem;font-style:italic;color:var(--burgundy);line-height:1.45;}
+.discover-list{display:flex;flex-direction:column;gap:10px;margin-bottom:28px;}
+.discover-item{display:flex;align-items:flex-start;gap:12px;opacity:0;transform:translateY(6px);transition:opacity .45s var(--ease),transform .45s var(--ease);}
+.discover-item.in{opacity:1;transform:translateY(0);}
+.d-dot{width:4px;height:4px;min-width:4px;border-radius:50%;background:var(--rose);margin-top:10px;}
+.d-text{font-family:var(--sans);font-size:.88rem;font-weight:300;color:var(--soft);line-height:1.7;}
+.closing-block{opacity:0;transform:translateY(12px);transition:opacity .55s var(--ease),transform .55s var(--ease);}
+.closing-block.in{opacity:1;transform:translateY(0);}
+.closing-rule{width:32px;height:1px;background:var(--champagne);margin-bottom:18px;}
+.closing-prose{font-family:var(--sans);font-size:.9rem;font-weight:300;color:var(--soft);line-height:1.82;}
+.closing-prose p{margin-bottom:14px;}
+.closing-finale{font-family:var(--serif);font-size:1.05rem;font-style:italic;color:var(--burgundy);margin-top:8px;}
+.lista-prose{font-family:var(--sans);font-size:.92rem;font-weight:300;color:var(--soft);line-height:1.82;}
+.lista-prose p{margin-bottom:16px;}
+.lista-highlight{border-left:2px solid var(--rose);padding:4px 0 4px 16px;font-family:var(--serif);font-size:1rem;font-style:italic;color:var(--burgundy);margin:20px 0;}
+.lista-finale{margin-top:40px;padding-top:30px;border-top:1px solid var(--border);text-align:center;}
+.finale-eyebrow{font-family:var(--sans);font-size:8px;letter-spacing:.42em;color:var(--champagne);text-transform:uppercase;display:block;margin-bottom:14px;}
+.finale-text{font-family:var(--serif);font-size:1.5rem;font-weight:500;font-style:italic;color:var(--burgundy);line-height:1.3;}
+.brujula-content{padding:4px 28px 52px;max-width:500px;margin:0 auto;width:100%;flex:1;display:flex;flex-direction:column;}
+.brujula-tm{font-size:.45em;vertical-align:super;font-weight:400;}
+.brujula-sub{font-family:var(--sans);font-size:.82rem;font-weight:300;color:var(--muted);margin-top:6px;}
+.compass-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;}
+.compass-btn{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:22px 14px;font-family:var(--serif);font-size:.98rem;font-weight:500;color:var(--burgundy);letter-spacing:.06em;transition:background .22s,border-color .22s,color .22s,transform .18s;min-height:68px;}
+.compass-btn:hover,.compass-btn:focus-visible{background:var(--nude);border-color:var(--rose);outline:none;}
+.compass-btn:active{transform:scale(.97);}
+.compass-btn.active{background:var(--burgundy);border-color:var(--burgundy);color:var(--cream);}
+.compass-reminder{background:#fff;border:1px solid var(--border);border-left:3px solid var(--rose);border-radius:var(--r-lg);padding:22px 20px;font-family:var(--sans);font-size:.9rem;font-weight:300;color:var(--soft);line-height:1.75;min-height:80px;opacity:0;transform:translateY(8px);transition:opacity .32s var(--ease),transform .32s var(--ease);}
+.compass-reminder.in{opacity:1;transform:translateY(0);}
+.compass-hint{margin-top:18px;font-family:var(--sans);font-size:.75rem;font-weight:300;color:var(--muted);text-align:center;letter-spacing:.06em;}
+.vuelves-emphasis{font-family:var(--serif);font-size:1.65rem;font-weight:600;font-style:italic;color:var(--burgundy);line-height:1.25;margin:26px 0 18px;}
+.sub-qs{display:flex;flex-direction:column;gap:9px;margin-bottom:26px;}
+.sub-q{display:flex;align-items:flex-start;gap:12px;}
+.sub-dash{color:var(--rose);font-family:var(--serif);font-size:.95rem;flex-shrink:0;margin-top:1px;}
+.sub-txt{font-family:var(--sans);font-size:.88rem;font-weight:300;color:var(--soft);line-height:1.65;}
+.checkin-body{flex:1;padding:30px 28px 56px;max-width:500px;margin:0 auto;width:100%;display:flex;flex-direction:column;}
+.progress-row{display:flex;align-items:center;gap:12px;margin-bottom:34px;}
+.progress-track{flex:1;height:1px;background:var(--border);border-radius:1px;overflow:hidden;}
+.progress-fill{height:100%;background:var(--rose);border-radius:1px;transition:width .4s var(--ease);}
+.progress-label{font-family:var(--sans);font-size:9px;letter-spacing:.28em;color:var(--muted);white-space:nowrap;}
+.cq-num{font-family:var(--sans);font-size:8px;letter-spacing:.38em;color:var(--champagne);text-transform:uppercase;margin-bottom:10px;}
+.cq-text{font-family:var(--serif);font-size:1.2rem;font-weight:500;color:var(--charcoal);line-height:1.35;margin-bottom:8px;}
+.cq-hint{font-family:var(--sans);font-size:.76rem;font-weight:300;color:var(--muted);margin-bottom:24px;}
+.options{display:flex;flex-direction:column;gap:8px;margin-bottom:28px;}
+.opt{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:15px 20px;font-family:var(--sans);font-size:.88rem;font-weight:300;color:var(--soft);text-align:left;cursor:pointer;transition:border-color .2s,background .2s,color .2s;-webkit-tap-highlight-color:transparent;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.opt:hover,.opt:focus-visible{border-color:var(--rose);background:rgba(201,155,166,.08);outline:none;}
+.opt.selected{border-color:var(--burgundy);background:rgba(91,15,26,.05);color:var(--burgundy);font-weight:400;}
+.opt.selected::after{content:'';width:6px;height:6px;min-width:6px;border-radius:50%;background:var(--burgundy);flex-shrink:0;}
+.cond-note{overflow:hidden;max-height:0;opacity:0;transition:max-height .4s var(--ease),opacity .4s var(--ease);}
+.cond-note.open{max-height:180px;opacity:1;margin-bottom:16px;}
+.cond-label{font-family:var(--sans);font-size:.8rem;font-weight:300;color:var(--muted);margin:12px 0 8px;}
+.cond-input{width:100%;background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:14px 18px;font-family:var(--sans);font-size:.87rem;font-weight:300;color:var(--charcoal);line-height:1.6;resize:none;min-height:88px;outline:none;transition:border-color .2s;}
+.cond-input:focus{border-color:var(--rose);}
+.cq-textarea{width:100%;background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:18px 20px;font-family:var(--sans);font-size:.9rem;font-weight:300;color:var(--charcoal);line-height:1.7;resize:none;min-height:130px;outline:none;transition:border-color .2s;margin-bottom:8px;}
+.cq-textarea:focus{border-color:var(--rose);}
+.cq-textarea::placeholder{color:var(--muted);font-style:italic;}
+.cq-area-hint{font-family:var(--sans);font-size:.76rem;font-weight:300;color:var(--muted);margin-bottom:24px;}
+.cq-nav{margin-top:auto;}
+.impresion-body{flex:1;padding:40px 28px 60px;max-width:500px;margin:0 auto;width:100%;display:flex;flex-direction:column;}
+.impresion-prompt{font-family:var(--sans);font-size:.85rem;font-weight:300;color:var(--muted);margin-bottom:14px;}
+.impresion-stem{font-family:var(--serif);font-size:1.05rem;font-style:italic;color:var(--soft);line-height:1.5;margin-bottom:18px;}
+.impresion-area{width:100%;background:#fff;border:1px solid var(--border);border-radius:var(--r-xl);padding:22px;font-family:var(--sans);font-size:.92rem;font-weight:300;color:var(--charcoal);line-height:1.75;resize:none;min-height:160px;max-height:260px;outline:none;transition:border-color .2s;margin-bottom:24px;display:block;flex:1;}
+.impresion-area:focus{border-color:var(--rose);}
+.impresion-area::placeholder{color:var(--muted);font-style:italic;}
+.final-card{display:none;flex-direction:column;align-items:center;text-align:center;}
+.final-card.show{display:flex;}
+.final-ornament{width:1px;height:48px;background:linear-gradient(to bottom,transparent,var(--rose),transparent);margin:0 auto 28px;}
+.final-card-inner{background:var(--burgundy);border-radius:var(--r-xl);padding:36px 28px 32px;width:100%;margin-bottom:28px;position:relative;overflow:hidden;}
+.final-card-inner::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,var(--champagne),transparent);}
+.final-card-logo{height:22px;width:auto;opacity:.3;filter:brightness(0) invert(1);margin:0 auto 18px;}
+.final-eyebrow{font-family:var(--sans);font-size:8px;letter-spacing:.42em;color:var(--rose);text-transform:uppercase;display:block;margin-bottom:18px;}
+.final-stem{font-family:var(--serif);font-size:.82rem;font-style:italic;color:rgba(250,245,239,.5);display:block;margin-bottom:8px;}
+.final-quote{font-family:var(--serif);font-size:1.15rem;font-style:italic;color:var(--cream);line-height:1.65;}
+.final-message{font-family:var(--sans);font-size:.83rem;font-weight:300;color:var(--muted);line-height:1.75;max-width:310px;margin-bottom:32px;}
+@media(min-width:640px){
+.cover-logo-badge img{height:48px;}.cover-title{font-size:3.1rem;}.cover-content{padding-bottom:80px;}
+.h-antes{max-height:420px;}.h-lista{max-height:460px;}.h-brujula{max-height:360px;}.h-vuelves{max-height:440px;}
+.topbar,.menu-top,.menu-list,.content-block,.brujula-content,.checkin-body,.impresion-body{padding-left:36px;padding-right:36px;}
+.topbar-photo{padding-left:36px;padding-right:36px;}.menu-top{padding-top:64px;}.topbar{padding-top:52px;}
+}
+  </style>
+</head>
+<body>
+<div id="app" aria-live="polite">
+
+<section id="screen-cover" class="screen active" role="main">
+  <div class="cover-photo" aria-hidden="true"><img src="antes-de-verlo.png.png" alt="" /></div>
+  <div class="cover-logo-wrap">
+    <div class="cover-logo-badge"><img src="logo-elegida.png.png" alt="ELEGIDA" /></div>
+  </div>
+  <div class="cover-content">
+    <p class="cover-eyebrow">Bono premium</p>
+    <h1 class="cover-title">PRIMERA CITA<br>INOLVIDABLE<sup>TM</sup></h1>
+    <div class="cover-divider" aria-hidden="true"></div>
+    <p class="cover-subtitle">Tu guia para disfrutar el encuentro sin perderte pensando en como gustarle.</p>
+    <button class="btn-primary btn-outline-cream" onclick="goTo('screen-menu')">EMPEZAR</button>
+  </div>
+</section>
+
+<section id="screen-menu" class="screen" role="main">
+  <div class="menu-top">
+    <img src="logo-elegida.png.png" alt="ELEGIDA" class="menu-logo" />
+    <p class="menu-eyebrow">Elige tu momento</p>
+    <h2 class="menu-title-big">¿EN QUÉ<br>MOMENTO ESTÁS?</h2>
+    <div class="menu-rule"></div>
+  </div>
+  <nav class="menu-list stagger" aria-label="Secciones">
+    <button class="menu-item" onclick="goTo('screen-antes')">
+      <span class="menu-num">i.</span>
+      <div class="menu-body"><div class="menu-item-title">ANTES DE VERLO</div><div class="menu-item-desc">Prepárate para el encuentro.</div></div>
+      <span class="menu-arrow" aria-hidden="true">→</span>
+    </button>
+    <button class="menu-item" onclick="goTo('screen-lista')">
+      <span class="menu-num">ii.</span>
+      <div class="menu-body"><div class="menu-item-title">YA ESTÁS LISTA</div><div class="menu-item-desc">Lo que necesitas recordar antes de encontrarte con el.</div></div>
+      <span class="menu-arrow" aria-hidden="true">→</span>
+    </button>
+    <button class="menu-item" onclick="goTo('screen-brujula')">
+      <span class="menu-num">iii.</span>
+      <div class="menu-body"><div class="menu-item-title">DURANTE EL ENCUENTRO</div><div class="menu-item-desc">Abre tu Brujula.</div></div>
+      <span class="menu-arrow" aria-hidden="true">→</span>
+    </button>
+    <button class="menu-item" onclick="goTo('screen-vuelves')">
+      <span class="menu-num">iv.</span>
+      <div class="menu-body"><div class="menu-item-title">CUANDO VUELVES A CASA</div><div class="menu-item-desc">Quedate con lo que realmente sentiste.</div></div>
+      <span class="menu-arrow" aria-hidden="true">→</span>
+    </button>
+  </nav>
+</section>
+
+<section id="screen-antes" class="screen" role="main">
+  <div style="position:relative;">
+    <div class="photo-wrap h-antes"><img src="antes-de-verlo.png.png" alt="" class="pos-antes" /></div>
+    <div class="topbar-photo">
+      <button class="btn-back" onclick="goTo('screen-menu')" style="color:rgba(250,245,239,.85);">
+        <svg viewBox="0 0 24 24" style="stroke:rgba(250,245,239,.85)" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>Menu
+      </button>
+      <img src="logo-elegida.png.png" alt="ELEGIDA" class="logo-micro-inv" />
+    </div>
+  </div>
+  <div class="content-block">
+    <span class="overline" style="margin-bottom:14px;">01 — Antes de verlo</span>
+    <div class="fade-up" id="av-intro">
+      <p style="font-family:var(--sans);font-size:.92rem;font-weight:300;color:var(--soft);line-height:1.82;margin-bottom:14px;">Quizas llevas un rato pensando que ponerte, como arreglarte o mirandote una vez mas antes de salir.</p>
+      <p style="font-family:var(--sans);font-size:.92rem;font-weight:300;color:var(--soft);line-height:1.82;margin-bottom:0;">Y tal vez aparecio alguna de esas preguntas:</p>
+    </div>
+    <div class="thought-cards">
+      <div class="thought" id="tc-1">¿Le voy a gustar?</div>
+      <div class="thought" id="tc-2">¿Habrá química?</div>
+      <div class="thought" id="tc-3">¿Qué va a pensar de mí?</div>
+    </div>
+    <div class="pivot-dark" id="pivot-1">
+      <span class="pivot-eyebrow">Pero antes de verlo, quiero proponerte algo diferente:</span>
+      <p class="pivot-text">En lugar de seguir preparándote para gustarle,<br>prepárate para estar ahí.</p>
+    </div>
+    <div class="fade-up" id="av-prose2">
+      <p style="font-family:var(--sans);font-size:.92rem;font-weight:300;color:var(--soft);line-height:1.82;margin-bottom:20px;">No necesitas llegar siendo la versión más interesante, divertida o atractiva de ti misma. Tampoco conseguir que el encuentro salga perfecto.</p>
+    </div>
+    <div class="pivot-light" id="pivot-2">
+      <p class="pivot-light-text">Hoy tú también vas a descubrir.</p>
+    </div>
+    <div class="discover-list">
+      <div class="discover-item" id="dq-1"><div class="d-dot"></div><div class="d-text">¿Cómo te sientes cuando estás a su lado?</div></div>
+      <div class="discover-item" id="dq-2"><div class="d-dot"></div><div class="d-text">¿Disfrutas la conversación?</div></div>
+      <div class="discover-item" id="dq-3"><div class="d-dot"></div><div class="d-text">¿Te gusta cómo te trata?</div></div>
+      <div class="discover-item" id="dq-4"><div class="d-dot"></div><div class="d-text">¿Te nace seguir conociéndolo?</div></div>
+    </div>
+    <div class="closing-block" id="av-closing">
+      <div class="closing-rule"></div>
+      <div class="closing-prose">
+        <p>No tienes que demostrarle que eres la mujer indicada ni decidir si el lo es para ti.</p>
+        <p>Este encuentro es simplemente una oportunidad para conocerse.</p>
+        <p>Para conversar, compartir, observar como se sienten juntos y dejar que cada uno vaya mostrando quien es, sin adelantarse a lo que podría pasar despues.</p>
+        <p class="closing-finale">Ve a conocerlo. Y deja que el también tenga la oportunidad de conocerte.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="screen-lista" class="screen" role="main">
+  <div style="position:relative;">
+    <div class="photo-wrap h-lista"><img src="ya-estas-lista.png.png" alt="" class="pos-lista" /></div>
+    <div class="topbar-photo">
+      <button class="btn-back" onclick="goTo('screen-menu')" style="color:rgba(250,245,239,.85);">
+        <svg viewBox="0 0 24 24" style="stroke:rgba(250,245,239,.85)" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>Menu
+      </button>
+      <img src="logo-elegida.png.png" alt="ELEGIDA" class="logo-micro-inv" />
+    </div>
+  </div>
+  <div class="content-block">
+    <span class="overline" style="margin-bottom:16px;">02 YA ESTÁS LISTA</span>
+    <div class="lista-prose stagger">
+      <p>Es natural sentir un poco de nervios, expectativas o curiosidad antes de un encuentro que te importa.</p>
+      <p>Pero no necesitas tener todo bajo control para disfrutarlo.</p>
+      <p>No sabes exactamente como va a ser la noche, y esta bien.</p>
+      <p>Puede haber risas, algun silencio, una conversacion inesperada o momentos mucho mas simples.</p>
+      <div class="lista-highlight">Deja que sucedan sin intentar anticiparlos.</div>
+      <p>No necesitas estar pendiente de cada cosa que dices o haces. Permitete conversar, escuchar, reirte y disfrutar sin estar evaluandote todo el tiempo.</p>
+      <p>Y si en algun momento vuelves a preguntarte que estara pensando el, recuerda volver a ti y a lo que estas viviendo.</p>
+    </div>
+    <div class="lista-finale">
+      <span class="finale-eyebrow">Y con eso en mente</span>
+      <p class="finale-text">Ahora disfruta de conocerlo.</p>
+    </div>
+  </div>
+</section>
+
+<section id="screen-brujula" class="screen" role="main">
+  <div style="position:relative;">
+    <div class="photo-wrap h-brujula"><img src="durante-encuentro.png.png" alt="" class="pos-brujula" /></div>
+    <div class="topbar-photo">
+      <button class="btn-back" onclick="goTo('screen-menu')" style="color:rgba(250,245,239,.9);">
+        <svg viewBox="0 0 24 24" style="stroke:rgba(250,245,239,.9)" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>Menu
+      </button>
+      <img src="logo-elegida.png.png" alt="ELEGIDA" class="logo-micro-inv" />
+    </div>
+  </div>
+  <div class="brujula-content">
+    <div style="margin-bottom:26px;">
+      <span class="overline" style="margin-bottom:10px;">03 — Durante el encuentro</span>
+      <h2 style="font-family:var(--serif);font-size:1.45rem;font-weight:600;color:var(--burgundy);line-height:1.2;margin-bottom:6px;">LA BRÚJULA DEL<br>ENCUENTRO<span class="brujula-tm">TM</span></h2>
+      <p class="brujula-sub">¿Qué necesitas recordar ahora?</p>
+    </div>
+    <div class="compass-grid" role="group" aria-label="Opciones de LA BRÚJULA">
+      <button class="compass-btn" id="bb-disfruta" onclick="showReminder('disfruta')" aria-pressed="false">DISFRUTA</button>
+      <button class="compass-btn" id="bb-CONÓCELO" onclick="showReminder('CONÓCELO')" aria-pressed="false">CONÓCELO</button>
+      <button class="compass-btn" id="bb-setu"     onclick="showReminder('setu')"    aria-pressed="false">SÉ TÚ</button>
+      <button class="compass-btn" id="bb-ESCÚCHATE" onclick="showReminder('ESCÚCHATE')" aria-pressed="false">ESCÚCHATE</button>
+    </div>
+    <div class="compass-reminder" id="compass-reminder" role="status" aria-live="polite"></div>
+    <p class="compass-hint">Elige lo que necesitas recordar ahora.</p>
+  </div>
+</section>
+
+<section id="screen-vuelves" class="screen" role="main">
+  <div style="position:relative;">
+    <div class="photo-wrap h-vuelves"><img src="vuelves-a-casa.png.png" alt="" class="pos-vuelves" /></div>
+    <div class="topbar-photo">
+      <button class="btn-back" onclick="goTo('screen-menu')" style="color:rgba(250,245,239,.85);">
+        <svg viewBox="0 0 24 24" style="stroke:rgba(250,245,239,.85)" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>Menu
+      </button>
+      <img src="logo-elegida.png.png" alt="ELEGIDA" class="logo-micro-inv" />
+    </div>
+  </div>
+  <div class="content-block">
+    <span class="overline" style="margin-bottom:16px;">04 — Cuando vuelves a casa</span>
+    <div class="prose stagger">
+      <p>Ya estás de vuelta.</p>
+      <p>Quizás la pasaste increible. Quizas hubo cosas que te encantaron y otras que todavia no sabes muy bi¿EN QUÉ pensar.</p>
+      <p>O quizas ya estas repasando alguna parte del encuentro.</p>
+      <p>No necesitas entender todo ahora.</p>
+      <p>Antes de volver a cada conversacion buscando que quiso decir o decidir que significa lo que paso entre ustedes, vuelve a lo esencial:</p>
+    </div>
+    <div class="vuelves-emphasis">¿Cómo te sentiste tú?</div>
+    <div class="sub-qs stagger">
+      <div class="sub-q"><span class="sub-dash">-</span><span class="sub-txt">¿Estuviste cómoda?</span></div>
+      <div class="sub-q"><span class="sub-dash">-</span><span class="sub-txt">Te divertiste?</span></div>
+      <div class="sub-q"><span class="sub-dash">-</span><span class="sub-txt">¿Hubo momentos en los que te sentiste especialmente bien?</span></div>
+      <div class="sub-q"><span class="sub-dash">-</span><span class="sub-txt">¿Algo te hizo ruido?</span></div>
+      <div class="sub-q"><span class="sub-dash">-</span><span class="sub-txt">¿Te gustó quién eras cuando estabas con el?</span></div>
+    </div>
+    <div class="prose stagger">
+      <p>Puedes haber sentido mucha atraccion y, al mismo tiempo, notar algo que no termino de gustarte. Una cosa no borra la otra.</p>
+      <p>Conocer de verdad a alguien lleva tiempo.</p>
+      <p>Una noche puede dejarte sensaciones muy lindas sin tener que darte todas las respuestas.</p>
+      <p>Por ahora, quedate con lo que sentiste.</p>
+    </div>
+    <div style="margin-top:36px;">
+      <button class="btn-primary btn-solid" onclick="goTo('screen-checkin')">QUIERO REGISTRAR CÓMO ME SENTÍ →</button>
+    </div>
+  </div>
+</section>
+
+<section id="screen-checkin" class="screen" role="main">
+  <div class="topbar">
+    <button class="btn-back" onclick="checkinBack()"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>Volver</button>
+    <img src="logo-elegida.png.png" alt="ELEGIDA" class="logo-micro" />
+  </div>
+  <div class="checkin-body">
+    <div class="progress-row">
+      <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="6" aria-valuenow="1">
+        <div class="progress-fill" id="progress-fill" style="width:16.66%"></div>
+      </div>
+      <span class="progress-label" id="progress-label" aria-live="polite">1 de 6</span>
+    </div>
+    <div id="cq-1" style="display:flex;flex-direction:column;flex:1;">
+      <p class="cq-num">PREGUNTA 01</p><h3 class="cq-text">¿CÓMO TE SENTISTE A SU LADO?</h3>
+      <p class="cq-hint">Puedes elegir más de una opción.</p>
+      <div class="options" role="group">
+        <button class="opt" onclick="toggleMulti(this,'q1')" data-val="Comoda">Comoda</button>
+        <button class="opt" onclick="toggleMulti(this,'q1')" data-val="Tranquila">Tranquila</button>
+        <button class="opt" onclick="toggleMulti(this,'q1')" data-val="Divertida">Divertida</button>
+        <button class="opt" onclick="toggleMulti(this,'q1')" data-val="Atraida">Atraida</button>
+        <button class="opt" onclick="toggleMulti(this,'q1')" data-val="Nerviosa">Nerviosa</button>
+        <button class="opt" onclick="toggleMulti(this,'q1')" data-val="Incomoda">Incomoda</button>
+        <button class="opt" onclick="toggleMulti(this,'q1')" data-val="Un poco desconectada">Un poco desconectada</button>
+        <button class="opt" onclick="toggleMulti(this,'q1')" data-val="Todavia no lo se">Todavia no lo se</button>
+      </div>
+      <div class="cq-nav"><button class="btn-primary btn-solid" onclick="nextQuestion(2)">SIGUIENTE</button></div>
+    </div>
+    <div id="cq-2" style="display:none;flex-direction:column;flex:1;">
+      <p class="cq-num">PREGUNTA 02</p><h3 class="cq-text">¿SENTISTE QUE PODÍAS SER TÚ?</h3>
+      <div class="options" role="group">
+        <button class="opt" onclick="selectSingle(this,'q2')" data-val="Si, completamente">Si, completamente</button>
+        <button class="opt" onclick="selectSingle(this,'q2')" data-val="Bastante">Bastante</button>
+        <button class="opt" onclick="selectSingle(this,'q2')" data-val="Por momentos">Por momentos</button>
+        <button class="opt" onclick="selectSingle(this,'q2')" data-val="Senti que estaba cuidando demasiado">Senti que estaba cuidando demasiado lo que decia o hacia</button>
+      </div>
+      <div class="cq-nav"><button class="btn-primary btn-solid" onclick="nextQuestion(3)">SIGUIENTE</button></div>
+    </div>
+    <div id="cq-3" style="display:none;flex-direction:column;flex:1;">
+      <p class="cq-num">PREGUNTA 03</p><h3 class="cq-text">¿CÓMO TE SENTISTE CON LA FORMA ¿EN QUÉ TE TRATO?</h3>
+      <div class="options" role="group">
+        <button class="opt" onclick="selectSingleQ3(this)" data-val="Muy bien">Muy bien</button>
+        <button class="opt" onclick="selectSingleQ3(this)" data-val="Bien">Bien</button>
+        <button class="opt" onclick="selectSingleQ3(this)" data-val="Hubo algo que me incomodo">Hubo algo que me incomodo</button>
+        <button class="opt" onclick="selectSingleQ3(this)" data-val="Todavia no se que pensar">Todavia no se que pensar</button>
+      </div>
+      <div class="cond-note" id="cond-note">
+        <p class="cond-label">¿Quieres anotarlo?</p>
+        <textarea class="cond-input" id="q3-note" placeholder="Escribe aqui si quieres..." rows="3"></textarea>
+      </div>
+      <div class="cq-nav" style="margin-top:20px;"><button class="btn-primary btn-solid" onclick="nextQuestion(4)">SIGUIENTE</button></div>
+    </div>
+    <div id="cq-4" style="display:none;flex-direction:column;flex:1;">
+      <p class="cq-num">PREGUNTA 04</p><h3 class="cq-text">MÁS ALLÁ DE SI LE GUSTASTE... ¿A TI TE GUSTARÍA VOLVER A VERLO?</h3>
+      <div class="options" role="group">
+        <button class="opt" onclick="selectSingle(this,'q4')" data-val="Si">Si</button>
+        <button class="opt" onclick="selectSingle(this,'q4')" data-val="Creo que si">Creo que si</button>
+        <button class="opt" onclick="selectSingle(this,'q4')" data-val="Todavia no lo se">Todavia no lo se</button>
+        <button class="opt" onclick="selectSingle(this,'q4')" data-val="Creo que no">Creo que no</button>
+        <button class="opt" onclick="selectSingle(this,'q4')" data-val="No">No</button>
+      </div>
+      <div class="cq-nav"><button class="btn-primary btn-solid" onclick="nextQuestion(5)">SIGUIENTE</button></div>
+    </div>
+    <div id="cq-5" style="display:none;flex-direction:column;flex:1;">
+      <p class="cq-num">PREGUNTA 05</p><h3 class="cq-text">¿QUÉ FUE LO QUE MÁS DISFRUTASTE DEL ENCUENTRO?</h3>
+      <textarea class="cq-textarea" id="q5-text" placeholder="Escribe aqui..."></textarea>
+      <p class="cq-area-hint">No hace falta escribir mucho. Puede ser una frase.</p>
+      <div class="cq-nav"><button class="btn-primary btn-solid" onclick="nextQuestion(6)">SIGUIENTE</button></div>
+    </div>
+    <div id="cq-6" style="display:none;flex-direction:column;flex:1;">
+      <p class="cq-num">PREGUNTA 06</p><h3 class="cq-text">¿HUBO ALGO DE ÉL QUE TE DIERA GANAS DE SEGUIR conociéndolo?</h3>
+      <textarea class="cq-textarea" id="q6-text" placeholder="Escribe aqui..."></textarea>
+      <p class="cq-area-hint">Puede ser algo que dijo, una forma de ser, algo que hizo o simplemente una sensacion que te quedo.</p>
+      <div class="cq-nav"><button class="btn-primary btn-solid" onclick="saveCurrentQ();goTo('screen-impresion')">CONTINUAR →</button></div>
+    </div>
+  </div>
+</section>
+
+<section id="screen-impresion" class="screen" role="main">
+  <div class="topbar">
+    <button class="btn-back" onclick="goTo('screen-checkin')"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>Volver</button>
+    <img src="logo-elegida.png.png" alt="ELEGIDA" class="logo-micro" />
+  </div>
+  <div class="impresion-body">
+    <span class="overline" style="margin-bottom:12px;">Mi impresión</span>
+    <h2 style="font-family:var(--serif);font-size:1.55rem;font-weight:600;color:var(--burgundy);line-height:1.2;margin-bottom:28px;">Mi impresión<br>DE HOY</h2>
+    <div id="impresion-form" style="display:flex;flex-direction:column;flex:1;">
+      <p class="impresion-prompt">Sin pensar demasiado, termina esta frase:</p>
+      <p class="impresion-stem">"Después de este encuentro, me quedo con la sensación de que..."</p>
+      <textarea class="impresion-area" id="impresion-text" placeholder="...escribe aquí lo que sientes"></textarea>
+      <button class="btn-primary btn-solid" onclick="showFinalCard()">ASÍ ME SENTÍ →</button>
+    </div>
+    <div class="final-card" id="final-card">
+      <div class="final-ornament" aria-hidden="true"></div>
+      <div class="final-card-inner">
+        <img src="logo-elegida.png.png" alt="" class="final-card-logo" aria-hidden="true" />
+        <span class="final-eyebrow">Mi impresión de hoy</span>
+        <span class="final-stem">"Después de este encuentro, me quedo con la sensación de que...</span>
+        <p class="final-quote" id="final-card-text"></p>
+      </div>
+      <p class="final-message">Listo. Quédate con esta primera impresión y deja que lo demas se vaya mostrando con el tiempo.</p>
+      <button class="btn-back" onclick="goTo('screen-menu')" style="justify-content:center;"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>Volver al inicio</button>
+    </div>
+  </div>
+</section>
+
+</div>
+<script>
+const answers={q1:new Set(),q2:null,q3:null,q3note:'',q4:null,q5:'',q6:'',impresion:''};
+let currentQ=1,antesAnimated=false,activeReminder=null;
+function goTo(id){
+  const all=document.querySelectorAll('.screen'),target=document.getElementById(id);
+  if(!target)return;
+  all.forEach(s=>{if(s.classList.contains('active')){s.classList.remove('active');setTimeout(()=>{if(!s.classList.contains('active'))s.style.display='none';},450);}});
+  target.style.display='flex';target.offsetHeight;target.classList.add('active');
+  window.scrollTo({top:0,behavior:'instant'});
+  target.querySelectorAll('.stagger > *').forEach(el=>{el.style.animation='none';el.offsetHeight;el.style.animation='';});
+  if(id==='screen-antes'&&!antesAnimated){antesAnimated=true;runAntesAnimation();}
+  if(id==='screen-impresion')resetImpresion();
+  if(id==='screen-checkin')showQuestion(currentQ);
+}
+function runAntesAnimation(){
+  const wait=ms=>new Promise(r=>setTimeout(r,ms));
+  setTimeout(()=>{const i=document.getElementById('av-intro');if(i)i.classList.add('in');},140);
+  async function seq(){
+    await wait(520);document.getElementById('tc-1').classList.add('in');
+    await wait(360);document.getElementById('tc-2').classList.add('in');
+    await wait(360);document.getElementById('tc-3').classList.add('in');
+    await wait(540);document.getElementById('pivot-1').classList.add('in');
+    await wait(520);document.getElementById('av-prose2').classList.add('in');
+    await wait(420);document.getElementById('pivot-2').classList.add('in');
+    await wait(360);
+    ['dq-1','dq-2','dq-3','dq-4'].forEach((id,i)=>{setTimeout(()=>document.getElementById(id).classList.add('in'),i*180);});
+    await wait(880);document.getElementById('av-closing').classList.add('in');
+  }
+  seq();
+}
+const reminders={
+  disfruta:'No estes pensando todo el tiempo si va bien. Estas aca, te gusta, estás pasando un lindo momento... disfrútalo.',
+  CONÓCELO:'No tengas apuro por sacar conclusiones. Escuchalo, miralo, deja que te vaya mostrando quien es.',
+  setu:'No midas cada cosa que dices. Si algo te causa gracia, riete. Si piensas distinto, dilo. Que conozca a la mujer que realmente eres.',
+  ESCÚCHATE:'Y cada tanto vuelve a ti. ¿Te sientes cómoda? ¿Te gusta cómo te sientes cuando estas con el? Eso también importa.'
+};
+const btnIds={disfruta:'bb-disfruta',CONÓCELO:'bb-CONÓCELO',setu:'bb-setu',ESCÚCHATE:'bb-ESCÚCHATE'};
+function showReminder(key){
+  const box=document.getElementById('compass-reminder');
+  Object.entries(btnIds).forEach(([k,id])=>{const btn=document.getElementById(id);const on=(k===key&&activeReminder!==key);btn.classList.toggle('active',on);btn.setAttribute('aria-pressed',on?'true':'false');});
+  if(activeReminder===key){box.classList.remove('in');setTimeout(()=>{box.textContent='';},220);activeReminder=null;return;}
+  activeReminder=key;box.classList.remove('in');
+  setTimeout(()=>{box.textContent=reminders[key];box.classList.add('in');},220);
+}
+function showQuestion(n){
+  for(let i=1;i<=6;i++){const el=document.getElementById('cq-'+i);if(!el)continue;el.style.display=(i===n)?'flex':'none';}
+  updateProgress(n);
+  if(n===1)restoreMulti('q1','#cq-1 .opt');
+  if(n===2)restoreSingle('q2','#cq-2 .opt');
+  if(n===3){restoreSingle('q3','#cq-3 .opt');const note=document.getElementById('cond-note');if(answers.q3==='Hubo algo que me incomodo'){note.classList.add('open');document.getElementById('q3-note').value=answers.q3note||'';}else{note.classList.remove('open');}}
+  if(n===4)restoreSingle('q4','#cq-4 .opt');
+  if(n===5&&answers.q5)document.getElementById('q5-text').value=answers.q5;
+  if(n===6&&answers.q6)document.getElementById('q6-text').value=answers.q6;
+}
+function updateProgress(n){document.getElementById('progress-fill').style.width=(n/6*100)+'%';document.getElementById('progress-label').textContent=n+' de 6';document.getElementById('progress-fill').parentElement.setAttribute('aria-valuenow',n);}
+function nextQuestion(to){saveCurrentQ();currentQ=to;showQuestion(to);window.scrollTo({top:0,behavior:'smooth'});}
+function checkinBack(){if(currentQ>1){saveCurrentQ();currentQ--;showQuestion(currentQ);window.scrollTo({top:0,behavior:'smooth'});}else{goTo('screen-vuelves');}}
+function saveCurrentQ(){if(currentQ===3){const n=document.getElementById('q3-note');if(n)answers.q3note=n.value;}if(currentQ===5){const t=document.getElementById('q5-text');if(t)answers.q5=t.value;}if(currentQ===6){const t=document.getElementById('q6-text');if(t)answers.q6=t.value;}}
+function toggleMulti(btn,key){const v=btn.dataset.val;if(answers[key].has(v)){answers[key].delete(v);btn.classList.remove('selected');}else{answers[key].add(v);btn.classList.add('selected');}btn.setAttribute('aria-pressed',btn.classList.contains('selected')?'true':'false');}
+function restoreMulti(key,sel){document.querySelectorAll(sel).forEach(b=>b.classList.toggle('selected',answers[key].has(b.dataset.val)));}
+function selectSingle(btn,key){btn.closest('.options').querySelectorAll('.opt').forEach(b=>{b.classList.remove('selected');b.setAttribute('aria-pressed','false');});btn.classList.add('selected');btn.setAttribute('aria-pressed','true');answers[key]=btn.dataset.val;}
+function restoreSingle(key,sel){document.querySelectorAll(sel).forEach(b=>b.classList.toggle('selected',b.dataset.val===answers[key]));}
+function selectSingleQ3(btn){selectSingle(btn,'q3');document.getElementById('cond-note').classList.toggle('open',btn.dataset.val==='Hubo algo que me incomodo');}
+function resetImpresion(){const form=document.getElementById('impresion-form');const card=document.getElementById('final-card');form.style.display='flex';form.style.flexDirection='column';form.style.flex='1';card.classList.remove('show');card.style.display='none';if(answers.impresion)document.getElementById('impresion-text').value=answers.impresion;}
+function showFinalCard(){const text=document.getElementById('impresion-text').value.trim();if(!text){document.getElementById('impresion-text').focus();return;}answers.impresion=text;document.getElementById('final-card-text').textContent=text+'"';document.getElementById('impresion-form').style.display='none';const card=document.getElementById('final-card');card.style.display='flex';requestAnimationFrame(()=>requestAnimationFrame(()=>card.classList.add('show')));window.scrollTo({top:0,behavior:'smooth'});}
+document.addEventListener('DOMContentLoaded',()=>{document.querySelectorAll('.screen:not(.active)').forEach(s=>s.style.display='none');const cover=document.getElementById('screen-cover');cover.style.opacity='0';cover.style.transition='none';setTimeout(()=>{cover.style.transition='opacity .9s ease';cover.style.opacity='1';},60);});
+</script>
+</body>
+</html>
